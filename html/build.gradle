@@ -1,0 +1,130 @@
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'org.gretty:gretty:3.0.2'
+	}
+}
+apply plugin: "gwt"
+apply plugin: "war"
+apply plugin: "org.gretty"
+
+gwt {
+	gwtVersion = "$gwtFrameworkVersion" // Should match the version used for building the GWT backend. See gradle.properties.
+	maxHeapSize = '1G' // Default 256m is not enough for the GWT compiler. GWT is HUNGRY.
+	minHeapSize = '1G'
+
+	src = files(file('src/main/java')) // Needs to be in front of "modules" below.
+	modules 'dev.lyze.parallelworlds.GdxDefinition'
+	devModules 'dev.lyze.parallelworlds.GdxDefinitionSuperdev'
+	project.webAppDirName = 'webapp'
+
+	compiler.strict = true
+	compiler.disableCastChecking = true
+	sourceLevel = 11
+}
+
+configurations { lom }
+
+dependencies {
+	implementation project(':core')
+	implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+	implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+	implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+	implementation "com.esotericsoftware.spine:spine-libgdx:$spineRuntimeVersion:sources"
+	implementation "space.earlygrey:shapedrawer:$shapeDrawerVersion:sources"
+	implementation "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:$controllerUtilsVersion"
+	implementation "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:$controllerUtilsVersion:sources"
+	implementation "de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:$controllerUtilsVersion:sources"
+
+	lom "org.projectlombok:lombok:$lombokVersion"
+	implementation configurations.lom.dependencies
+	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+}
+
+import org.akhikhl.gretty.AppBeforeIntegrationTestTask
+import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
+
+gretty.httpPort = 8080
+gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
+gretty.contextPath = "/"
+gretty.portPropertiesFileName = "TEMP_PORTS.properties"
+
+task startHttpServer (dependsOn: [draftCompileGwt]) {
+	doFirst {
+		copy {
+			from "webapp"
+			into gretty.resourceBase
+		}
+		copy {
+			from "war"
+			into gretty.resourceBase
+		}
+	}
+}
+task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
+    // The next line allows ports to be reused instead of
+    // needing a process to be manually terminated.
+	file("build/TEMP_PORTS.properties").delete()
+	// Somewhat of a hack; uses Gretty's support for wrapping a task in
+	// a start and then stop of a Jetty server that serves files while
+	// also running the SuperDev code server.
+	integrationTestTask 'superDev'
+	
+	interactive false
+}
+
+task superDev(type: GwtSuperDev) {
+	doFirst {
+		gwt.modules = gwt.devModules
+	}
+}
+task dist(dependsOn: [clean, compileGwt]) {
+    doLast {
+		file("build/dist").mkdirs()
+		copy {
+			from "build/gwt/out"
+			into "build/dist"
+		}
+		copy {
+			from "webapp"
+			into "build/dist"
+			}
+		copy {
+			from "war"
+			into "build/dist"
+		}
+	}
+}
+
+task addSource {
+	doLast {
+		sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
+	}
+}
+
+draftCompileGwt {
+	doFirst {
+		jvmArgs "-javaagent:${configurations.lom.asPath}=ECJ"
+	}
+}
+
+compileGwt {
+	doFirst {
+		jvmArgs "-javaagent:${configurations.lom.asPath}=ECJ"
+	}
+}
+
+superDev {
+	doFirst {
+		jvmArgs "-javaagent:${configurations.lom.asPath}=ECJ"
+	}
+}
+
+tasks.compileGwt.dependsOn(addSource)
+tasks.draftCompileGwt.dependsOn(addSource)
+
+sourceCompatibility = 11.0
+sourceSets.main.java.srcDirs = [ "src/main/java/" ]
