@@ -1,0 +1,20 @@
+
+default.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Title
+  rotate: false
+  xy: 1, 515
+  size: 465, 233
+  orig: 465, 233
+  offset: 0, 0
+  index: -1
+pixeldroidConsoleRegular-64
+  rotate: false
+  xy: 1, 1
+  size: 256, 512
+  orig: 256, 512
+  offset: 0, 0
+  index: -1

@@ -10,9 +10,10 @@ import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
 import de.eskalon.commons.screen.transition.impl.SlidingDirection;
 import de.eskalon.commons.screen.transition.impl.SlidingOutTransition;
 import dev.lyze.parallelworlds.logger.Logger;
-import dev.lyze.parallelworlds.screens.GameScreen;
+import dev.lyze.parallelworlds.screens.game.GameScreen;
 import dev.lyze.parallelworlds.screens.LoadingScreen;
 import dev.lyze.parallelworlds.screens.MainMenuScreen;
+import dev.lyze.parallelworlds.statics.Statics;
 
 public class ParallelWorlds extends ManagedGame<ManagedScreen, ScreenTransition> {
     private static final Logger<ParallelWorlds> logger = new Logger<>(ParallelWorlds.class);
@@ -44,7 +45,8 @@ public class ParallelWorlds extends ManagedGame<ManagedScreen, ScreenTransition>
     }
 
     private void setupStatics() {
-
+        Statics.parallelWorlds = this;
+        Statics.assets.load();
     }
 
     @Override

@@ -8,6 +8,7 @@ buildscript {
 	}
 	dependencies {
 		classpath "org.wisepersist:gwt-gradle-plugin:$gwtPluginVersion"
+		classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
 	}
 }
 
@@ -20,12 +21,22 @@ def getGitHash = { ->
 	return stdout.toString().trim()
 }
 
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+task texturePacker {
+	doLast {
+		TexturePacker.process("${project.rootDir}/assets/images/particles", "${project.rootDir}/assets/atlas", "particles")
+		TexturePacker.process("${project.rootDir}/assets/images/ui", "${project.rootDir}/assets/atlas", "ui")
+	}
+}
+
 configure(subprojects) {
 	apply plugin: 'java-library'
 	sourceCompatibility = 11.0
 	compileJava {
 		options.incremental = true
 	}
+
+	compileJava.dependsOn texturePacker
 }
 
 subprojects {

@@ -1,6 +1,5 @@
 package dev.lyze.parallelworlds.logger;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 
 public class Logger<TClass> {

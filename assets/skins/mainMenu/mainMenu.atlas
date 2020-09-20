@@ -1,0 +1,62 @@
+
+mainMenu.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Buttons
+  rotate: false
+  xy: 1, 656
+  size: 505, 367
+  orig: 505, 367
+  offset: 0, 0
+  index: -1
+Title
+  rotate: false
+  xy: 1, 421
+  size: 476, 233
+  orig: 476, 233
+  offset: 0, 0
+  index: -1
+clouds
+  rotate: false
+  xy: 1, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+layer
+  rotate: false
+  xy: 508, 807
+  size: 384, 216
+  orig: 384, 216
+  offset: 0, 0
+  index: 0
+layer
+  rotate: false
+  xy: 1, 203
+  size: 384, 216
+  orig: 384, 216
+  offset: 0, 0
+  index: 1
+layer
+  rotate: false
+  xy: 508, 589
+  size: 384, 216
+  orig: 384, 216
+  offset: 0, 0
+  index: 2
+layer
+  rotate: false
+  xy: 479, 371
+  size: 384, 216
+  orig: 384, 216
+  offset: 0, 0
+  index: 3
+layer
+  rotate: false
+  xy: 387, 153
+  size: 384, 216
+  orig: 384, 216
+  offset: 0, 0
+  index: 4

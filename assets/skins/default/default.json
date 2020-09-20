@@ -1,0 +1,40 @@
+{
+BitmapFont: {
+	"pixeldroidConsoleRegular-64": {
+		file: "pixeldroidConsoleRegular-64.fnt"
+	},
+	Title: {
+		file: "Title.fnt"
+	}
+},
+Color: {
+	RGBA_216_214_80_255: {
+		hex: "d8d650ff"
+	},
+	RGBA_255_255_255_255: {
+		hex: "ffffffff"
+	}
+},
+LabelStyle: {
+	default: {
+		font: "pixeldroidConsoleRegular-64",
+		fontColor: "RGBA_255_255_255_255"
+	},
+	title: {
+		font: "Title",
+		fontColor: "RGBA_255_255_255_255"
+	}
+},
+TextButtonStyle: {
+	default: {
+		font: "pixeldroidConsoleRegular-64",
+		fontColor: "RGBA_255_255_255_255",
+		overFontColor: "RGBA_216_214_80_255"
+	}
+},
+TextTooltipStyle: {
+	default: {
+		label: "default"
+	}
+}
+}
