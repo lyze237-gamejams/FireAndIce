@@ -1,0 +1,155 @@
+name: Build ParallelWorlds and upload it to itch.io
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GRADLE_USER_HOME: .gradle
+  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup gradle cache
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle') }}
+          path: |
+            .gradle/wrapper
+            .gradle/caches
+
+      - name: Setup jdk cache
+        uses: actions/cache@v2
+        id: jdkcache
+        with:
+          key: ${{ runner.os }}-jdk-${{ hashFiles('**/build.gradle') }}
+          path: |
+            jdk.tar.gz
+
+      - name: Download JDK
+        if: steps.jdkcache.outputs.cache-hit != 'true'
+        run: wget https://download.bell-sw.com/java/14.0.1+8/bellsoft-jdk14.0.1+8-linux-amd64-full.tar.gz -O jdk.tar.gz
+
+      - name: Set up JDK 14
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+          jdkFile: jdk.tar.gz
+
+
+
+      - name: Download butler
+        run: wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -O butler.zip
+
+      - name: Unzip buttler
+        run: unzip butler.zip
+
+
+
+      - name: Fix permissions
+        run: chmod +x butler && chmod +x gradlew
+
+
+
+      - name: Build jar
+        run: ./gradlew lwjgl3:jar
+
+      - name: Build gwt
+        run: ./gradlew html:dist
+
+      - name: Build package image
+        run: ./gradlew lwjgl3:jpackageImage
+
+      - name: Build deb/rpm
+        run: ./gradlew lwjgl3:jpackage
+
+      - name: Fix file names
+        run: mv lwjgl3/build/lib/*.jar ParallelWorlds_linux.jar && mv lwjgl3/build/jpackage/*.deb ParallelWorlds.deb && mv lwjgl3/build/jpackage/*.rpm ParallelWorlds.rpm
+
+
+
+      - name: Check if butler works
+        run: ./butler -V
+
+      - run: ./butler push ParallelWorlds_linux.jar lyze237/ParallelWorlds:linux-jar
+
+      - run: ./butler push lwjgl3/build/jpackage/ParallelWorlds lyze237/ParallelWorlds:linux-image
+
+      - run: ./butler push ParallelWorlds.deb lyze237/ParallelWorlds:linux-deb
+      - run: ./butler push ParallelWorlds.rpm lyze237/ParallelWorlds:linux-rpm
+
+      - run: ./butler push html/build/dist lyze237/ParallelWorlds:html
+
+
+
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup gradle cache
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle') }}
+          path: |
+            .gradle/wrapper
+            .gradle/caches
+
+      - name: Setup jdk cache
+        uses: actions/cache@v2
+        id: jdkcache
+        with:
+          key: ${{ runner.os }}-jdk-${{ hashFiles('**/build.gradle') }}
+          path: |
+            jdk.zip
+
+      - name: Download JDK
+        if: steps.jdkcache.outputs.cache-hit != 'true'
+        run: Invoke-WebRequest -Uri https://download.bell-sw.com/java/14.0.1+8/bellsoft-jdk14.0.1+8-windows-amd64-full.zip -OutFile jdk.zip
+
+      - name: Set up JDK 14
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+          jdkFile: jdk.zip
+
+
+
+      - name: Download Butler
+        run: Invoke-WebRequest -Uri https://broth.itch.ovh/butler/windows-amd64/LATEST/archive/default -OutFile butler.zip
+
+      - name: Extract butler
+        run: Expand-Archive -DestinationPath . butler.zip
+
+
+
+      - name: Build jar
+        run: ./gradlew.bat lwjgl3:jar
+
+      - name: Build package image
+        run: ./gradlew.bat lwjgl3:jpackageImage
+
+      - name: Build exe/msi
+        run: ./gradlew.bat lwjgl3:jpackage
+
+      - name: Fix file names
+        run: mv lwjgl3/build/lib/*.jar ParallelWorlds_windows.jar && mv lwjgl3/build/jpackage/*.exe ParallelWorlds.exe && mv lwjgl3/build/jpackage/*.msi ParallelWorlds.msi
+
+
+
+      - name: Check if butler works
+        run: ./butler.exe -V
+
+      - run: ./butler push ParallelWorlds_windows.jar lyze237/ParallelWorlds:windows-jar
+
+      - run: ./butler push lwjgl3/build/jpackage/ParallelWorlds lyze237/ParallelWorlds:windows-image
+
+      - run: ./butler push ParallelWorlds.exe lyze237/ParallelWorlds:windows-exe
+      - run: ./butler push ParallelWorlds.msi lyze237/ParallelWorlds:windows-msi
+
