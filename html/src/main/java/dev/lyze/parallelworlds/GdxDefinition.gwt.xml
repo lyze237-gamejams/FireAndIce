@@ -7,6 +7,8 @@
 	<inherits name="com.esotericsoftware.spine" />
 	<inherits name="dev.lyze.parallelworlds.ParallelWorlds" />
 	<inherits name="space.earlygrey.shapedrawer" />
+	<inherits name="libgdx_screenmanager" />
+	<inherits name="libgdx_screenmanager_gwt" />
 	<entry-point class="dev.lyze.parallelworlds.gwt.GwtLauncher" />
 	<set-configuration-property name="gdx.assetpath" value="../assets" />
 	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>

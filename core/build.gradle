@@ -6,6 +6,8 @@ dependencies {
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 	api "de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:$controllerUtilsVersion"
 
+	api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion"
+
 	implementation "org.projectlombok:lombok:$lombokVersion"
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
