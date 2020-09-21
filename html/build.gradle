@@ -43,6 +43,8 @@ dependencies {
 	api "com.github.crykn:libgdx-screenmanager-gwt:$screenManagerVersion"
 	api "com.github.crykn:libgdx-screenmanager-gwt:$screenManagerVersion:sources"
 
+	api "com.github.tommyettinger:jbump:$jbumpVersion:sources"
+
 	lom "org.projectlombok:lombok:$lombokVersion"
 	implementation configurations.lom.dependencies
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"

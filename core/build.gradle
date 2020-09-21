@@ -8,6 +8,8 @@ dependencies {
 
 	api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion"
 
+	api "com.github.tommyettinger:jbump:$jbumpVersion"
+
 	implementation "org.projectlombok:lombok:$lombokVersion"
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
