@@ -2,8 +2,6 @@ package dev.lyze.parallelworlds.screens.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -38,7 +36,6 @@ public class Map {
 
         renderer = new OrthogonalTiledMapRendererBleeding(map, 1 / 8f);
     }
-
 
     public void initialize() {
         setupFields();
@@ -88,8 +85,14 @@ public class Map {
                 var properties = tile.getProperties();
 
                 switch (properties.get("type", String.class)) {
-                    case "spawn":
+                    case "Spawn":
                         game.getLevel().spawnPlayer(properties.get("player", String.class), x, y);
+                        break;
+                    case "Portal":
+                        game.getLevel().spawnPortal(properties.get("color", String.class), x, y);
+                        break;
+                    case "PortalDirection":
+                        game.getLevel().spawnPortalDirection(properties.get("direction", String.class), x, y);
                         break;
                 }
             }

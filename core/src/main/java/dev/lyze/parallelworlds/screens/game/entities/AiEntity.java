@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.Collisions;
+import com.dongbat.jbump.Response;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
-import dev.lyze.parallelworlds.screens.game.entities.filters.StaticBlockFilter;
+import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerFilter;
 import dev.lyze.parallelworlds.utils.MathUtils;
 import dev.lyze.parallelworlds.utils.Vector3Pool;
 
@@ -25,7 +26,7 @@ public class AiEntity extends Entity {
 
     private final int maxJumpsLeft = 2;
 
-    private final Vector2 velocity = new Vector2();
+    protected final Vector2 velocity = new Vector2();
     protected final Vector2 inputVelocity = new Vector2();
 
     protected boolean isFacingRight = true;
@@ -63,7 +64,7 @@ public class AiEntity extends Entity {
     }
 
     private void checkGround(World<Entity> world) {
-        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), StaticBlockFilter.instance, tempCollisions);
+        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), PlayerFilter.instance, tempCollisions);
         isGrounded = tempCollisions.size() > 0;
     }
 
@@ -86,7 +87,7 @@ public class AiEntity extends Entity {
     }
 
     private void checkCollisionsAndApplyVelocity(World<Entity> world, float delta) {
-        var response = world.move(item, position.x + velocity.x * delta, position.y + velocity.y * delta, StaticBlockFilter.instance);
+        var response = world.move(item, position.x + velocity.x * delta, position.y + velocity.y * delta, PlayerFilter.instance);
 
         for (int i = 0; i < response.projectedCollisions.size(); i++) {
             onCollision(response.projectedCollisions.get(i));
@@ -95,19 +96,27 @@ public class AiEntity extends Entity {
         position.set(response.goalX, response.goalY);
     }
 
-    private void onCollision(Collision collision) {
-        if (collision.other.userData instanceof StaticEntity) {
-            if (collision.normal.x != 0) {
-                // wall
-                velocity.x = 0;
-            }
-            if (collision.normal.y != 0) {
-                // ceiling or floor
-                velocity.y = 0;
+    protected void onCollision(Collision collision) {
+        if (!(collision.other.userData instanceof StaticEntity))
+            return;
 
-                if (collision.normal.y == fixInverted(1)) {
-                    isJumping = false;
-                }
+        var entity = (StaticEntity) collision.other.userData;
+        if (!entity.isSolid())
+            return;
+
+        if (collision.type != Response.slide)
+            return;
+
+        if (collision.normal.x != 0) {
+            // wall
+            velocity.x = 0;
+        }
+        if (collision.normal.y != 0) {
+            // ceiling or floor
+            velocity.y = 0;
+
+            if (collision.normal.y == fixInverted(1)) {
+                isJumping = false;
             }
         }
     }

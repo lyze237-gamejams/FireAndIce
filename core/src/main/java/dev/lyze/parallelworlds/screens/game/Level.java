@@ -10,9 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
-import dev.lyze.parallelworlds.screens.game.entities.Entity;
-import dev.lyze.parallelworlds.screens.game.entities.Player;
-import dev.lyze.parallelworlds.screens.game.entities.PlayerColor;
+import dev.lyze.parallelworlds.screens.game.entities.*;
 import dev.lyze.parallelworlds.statics.Statics;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -111,5 +109,30 @@ public class Level {
         Player player = players.getPlayer(playerColor);
         player.getPosition().set(x, y);
         world.update(player.getItem(), x, y);
+    }
+
+    public void spawnPortal(String color, int x, int y) {
+        logger.logInfo("Spawning portal " + color + " at " + x + "/" + y);
+
+        PlayerColor playerColor;
+        try {
+            playerColor = PlayerColor.valueOf(color);
+        } catch (IllegalArgumentException ignored) {
+            playerColor = null;
+        }
+
+        var portal = new PortalBlock(x, y, this, playerColor);
+        entities.add(portal);
+        portal.addToWorld(world);
+    }
+
+    public void spawnPortalDirection(String direction, int x, int y) {
+        logger.logInfo("Spawning portal direction " + direction + " at " + x + "/" + y);
+
+        var portalDirection = Direction.valueOf(direction);
+
+        var portal = new PortalDirectionBlock(x, y, this, portalDirection);
+        entities.add(portal);
+        portal.addToWorld(world);
     }
 }
