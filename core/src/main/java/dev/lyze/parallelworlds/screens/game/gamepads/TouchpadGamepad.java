@@ -1,0 +1,104 @@
+package dev.lyze.parallelworlds.screens.game.gamepads;
+
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import dev.lyze.parallelworlds.screens.game.entities.Direction;
+import dev.lyze.parallelworlds.screens.game.entities.Player;
+import dev.lyze.parallelworlds.screens.game.entities.PlayerColor;
+import dev.lyze.parallelworlds.statics.Statics;
+
+public class TouchpadGamepad extends VirtualGamepad {
+    public TouchpadGamepad(Player player) {
+        super(player);
+    }
+
+    public void setup(Stage stage) {
+        var uiAtlas = Statics.assets.getGame().getSharedLevelAssets().getUiAtlas();
+
+        var rootTable = new Table();
+        rootTable.setFillParent(true);
+
+        if (player.getColor() == PlayerColor.Blue) {
+            Table leftControlsTable = setupController(uiAtlas.getBlueUp(), uiAtlas.getBlueLeft(), uiAtlas.getBlueRight(), uiAtlas.getBlueDown());
+            rootTable.add(leftControlsTable).bottom().left().padLeft(8).padBottom(8).expand();
+        } else {
+            Table rightControlsTable = setupController(uiAtlas.getRedUp(), uiAtlas.getRedLeft(), uiAtlas.getRedRight(), uiAtlas.getRedDown());
+            rootTable.add(rightControlsTable).bottom().right().padRight(8).padBottom(8).expand();
+        }
+
+        stage.addActor(rootTable);
+    }
+
+    private Table setupController(TextureAtlas.AtlasRegion up, TextureAtlas.AtlasRegion left, TextureAtlas.AtlasRegion right, TextureAtlas.AtlasRegion down) {
+        var leftControlsTable = new Table();
+        leftControlsTable.add();
+        leftControlsTable.add(TouchpadGamepad.this.setupController(up, Direction.Up));
+        leftControlsTable.add().row();
+
+        leftControlsTable.add(setupController(left, Direction.Left));
+        leftControlsTable.add();
+        leftControlsTable.add(setupController(right, Direction.Right)).row();
+
+        leftControlsTable.add();
+        leftControlsTable.add(setupController(down, Direction.Down));
+        leftControlsTable.add();
+        return leftControlsTable;
+    }
+
+    private ImageButton setupController(TextureAtlas.AtlasRegion image, Direction direction) {
+        var button = new ImageButton(new TextureRegionDrawable(image));
+
+        var self = this;
+        button.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                switch (direction) {
+                    case Up:
+                        self.jumpJustPressed = true;
+                        break;
+                    case Down:
+                        break;
+                    case Left:
+                        self.leftPressed = true;
+                        break;
+                    case Right:
+                        self.rightPressed = true;
+                        break;
+                }
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                switch (direction) {
+                    case Up:
+                        self.jumpJustPressed = false;
+                        break;
+                    case Down:
+                        break;
+                    case Left:
+                        self.leftPressed = false;
+                        break;
+                    case Right:
+                        self.rightPressed = false;
+                        break;
+                }
+            }
+        });
+        return button;
+    }
+
+    @Override
+    public void update(float delta) {
+    }
+
+    @Override
+    public void reset(float delta) {
+        jumpJustPressed = false;
+    }
+}

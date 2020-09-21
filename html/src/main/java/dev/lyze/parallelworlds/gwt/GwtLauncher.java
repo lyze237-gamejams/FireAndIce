@@ -6,12 +6,11 @@ import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import com.badlogic.gdx.backends.gwt.preloader.Preloader;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Panel;
 import dev.lyze.parallelworlds.ParallelWorlds;
+import dev.lyze.parallelworlds.statics.Statics;
 
 /**
  * Launches the GWT application.
@@ -45,6 +44,7 @@ public class GwtLauncher extends GwtApplication {
 
     @Override
     public ApplicationListener createApplicationListener() {
+        Statics.isMobileDevice = GwtApplication.isMobileDevice();
         return new ParallelWorlds();
     }
 

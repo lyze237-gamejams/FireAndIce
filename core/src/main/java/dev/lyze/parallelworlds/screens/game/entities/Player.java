@@ -1,13 +1,12 @@
 package dev.lyze.parallelworlds.screens.game.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
+import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.statics.Statics;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -19,6 +18,7 @@ public class Player extends AiEntity {
     private final PlayerColor color;
 
     private Direction portalDirection;
+    private VirtualGamepadGroup gamepad;
 
     public Player(Level level, PlayerColor color, boolean invertedGravity) {
         super(0, 0, 2, 4, level);
@@ -47,14 +47,10 @@ public class Player extends AiEntity {
     }
 
     private void checkInput() {
-        var leftKey = color == PlayerColor.Blue ? Input.Keys.A : Input.Keys.LEFT;
-        var rightKey = color == PlayerColor.Blue ? Input.Keys.D : Input.Keys.RIGHT;
-        var jump = color == PlayerColor.Blue ? Input.Keys.W : Input.Keys.UP;
+        wantsToMoveLeft = gamepad.isLeftPressed();
+        wantsToMoveRight = gamepad.isRightPressed();
 
-        wantsToMoveLeft = Gdx.input.isKeyPressed(leftKey);
-        wantsToMoveRight = Gdx.input.isKeyPressed(rightKey);
-
-        wantsToJump = Gdx.input.isKeyJustPressed(jump);
+        wantsToJump = gamepad.isJumpJustPressed();
     }
 
     @Override
@@ -79,5 +75,9 @@ public class Player extends AiEntity {
     public void debugRender(ShapeDrawer shapes) {
         shapes.setColor(color.getRenderColor());
         super.debugRender(shapes);
+    }
+
+    public void setGamepadGroup(VirtualGamepadGroup virtualGamepad) {
+        this.gamepad = virtualGamepad;
     }
 }

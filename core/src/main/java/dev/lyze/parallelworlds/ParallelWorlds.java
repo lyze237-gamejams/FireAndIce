@@ -50,8 +50,10 @@ public class ParallelWorlds extends ManagedGame<ManagedScreen, ScreenTransition>
     public void render() {
         super.render();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F9))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F9)) {
             Statics.debugging = !Statics.debugging;
+            Statics.isMobileDevice = Statics.debugging;
+        }
     }
 
     private void setupStatics() {
