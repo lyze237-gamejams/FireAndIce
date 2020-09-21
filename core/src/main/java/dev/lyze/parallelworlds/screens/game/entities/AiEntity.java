@@ -25,8 +25,6 @@ public class AiEntity extends Entity {
 
     private final float jumpForce = 1f;
 
-    private final int maxJumpsLeft = 2;
-
     protected final Vector2 velocity = new Vector2();
     protected final Vector2 inputVelocity = new Vector2();
 
@@ -40,7 +38,6 @@ public class AiEntity extends Entity {
 
     private boolean isJumping;
     private boolean isGrounded;
-    private int jumpsLeft = maxJumpsLeft;
 
     private final Collisions tempCollisions = new Collisions();
     private final GlyphLayout debugGlyphLayout = new GlyphLayout();
@@ -74,21 +71,12 @@ public class AiEntity extends Entity {
         if (!wantsToJump)
             return;
 
-
         if (isGrounded && !isJumping) {
             if (invertedGravity ? velocity.y > 0 : velocity.y < 0)
                 velocity.y = 0;
 
-            jumpsLeft = maxJumpsLeft - 1;
             velocity.y += fixInverted(jumpForce);
             isJumping = true;
-        }
-        else if (!isGrounded && jumpsLeft > 0) {
-            if (invertedGravity ? velocity.y > 0 : velocity.y < 0)
-                velocity.y = 0;
-
-            velocity.y += fixInverted(jumpForce);
-            jumpsLeft--;
         }
     }
 
@@ -172,7 +160,6 @@ public class AiEntity extends Entity {
                 "Pos: " + position.x + "/" + position.y + "\n" +
                 "Jum: " + isJumping + " ; Grn: " + isGrounded + "\n" +
                 "Vel: " + velocity.x + "/" + velocity.y + "\n" +
-                "JuL: " + jumpsLeft  + "\n" +
                 "Grv: " + fixInverted(gravity),
                 pos.x, pos.y);
 
