@@ -35,7 +35,7 @@ public class Level {
     private final World<Entity> world;
 
     @Getter
-    private final ArrayList<Player> players = new ArrayList<>();
+    private final Players players;
 
     @Getter
     private final ArrayList<Entity> entities = new ArrayList<>();
@@ -47,8 +47,7 @@ public class Level {
         world = new World<>();
         map = new Map(game, tiledMap);
 
-        players.add(new Player(this, PlayerColor.Red));
-        players.add(new Player(this, PlayerColor.Blue));
+        players = new Players(this);
 
         shapeDrawer = new ShapeDrawer(spriteBatch, new TextureRegion(Statics.assets.getGame().getSharedLevelAssets().getPixel()));
         shapeDrawer.setDefaultLineWidth(0.1f);
@@ -59,7 +58,8 @@ public class Level {
     }
 
     public void update(float delta) {
-        players.forEach(p -> p.update(delta));
+        players.update(delta);
+
         entities.forEach(e -> e.update(delta));
 
         updateCamera();
@@ -70,11 +70,11 @@ public class Level {
         map.render((OrthographicCamera) viewport.getCamera());
 
         spriteBatch.begin();
-        players.forEach(p -> p.render(spriteBatch));
+        players.render(spriteBatch);
         entities.forEach(e -> e.render(spriteBatch));
 
         //DEBUG LINES
-        players.forEach(p -> p.debugRender(shapeDrawer));
+        players.debugRender(shapeDrawer);
 
         shapeDrawer.setColor(Color.GREEN);
         entities.forEach(e -> e.debugRender(shapeDrawer));
@@ -89,8 +89,8 @@ public class Level {
     private void updateCamera() {
         var cam = (GameCamera) viewport.getCamera();
 
-        cam.lerpToPlayers(getRedPlayer().getPosition(), getBluePlayer().getPosition());
-        cam.zoomToPlayers(getRedPlayer().getPosition(), getBluePlayer().getPosition());
+        cam.lerpToPlayers(players.getRedPlayer().getPosition(), players.getBluePlayer().getPosition());
+        cam.zoomToPlayers(players.getRedPlayer().getPosition(), players.getBluePlayer().getPosition());
         cam.keepInBoundaries(map.getBoundaries());
 
         cam.update();
@@ -100,18 +100,6 @@ public class Level {
         logger.logInfo("Spawning player " + name + " at " + x + "/" + y);
 
         var playerColor = PlayerColor.valueOf(name);
-        getPlayer(playerColor).getPosition().set(x, y);
-    }
-
-    public Player getPlayer(PlayerColor playerColor) {
-        return players.get(0).getColor() == playerColor ? players.get(0) : players.get(1);
-    }
-
-    public Player getRedPlayer() {
-        return getPlayer(PlayerColor.Red);
-    }
-
-    public Player getBluePlayer() {
-        return getPlayer(PlayerColor.Blue);
+        players.getPlayer(playerColor).getPosition().set(x, y);
     }
 }
