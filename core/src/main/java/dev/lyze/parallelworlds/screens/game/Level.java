@@ -68,9 +68,18 @@ public class Level {
 
     public void render() {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+
+        spriteBatch.begin();
+        spriteBatch.setColor(map.getTopColor());
+        spriteBatch.draw(Statics.assets.getGame().getSharedLevelAssets().getPixel(), 0, map.getMapHeight() / 2f, map.getMapWidth(), map.getMapHeight());
+        spriteBatch.setColor(map.getBottomColor());
+        spriteBatch.draw(Statics.assets.getGame().getSharedLevelAssets().getPixel(), 0, map.getMapHeight() / 2f, map.getMapWidth(), -map.getMapHeight());
+        spriteBatch.end();
+
         map.render((OrthographicCamera) viewport.getCamera());
 
         spriteBatch.begin();
+
         players.render(spriteBatch);
         entities.forEach(e -> e.render(spriteBatch));
         spriteBatch.end();
@@ -94,6 +103,7 @@ public class Level {
         spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch.begin();
         players.debugTextRender(debugFont, viewport.getCamera(), spriteBatch);
+        debugFont.draw(spriteBatch, "Fps: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
         spriteBatch.end();
     }
 

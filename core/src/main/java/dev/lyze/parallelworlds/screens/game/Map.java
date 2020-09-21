@@ -1,5 +1,6 @@
 package dev.lyze.parallelworlds.screens.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -29,6 +30,9 @@ public class Map {
     private int mapPixelWidth, mapPixelHeight;
     @Getter
     private Rectangle boundaries;
+
+    @Getter
+    private Color topColor, bottomColor;
 
     public Map(GameScreen game, TiledMap map) {
         this.game = game;
@@ -169,6 +173,9 @@ public class Map {
 
         mapPixelWidth = mapWidth * tileWidth;
         mapPixelHeight = mapHeight * tileHeight;
+
+        topColor = map.getProperties().get("topColor", Color.class);
+        bottomColor = map.getProperties().get("bottomColor", Color.class);
     }
 
     public void render(OrthographicCamera cam) {
