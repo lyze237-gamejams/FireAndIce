@@ -87,50 +87,13 @@ public class Level {
     }
 
     private void updateCamera() {
-        var cam = (OrthographicCamera) viewport.getCamera();
+        var cam = (GameCamera) viewport.getCamera();
 
-        lerpToPlayers(cam);
-        zoomToPlayers(cam);
-        keepInBoundaries(cam);
+        cam.lerpToPlayers(getRedPlayer().getPosition(), getBluePlayer().getPosition());
+        cam.zoomToPlayers(getRedPlayer().getPosition(), getBluePlayer().getPosition());
+        cam.keepInBoundaries(map.getBoundaries());
 
         cam.update();
-    }
-
-    private void zoomToPlayers(OrthographicCamera cam) {
-        var redPlayerViewport = Vector3Pool.instance.obtain();
-        var bluePlayerViewport = Vector3Pool.instance.obtain();
-
-        redPlayerViewport.set(getRedPlayer().getPosition().x / Gdx.graphics.getWidth(), getRedPlayer().getPosition().y / Gdx.graphics.getHeight(), 0);
-        bluePlayerViewport.set(getBluePlayer().getPosition().x / Gdx.graphics.getWidth(), getBluePlayer().getPosition().y / Gdx.graphics.getHeight(), 0);
-
-        cam.project(redPlayerViewport);
-        cam.project(bluePlayerViewport);
-
-        var viewportDist = redPlayerViewport.dst(bluePlayerViewport);
-        if (viewportDist > 0.8f) {
-            cam.zoom = cam.zoom + 0.01f;
-        }
-        if (cam.zoom < 0.5f) {
-            cam.zoom = 1f;
-        }
-    }
-
-    private void lerpToPlayers(OrthographicCamera cam) {
-        var avgX = (getRedPlayer().getPosition().x + getBluePlayer().getPosition().x) / 2f;
-        var avgY = (getRedPlayer().getPosition().y + getBluePlayer().getPosition().y) / 2f;
-
-        cam.position.x = cam.position.x + (avgX - cam.position.x) * 0.1f;
-        cam.position.y = cam.position.y + (avgY - cam.position.y) * 0.1f;
-    }
-
-    private void keepInBoundaries(OrthographicCamera cam) {
-        var boundaries = map.getBoundaries();
-
-        var halfViewportWidth = (cam.viewportWidth * cam.zoom) / 2f;
-        var halfViewportHeight = (cam.viewportHeight * cam.zoom) / 2f;
-
-        cam.position.x = MathUtils.clamp(cam.position.x, boundaries.getX() + halfViewportWidth, boundaries.getX() + boundaries.getWidth() - halfViewportWidth);
-        cam.position.y = MathUtils.clamp(cam.position.y, boundaries.getY() + halfViewportHeight, boundaries.getY() + boundaries.getHeight() - halfViewportHeight);
     }
 
     public void spawnPlayer(String name, int x, int y) {

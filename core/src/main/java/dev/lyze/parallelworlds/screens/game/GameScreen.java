@@ -12,7 +12,7 @@ import lombok.Getter;
 
 public class GameScreen extends ManagedScreen {
     private final Stage ui = new Stage(new ExtendViewport(640, 320));
-    private final Viewport gameViewport = new ExtendViewport(80, 40);
+    private final Viewport gameViewport = new ExtendViewport(80, 40, new GameCamera());
 
     @Getter
     private LevelAssets levelAssets;
