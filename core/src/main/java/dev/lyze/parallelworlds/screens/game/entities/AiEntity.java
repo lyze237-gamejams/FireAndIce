@@ -164,7 +164,8 @@ public class AiEntity extends Entity {
                 "Pos: " + position.x + "/" + position.y + "\n" +
                 "Jum: " + isJumping + "\n" +
                 "Vel: " + velocity.x + "/" + velocity.y + "\n" +
-                "Grn: " + isGrounded, pos.x, pos.y);
+                "Grn: " + isGrounded + "\n" +
+                "Grv: " + fixInverted(gravity), pos.x, pos.y);
 
         Vector3Pool.instance.free(pos);
     }
