@@ -25,6 +25,8 @@ public class AiEntity extends Entity {
 
     private final float jumpForce = 0.85f;
 
+    private final double jumpAfterGroundLeftMax = 150;
+
     protected final Vector2 velocity = new Vector2();
     protected final Vector2 inputVelocity = new Vector2();
 
@@ -38,6 +40,7 @@ public class AiEntity extends Entity {
 
     private boolean isJumping;
     private boolean isGrounded;
+    private double lastGrounded = 0f;
 
     private final Collisions tempCollisions = new Collisions();
     private final GlyphLayout debugGlyphLayout = new GlyphLayout();
@@ -65,14 +68,16 @@ public class AiEntity extends Entity {
 
     private void checkGround(World<Entity> world) {
         world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), PlayerCollisionFilter.instance, tempCollisions);
-        isGrounded = tempCollisions.size() > 0;
+        if (isGrounded = tempCollisions.size() > 0) {
+            lastGrounded = System.currentTimeMillis();
+        }
     }
 
     private void checkJump(float delta) {
         if (!wantsToJump)
             return;
 
-        if (isGrounded && !isJumping) {
+        if ((isGrounded || (System.currentTimeMillis() - lastGrounded) < jumpAfterGroundLeftMax) && !isJumping) {
             if (invertedGravity ? velocity.y > 0 : velocity.y < 0)
                 velocity.y = 0;
 
