@@ -2,6 +2,7 @@ package dev.lyze.parallelworlds.screens.game.entities;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.dongbat.jbump.Collision;
@@ -42,6 +43,7 @@ public class AiEntity extends Entity {
     private int jumpsLeft = maxJumpsLeft;
 
     private final Collisions tempCollisions = new Collisions();
+    private final GlyphLayout debugGlyphLayout = new GlyphLayout();
 
     public AiEntity(float x, float y, float width, float height, Level level) {
         super(x, y, width, height, level);
@@ -72,15 +74,13 @@ public class AiEntity extends Entity {
         if (!wantsToJump)
             return;
 
-        if (jumpsLeft == 0)
-            return;
 
         if (isGrounded && !isJumping) {
             jumpsLeft = maxJumpsLeft - 1;
             velocity.y += fixInverted(jumpForce);
             isJumping = true;
         }
-        else if (isJumping && !isGrounded) {
+        else if (!isGrounded && jumpsLeft > 0) {
             velocity.y += fixInverted(jumpForce);
             jumpsLeft--;
         }
@@ -171,11 +171,26 @@ public class AiEntity extends Entity {
 
         font.draw(screenBatch,
                 "Pos: " + position.x + "/" + position.y + "\n" +
-                "Jum: " + isJumping + "\n" +
+                "Jum: " + isJumping + " ; Grn: " + isGrounded + "\n" +
                 "Vel: " + velocity.x + "/" + velocity.y + "\n" +
-                "Grn: " + isGrounded + "\n" +
-                "Grv: " + fixInverted(gravity), pos.x, pos.y);
+                "JuL: " + jumpsLeft  + "\n" +
+                "Grv: " + fixInverted(gravity),
+                pos.x, pos.y);
 
+
+
+
+        String str = "WJ: " + wantsToJump + "\n" +
+                "WL: " + wantsToMoveLeft + "\n" +
+                "WR: " + wantsToMoveRight + "\n";
+
+        debugGlyphLayout.setText(font, str);
+
+        pos.set(position, 0);
+        pos.add(0, height, 0);
+        cam.project(pos);
+
+        font.draw(screenBatch, str, pos.x - debugGlyphLayout.width, pos.y);
         Vector3Pool.instance.free(pos);
     }
 }
