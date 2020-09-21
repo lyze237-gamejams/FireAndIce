@@ -156,6 +156,25 @@ atlasData: {
 			type: FONT
 			hidden: false
 		}
+		{
+			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/Debug.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: Debug
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
 	]
 }
 jsonData: {
@@ -186,6 +205,11 @@ jsonData: {
 			class: com.ray3k.skincomposer.data.FontData
 			name: Buttons
 			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/Buttons.fnt
+		}
+		{
+			class: com.ray3k.skincomposer.data.FontData
+			name: Debug
+			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/Debug.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
@@ -1650,6 +1674,10 @@ preferences: {
 		g: 0
 		b: 0
 		a: 1
+	}
+	last-import-export-path: {
+		class: java.lang.String
+		value: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/assets/skins/mainMenu/mainMenu.json
 	}
 	resources-relative: {
 		class: java.lang.Boolean

@@ -1,14 +1,13 @@
 package dev.lyze.parallelworlds.screens.game.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.screens.game.Level;
+import dev.lyze.parallelworlds.utils.Vector3Pool;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -40,6 +39,18 @@ public class Entity {
 
     public void debugRender(ShapeDrawer shapes) {
         shapes.rectangle(position.x, position.y, width, height);
+    }
+
+    public void debugTextRender(BitmapFont font, Camera cam, SpriteBatch screenBatch) {
+        var pos = Vector3Pool.instance.obtain();
+        pos.set(position, 0);
+        pos.add(width, height, 0);
+
+        cam.project(pos);
+
+        font.draw(screenBatch, "Pos: " + position.x + "/" + position.y, pos.x, pos.y);
+
+        Vector3Pool.instance.free(pos);
     }
 
     public void addToWorld(World<Entity> world) {

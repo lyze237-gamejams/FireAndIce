@@ -3,10 +3,10 @@ package dev.lyze.parallelworlds.screens.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
@@ -14,7 +14,6 @@ import dev.lyze.parallelworlds.screens.game.entities.Entity;
 import dev.lyze.parallelworlds.screens.game.entities.Player;
 import dev.lyze.parallelworlds.screens.game.entities.PlayerColor;
 import dev.lyze.parallelworlds.statics.Statics;
-import dev.lyze.parallelworlds.utils.Vector3Pool;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -40,6 +39,8 @@ public class Level {
     @Getter
     private final ArrayList<Entity> entities = new ArrayList<>();
 
+    private final BitmapFont debugFont;
+
     public Level(GameScreen game, TiledMap tiledMap, Viewport viewport) {
         this.game = game;
         this.viewport = viewport;
@@ -51,6 +52,8 @@ public class Level {
 
         shapeDrawer = new ShapeDrawer(spriteBatch, new TextureRegion(Statics.assets.getGame().getSharedLevelAssets().getPixel()));
         shapeDrawer.setDefaultLineWidth(0.1f);
+
+        debugFont = Statics.assets.getMainMenu().getSkin().getFont("Debug");
     }
 
     public void initialize() {
@@ -83,6 +86,11 @@ public class Level {
         map.debugRender(shapeDrawer);
         shapeDrawer.circle(viewport.getCamera().position.x, viewport.getCamera().position.y, 1);
 
+        spriteBatch.end();
+
+        spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spriteBatch.begin();
+        players.debugTextRender(debugFont, viewport.getCamera(), spriteBatch);
         spriteBatch.end();
     }
 

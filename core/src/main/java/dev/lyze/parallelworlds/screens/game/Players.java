@@ -1,7 +1,8 @@
 package dev.lyze.parallelworlds.screens.game;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dev.lyze.parallelworlds.screens.game.entities.Player;
 import dev.lyze.parallelworlds.screens.game.entities.PlayerColor;
 import lombok.Getter;
@@ -41,5 +42,9 @@ public class Players {
 
     public Player getPlayer(PlayerColor playerColor) {
         return players.stream().filter(p -> p.getColor() == playerColor).findFirst().get();
+    }
+
+    public void debugTextRender(BitmapFont font, Camera camera, SpriteBatch screenBatch) {
+        players.forEach(p -> p.debugTextRender(font, camera, screenBatch));
     }
 }

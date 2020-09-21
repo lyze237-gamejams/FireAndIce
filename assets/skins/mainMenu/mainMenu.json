@@ -3,6 +3,9 @@
 	Buttons: {
 		file: "Buttons.fnt"
 	},
+	Debug: {
+		file: "Debug.fnt"
+	},
 	Title: {
 		file: "Title.fnt"
 	}

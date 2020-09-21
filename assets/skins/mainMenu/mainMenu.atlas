@@ -6,14 +6,21 @@ filter: Nearest,Nearest
 repeat: none
 Buttons
   rotate: false
-  xy: 1, 656
+  xy: 1, 609
   size: 505, 367
   orig: 505, 367
   offset: 0, 0
   index: -1
+Debug
+  rotate: false
+  xy: 1, 978
+  size: 506, 45
+  orig: 506, 45
+  offset: 0, 0
+  index: -1
 Title
   rotate: false
-  xy: 1, 421
+  xy: 1, 374
   size: 476, 233
   orig: 476, 233
   offset: 0, 0
@@ -27,14 +34,14 @@ clouds
   index: -1
 layer
   rotate: false
-  xy: 508, 807
+  xy: 1, 156
   size: 384, 216
   orig: 384, 216
   offset: 0, 0
   index: 0
 layer
   rotate: false
-  xy: 1, 203
+  xy: 509, 807
   size: 384, 216
   orig: 384, 216
   offset: 0, 0
