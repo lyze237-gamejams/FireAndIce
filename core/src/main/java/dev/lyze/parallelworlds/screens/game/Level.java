@@ -63,7 +63,7 @@ public class Level {
 
         entities.forEach(e -> e.update(world, delta));
 
-        updateCamera();
+        ((GameCamera) viewport.getCamera()).update(players.getRedPlayer().getPosition(), players.getBluePlayer().getPosition(), map.getBoundaries(), delta);
     }
 
     public void render() {
@@ -90,16 +90,6 @@ public class Level {
         spriteBatch.begin();
         players.debugTextRender(debugFont, viewport.getCamera(), spriteBatch);
         spriteBatch.end();
-    }
-
-    private void updateCamera() {
-        var cam = (GameCamera) viewport.getCamera();
-
-        cam.lerpToPlayers(players.getRedPlayer().getPosition(), players.getBluePlayer().getPosition());
-        cam.zoomToPlayers(players.getRedPlayer().getPosition(), players.getBluePlayer().getPosition());
-        cam.keepInBoundaries(map.getBoundaries());
-
-        cam.update();
     }
 
     public void spawnPlayer(String name, int x, int y) {
