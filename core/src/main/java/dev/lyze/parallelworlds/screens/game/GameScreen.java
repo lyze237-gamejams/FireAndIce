@@ -12,13 +12,13 @@ import lombok.Getter;
 
 public class GameScreen extends ManagedScreen {
     private final Stage ui = new Stage(new ExtendViewport(640, 320));
-    private final Viewport gameViewport = new ExtendViewport(640, 320);
+    private final Viewport gameViewport = new ExtendViewport(80, 40);
 
     @Getter
     private LevelAssets levelAssets;
 
     @Getter
-    private World world;
+    private Level level;
 
     public GameScreen() {
     }
@@ -33,7 +33,8 @@ public class GameScreen extends ManagedScreen {
         super.show();
 
         levelAssets = (LevelAssets) pushParams[0];
-        world = new World(this, new Map(this, levelAssets.getMap()), gameViewport);
+        level = new Level(this, levelAssets.getMap(), gameViewport);
+        level.initialize();
 
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
@@ -44,8 +45,8 @@ public class GameScreen extends ManagedScreen {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         gameViewport.apply();
-        world.update(delta);
-        world.render();
+        level.update(delta);
+        level.render();
 
         ui.getViewport().apply();
         ui.act(delta);
@@ -54,7 +55,7 @@ public class GameScreen extends ManagedScreen {
 
     @Override
     public void resize(int width, int height) {
-        gameViewport.update(width, height, true);
+        gameViewport.update(width, height);
         ui.getViewport().update(width, height, true);
     }
 

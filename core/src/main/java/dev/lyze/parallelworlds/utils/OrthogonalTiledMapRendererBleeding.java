@@ -12,7 +12,7 @@ import static com.badlogic.gdx.graphics.g2d.Batch.*;
 // https://www.badlogicgames.com/forum/viewtopic.php?t=16368#p74103
 // better solution: render to framebuffer and scale that one?
 public class OrthogonalTiledMapRendererBleeding extends OrthogonalTiledMapRenderer  {
-    public OrthogonalTiledMapRendererBleeding(TiledMap map, int unitScale) {
+    public OrthogonalTiledMapRendererBleeding(TiledMap map, float unitScale) {
         super(map, unitScale);
     }
 

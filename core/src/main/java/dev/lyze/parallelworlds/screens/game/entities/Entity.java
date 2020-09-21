@@ -6,46 +6,40 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import dev.lyze.parallelworlds.screens.game.World;
+import com.dongbat.jbump.Item;
+import com.dongbat.jbump.World;
+import dev.lyze.parallelworlds.screens.game.Level;
+import lombok.Getter;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Entity {
-    protected final World world;
-    private final Rectangle hitbox;
+    protected final Level level;
 
-    private final Vector2 inputVelocity = new Vector2(), worldVelocity = new Vector2(), combinedVelocity = new Vector2();
+    @Getter
+    protected Vector2 position;
+    @Getter
+    protected float width, height;
 
-    public Entity(int x, int y, int width, int height, World world) {
-        this.world = world;
+    public Entity(float x, float y, float width, float height, Level level) {
+        this.level = level;
 
-        hitbox = new Rectangle(x, y, width, height);
+        position = new Vector2(x, y);
+        this.width = width;
+        this.height = height;
     }
 
     public void update(float delta) {
-        inputVelocity.set(0, 0);
-
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            inputVelocity.x = -64f;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            inputVelocity.x = 64f;
-        }
-
-        combinedVelocity.set(inputVelocity);
-        combinedVelocity.add(worldVelocity);
-
-        combinedVelocity.scl(delta);
-
-        //worldVelocity.add(0, -64 * delta);
-        worldVelocity.add(0, -32 * delta);
-
-        hitbox.setPosition(hitbox.getX() + combinedVelocity.x, hitbox.getY() + combinedVelocity.y);
     }
 
     public void render(SpriteBatch batch) {
 
     }
 
-    public void debugRender(ShapeRenderer shapes) {
-        shapes.rect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+    public void debugRender(ShapeDrawer shapes) {
+        shapes.rectangle(position.x, position.y, width, height);
+    }
+
+    public void addToWorld(World<Entity> world) {
+        world.add(new Item<>(this), this.position.x, this.position.y, this.width, this.height);
     }
 }
