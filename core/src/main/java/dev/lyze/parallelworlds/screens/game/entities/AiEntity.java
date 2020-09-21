@@ -20,10 +20,10 @@ public class AiEntity extends Entity {
 
     private final float gravity = -4f;
     private final float movementSpeedIncrease = 10f;
-    private final float maxSpeed = 20f;
-    private final float friction = 2f;
+    private final float maxSpeed = 0.5f;
+    private final float friction = 5f;
 
-    private final float jumpForce = 50f;
+    private final float jumpForce = 1f;
 
     private final int maxJumpsLeft = 2;
 
@@ -55,12 +55,12 @@ public class AiEntity extends Entity {
 
         setInput();
         checkGround(world);
-        checkJump();
+        checkJump(delta);
         checkMovementDirection();
 
-        applyInput();
-        applyGravity();
-        applyFriction();
+        applyInput(delta);
+        applyGravity(delta);
+        applyFriction(delta);
 
         checkCollisionsAndApplyVelocity(world, delta);
     }
@@ -70,7 +70,7 @@ public class AiEntity extends Entity {
         isGrounded = tempCollisions.size() > 0;
     }
 
-    private void checkJump() {
+    private void checkJump(float delta) {
         if (!wantsToJump)
             return;
 
@@ -93,7 +93,7 @@ public class AiEntity extends Entity {
     }
 
     private void checkCollisionsAndApplyVelocity(World<Entity> world, float delta) {
-        var response = world.move(item, position.x + velocity.x * delta, position.y + velocity.y * delta, PlayerCollisionFilter.instance);
+        var response = world.move(item, position.x + velocity.x, position.y + velocity.y, PlayerCollisionFilter.instance);
 
         for (int i = 0; i < response.projectedCollisions.size(); i++) {
             onCollision(response.projectedCollisions.get(i));
@@ -137,21 +137,21 @@ public class AiEntity extends Entity {
         isFacingRight = !isFacingRight;
     }
 
-    private void applyInput() {
+    private void applyInput(float delta) {
         if (inputVelocity.x > 0) {
-            velocity.x = MathUtils.approach(velocity.x, maxSpeed, inputVelocity.x);
+            velocity.x = MathUtils.approach(velocity.x, maxSpeed, inputVelocity.x * delta);
         } else if (inputVelocity.x < 0) {
-            velocity.x = MathUtils.approach(velocity.x, -maxSpeed, inputVelocity.x);
+            velocity.x = MathUtils.approach(velocity.x, -maxSpeed, inputVelocity.x * delta);
         }
     }
 
-    private void applyFriction() {
+    private void applyFriction(float delta) {
         if (inputVelocity.x == 0)
-            velocity.x = MathUtils.approach(velocity.x, 0, friction);
+            velocity.x = MathUtils.approach(velocity.x, 0, friction * delta);
     }
 
-    private void applyGravity() {
-        velocity.y += fixInverted(gravity);
+    private void applyGravity(float delta) {
+        velocity.y += fixInverted(gravity) * delta;
 
         if (isJumping && invertedGravity ? (velocity.y > 0) : (velocity.y < 0))
             isJumping = false;
