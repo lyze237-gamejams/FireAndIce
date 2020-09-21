@@ -10,9 +10,9 @@ import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.statics.Statics;
 import dev.lyze.parallelworlds.statics.assets.levels.LevelAssets;
 import lombok.Getter;
-import lombok.SneakyThrows;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameScreen extends ManagedScreen {
     private final Stage ui = new Stage(new ExtendViewport(640, 320));
@@ -36,7 +36,7 @@ public class GameScreen extends ManagedScreen {
     public void show() {
         super.show();
 
-        levelAssets = (LevelAssets) pushParams[0];
+        levelAssets = (LevelAssets) Objects.requireNonNull(pushParams)[0];
         level = new Level(this, levelAssets.getMap(), gameViewport);
         level.initialize();
 
@@ -45,12 +45,11 @@ public class GameScreen extends ManagedScreen {
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
-    private float t = 0.0f;
-    private float dt = 0.01f;
+    private float actualDeltaTime = 0.0f;
+    private final float targetDeltaTime = 0.01f;
     private double currentTime = System.currentTimeMillis();
     private float accumulator = 0f;
 
-    @SneakyThrows
     @Override
     public void render(float delta) {
         var newTime = System.currentTimeMillis();
@@ -58,26 +57,33 @@ public class GameScreen extends ManagedScreen {
         accumulator += frameTime;
         currentTime = newTime;
 
-        while (accumulator >= dt) {
-            gamepads.forEach(g -> g.update(t));
-            gameViewport.apply();
-            level.update(t);
-            ui.getViewport().apply();
-            ui.act(t);
+        while (accumulator >= targetDeltaTime) {
+            update();
 
-            if (Statics.isMobileDevice) {
-                mobileUi.getViewport().apply();
-                mobileUi.act(t);
-            }
-            gamepads.forEach(g -> g.reset(t));
-
-            accumulator -= dt;
-            t = dt;
+            accumulator -= targetDeltaTime;
+            actualDeltaTime = targetDeltaTime;
         }
 
+        render();
+    }
+
+    private void update() {
+        gamepads.forEach(g -> g.update(actualDeltaTime));
+        gameViewport.apply();
+        level.update(actualDeltaTime);
+        ui.getViewport().apply();
+        ui.act(actualDeltaTime);
+
+        if (Statics.isMobileDevice) {
+            mobileUi.getViewport().apply();
+            mobileUi.act(actualDeltaTime);
+        }
+        gamepads.forEach(g -> g.reset(actualDeltaTime));
+    }
+
+    private void render() {
         Gdx.gl.glClearColor(0.2f, 0.1f, 0.4f, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
 
         gameViewport.apply();
         level.render();

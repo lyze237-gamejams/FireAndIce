@@ -23,15 +23,27 @@ public class TouchpadGamepad extends VirtualGamepad {
         var rootTable = new Table();
         rootTable.setFillParent(true);
 
+        var additionalTable = new Table();
+        additionalTable.setFillParent(true);
+
         if (player.getColor() == PlayerColor.Blue) {
             Table leftControlsTable = setupController(uiAtlas.getBlueUp(), uiAtlas.getBlueLeft(), uiAtlas.getBlueRight(), uiAtlas.getBlueDown());
             rootTable.add(leftControlsTable).bottom().left().padLeft(8).padBottom(8).expand();
+
+            var rightAdditionalTable = new Table();
+            rightAdditionalTable.add(setupController(uiAtlas.getBlueUp(), Direction.Up));
+            additionalTable.add(rightAdditionalTable).right().padRight(8).expand();
         } else {
             Table rightControlsTable = setupController(uiAtlas.getRedUp(), uiAtlas.getRedLeft(), uiAtlas.getRedRight(), uiAtlas.getRedDown());
             rootTable.add(rightControlsTable).bottom().right().padRight(8).padBottom(8).expand();
+
+            var leftAdditionalTable = new Table();
+            leftAdditionalTable.add(setupController(uiAtlas.getRedUp(), Direction.Up));
+            additionalTable.add(leftAdditionalTable).left().padLeft(8).expand();
         }
 
         stage.addActor(rootTable);
+        stage.addActor(additionalTable);
     }
 
     private Table setupController(TextureAtlas.AtlasRegion up, TextureAtlas.AtlasRegion left, TextureAtlas.AtlasRegion right, TextureAtlas.AtlasRegion down) {
