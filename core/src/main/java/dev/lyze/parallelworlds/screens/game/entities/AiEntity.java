@@ -18,12 +18,12 @@ import dev.lyze.parallelworlds.utils.Vector3Pool;
 public class AiEntity extends Entity {
     private static final Logger<AiEntity> logger = new Logger<>(AiEntity.class);
 
-    private final float gravity = -4f;
+    private final float gravity = -2f;
     private final float movementSpeedIncrease = 10f;
-    private final float maxSpeed = 0.5f;
+    private final float maxSpeed = 0.25f;
     private final float friction = 5f;
 
-    private final float jumpForce = 1f;
+    private final float jumpForce = 0.85f;
 
     protected final Vector2 velocity = new Vector2();
     protected final Vector2 inputVelocity = new Vector2();
@@ -50,6 +50,7 @@ public class AiEntity extends Entity {
     public void update(World<Entity> world, float delta) {
         super.update(world, delta);
 
+        applyGravity(delta);
         setInput();
         checkGround(world);
         checkJump(delta);

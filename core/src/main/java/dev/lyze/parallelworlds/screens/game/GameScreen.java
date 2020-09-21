@@ -10,6 +10,7 @@ import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.statics.Statics;
 import dev.lyze.parallelworlds.statics.assets.levels.LevelAssets;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
 import java.util.ArrayList;
 
@@ -44,29 +45,50 @@ public class GameScreen extends ManagedScreen {
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    private float t = 0.0f;
+    private float dt = 0.01f;
+    private double currentTime = System.currentTimeMillis();
+    private float accumulator = 0f;
+
+    @SneakyThrows
     @Override
     public void render(float delta) {
+        var newTime = System.currentTimeMillis();
+        var frameTime = (newTime - currentTime) / 1000f;
+        accumulator += frameTime;
+        currentTime = newTime;
+
+        while (accumulator >= dt) {
+            gamepads.forEach(g -> g.update(t));
+            gameViewport.apply();
+            level.update(t);
+            ui.getViewport().apply();
+            ui.act(t);
+
+            if (Statics.isMobileDevice) {
+                mobileUi.getViewport().apply();
+                mobileUi.act(t);
+            }
+            gamepads.forEach(g -> g.reset(t));
+
+            accumulator -= dt;
+            t = dt;
+        }
+
         Gdx.gl.glClearColor(0.2f, 0.1f, 0.4f, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        gamepads.forEach(g -> g.update(delta));
 
         gameViewport.apply();
-
-        level.update(delta);
         level.render();
 
         ui.getViewport().apply();
-        ui.act(delta);
         ui.draw();
 
-        if (Statics.isMobileDevice) {
+        if(Statics.isMobileDevice) {
             mobileUi.getViewport().apply();
-            mobileUi.act(delta);
             mobileUi.draw();
         }
-
-        gamepads.forEach(g -> g.reset(delta));
     }
 
     @Override
