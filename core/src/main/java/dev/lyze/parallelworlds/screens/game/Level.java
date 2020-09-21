@@ -73,8 +73,13 @@ public class Level {
         spriteBatch.begin();
         players.render(spriteBatch);
         entities.forEach(e -> e.render(spriteBatch));
+        spriteBatch.end();
 
         //DEBUG LINES
+        if (!Statics.debugging)
+            return;
+
+        spriteBatch.begin();
         players.debugRender(shapeDrawer);
 
         shapeDrawer.setColor(Color.GREEN);
@@ -83,8 +88,8 @@ public class Level {
         shapeDrawer.setColor(Color.CYAN);
         map.debugRender(shapeDrawer);
         shapeDrawer.circle(viewport.getCamera().position.x, viewport.getCamera().position.y, 1);
-
         spriteBatch.end();
+
 
         spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch.begin();

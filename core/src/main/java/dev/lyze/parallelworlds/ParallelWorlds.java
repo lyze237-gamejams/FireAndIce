@@ -1,5 +1,7 @@
 package dev.lyze.parallelworlds;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import de.eskalon.commons.core.ManagedGame;
@@ -42,6 +44,14 @@ public class ParallelWorlds extends ManagedGame<ManagedScreen, ScreenTransition>
         screenManager.addScreenTransition(BlendingTransition.class.getName(), new BlendingTransition(batch, 1F, Interpolation.pow2In));
         screenManager.addScreenTransition(SlidingOutTransition.class.getName(), new SlidingOutTransition(batch, SlidingDirection.DOWN, 0.35F));
         screenManager.addScreenTransition(HorizontalSlicingTransition.class.getName(), new HorizontalSlicingTransition(batch, 5, 1F, Interpolation.exp5In));
+    }
+
+    @Override
+    public void render() {
+        super.render();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F9))
+            Statics.debugging = !Statics.debugging;
     }
 
     private void setupStatics() {

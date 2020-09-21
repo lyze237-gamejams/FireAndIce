@@ -2,10 +2,13 @@ package dev.lyze.parallelworlds.screens.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
+import dev.lyze.parallelworlds.statics.Statics;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -67,6 +70,14 @@ public class Player extends AiEntity {
             var portalDirection = (PortalDirectionBlock) collision.other.userData;
             this.portalDirection = portalDirection.getDirection();
         }
+    }
+
+    @Override
+    public void render(SpriteBatch batch) {
+        batch.setColor(color.getRenderColor());
+        batch.draw(Statics.assets.getGame().getSharedLevelAssets().getPixel(), position.x, position.y, width, height);
+        batch.setColor(Color.WHITE);
+        super.render(batch);
     }
 
     @Override
