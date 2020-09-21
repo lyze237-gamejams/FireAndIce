@@ -7,13 +7,9 @@ import dev.lyze.parallelworlds.screens.game.Level;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class Player extends GravityEntity {
-    private final float movementSpeed = 10f;
-
+public class Player extends AiEntity {
     @Getter
     private final PlayerColor color;
-
-    private float movementInputDirection;
 
     public Player(Level level, PlayerColor color, boolean invertedGravity) {
         super(0, 0, 2, 4, level);
@@ -25,23 +21,18 @@ public class Player extends GravityEntity {
     @Override
     public void update(World<Entity> world, float delta) {
         checkInput();
-        applyMovement();
         super.update(world, delta);
     }
 
     private void checkInput() {
-        inputVelocity.set(0, 0);
-
-        movementInputDirection = 0;
         var leftKey = color == PlayerColor.Blue ? Input.Keys.A : Input.Keys.LEFT;
         var rightKey = color == PlayerColor.Blue ? Input.Keys.D : Input.Keys.RIGHT;
+        var jump = color == PlayerColor.Blue ? Input.Keys.W : Input.Keys.UP;
 
-        movementInputDirection += Gdx.input.isKeyPressed(leftKey) ? -1 : 0;
-        movementInputDirection += Gdx.input.isKeyPressed(rightKey) ? 1 : 0;
-    }
+        wantsToMoveLeft = Gdx.input.isKeyPressed(leftKey);
+        wantsToMoveRight = Gdx.input.isKeyPressed(rightKey);
 
-    private void applyMovement() {
-        inputVelocity.set(movementSpeed * movementInputDirection, 0);
+        wantsToJump = Gdx.input.isKeyJustPressed(jump);
     }
 
     @Override
