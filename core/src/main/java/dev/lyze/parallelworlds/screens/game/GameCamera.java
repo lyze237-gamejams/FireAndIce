@@ -25,6 +25,9 @@ public class GameCamera extends OrthographicCamera {
         if (this.zoom < 0.5f) {
             this.zoom = 1f;
         }
+
+        Vector3Pool.instance.free(redPlayerViewport);
+        Vector3Pool.instance.free(bluePlayerViewport);
     }
 
     public void lerpToPlayers(Vector2 pos1, Vector2 pos2) {

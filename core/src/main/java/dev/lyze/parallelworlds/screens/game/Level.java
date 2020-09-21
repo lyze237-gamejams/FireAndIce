@@ -44,7 +44,7 @@ public class Level {
         this.game = game;
         this.viewport = viewport;
 
-        world = new World<>();
+        world = new World<>(1);
         map = new Map(game, tiledMap);
 
         players = new Players(this);
@@ -60,7 +60,7 @@ public class Level {
     public void update(float delta) {
         players.update(delta);
 
-        entities.forEach(e -> e.update(delta));
+        entities.forEach(e -> e.update(world, delta));
 
         updateCamera();
     }
@@ -100,6 +100,8 @@ public class Level {
         logger.logInfo("Spawning player " + name + " at " + x + "/" + y);
 
         var playerColor = PlayerColor.valueOf(name);
-        players.getPlayer(playerColor).getPosition().set(x, y);
+        Player player = players.getPlayer(playerColor);
+        player.getPosition().set(x, y);
+        world.update(player.getItem(), x, y);
     }
 }

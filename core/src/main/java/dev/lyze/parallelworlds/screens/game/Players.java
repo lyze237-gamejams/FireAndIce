@@ -7,7 +7,6 @@ import dev.lyze.parallelworlds.screens.game.entities.PlayerColor;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class Players {
@@ -17,16 +16,19 @@ public class Players {
 
     @Getter
     private final Player redPlayer, bluePlayer;
+    private final Level level;
 
     public Players(Level level) {
-        players.add(redPlayer = new Player(level, PlayerColor.Red));
-        players.add(bluePlayer = new Player(level, PlayerColor.Blue));
+        this.level = level;
+
+        players.add(redPlayer = new Player(level, PlayerColor.Red, false));
+        players.add(bluePlayer = new Player(level, PlayerColor.Blue, true));
 
         players.forEach(p -> p.addToWorld(level.getWorld()));
     }
 
     public void update(float delta) {
-        players.forEach(p -> p.update(delta));
+        players.forEach(p -> p.update(level.getWorld(), delta));
     }
 
     public void render(SpriteBatch batch) {

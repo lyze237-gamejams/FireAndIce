@@ -20,6 +20,9 @@ public class Entity {
     @Getter
     protected float width, height;
 
+    @Getter
+    protected Item<Entity> item;
+
     public Entity(float x, float y, float width, float height, Level level) {
         this.level = level;
 
@@ -28,7 +31,7 @@ public class Entity {
         this.height = height;
     }
 
-    public void update(float delta) {
+    public void update(World<Entity> world, float delta) {
     }
 
     public void render(SpriteBatch batch) {
@@ -40,6 +43,6 @@ public class Entity {
     }
 
     public void addToWorld(World<Entity> world) {
-        world.add(new Item<>(this), this.position.x, this.position.y, this.width, this.height);
+        world.add(item = new Item<>(this), this.position.x, this.position.y, this.width, this.height);
     }
 }
