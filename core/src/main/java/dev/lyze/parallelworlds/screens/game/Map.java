@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import dev.lyze.parallelworlds.logger.Logger;
-import dev.lyze.parallelworlds.screens.game.entities.Block;
+import dev.lyze.parallelworlds.screens.game.entities.GroundTile;
 import dev.lyze.parallelworlds.utils.OrthogonalTiledMapRendererBleeding;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -133,7 +133,7 @@ public class Map {
                         continue;
 
                     //var block = new Block(x * tileWidth + rectangle.x, y * tileHeight + rectangle.y, rectangle.width, rectangle.height, game.getLevel());
-                    var block = new Block(x + rectangle.x, y + rectangle.y, rectangle.width / tileWidth, rectangle.height / tileHeight, game.getLevel());
+                    var block = new GroundTile(x + rectangle.x, y + rectangle.y, rectangle.width / tileWidth, rectangle.height / tileHeight, game.getLevel());
                     block.addToWorld(world);
                     game.getLevel().getEntities().add(block);
                 }

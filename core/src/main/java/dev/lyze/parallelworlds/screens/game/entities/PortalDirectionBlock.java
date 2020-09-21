@@ -8,7 +8,7 @@ public class PortalDirectionBlock extends StaticEntity {
     private final Direction direction;
 
     public PortalDirectionBlock(float x, float y, Level level, Direction direction) {
-        super(x, y, 1, 1, level, false);
+        super(x, y, 1, 1, level);
         this.direction = direction;
     }
 }

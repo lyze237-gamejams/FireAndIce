@@ -11,7 +11,7 @@ import com.dongbat.jbump.Response;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
-import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerFilter;
+import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerCollisionFilter;
 import dev.lyze.parallelworlds.utils.MathUtils;
 import dev.lyze.parallelworlds.utils.Vector3Pool;
 
@@ -66,7 +66,7 @@ public class AiEntity extends Entity {
     }
 
     private void checkGround(World<Entity> world) {
-        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), PlayerFilter.instance, tempCollisions);
+        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), PlayerCollisionFilter.instance, tempCollisions);
         isGrounded = tempCollisions.size() > 0;
     }
 
@@ -87,7 +87,7 @@ public class AiEntity extends Entity {
     }
 
     private void checkCollisionsAndApplyVelocity(World<Entity> world, float delta) {
-        var response = world.move(item, position.x + velocity.x * delta, position.y + velocity.y * delta, PlayerFilter.instance);
+        var response = world.move(item, position.x + velocity.x * delta, position.y + velocity.y * delta, PlayerCollisionFilter.instance);
 
         for (int i = 0; i < response.projectedCollisions.size(); i++) {
             onCollision(response.projectedCollisions.get(i));
@@ -97,13 +97,6 @@ public class AiEntity extends Entity {
     }
 
     protected void onCollision(Collision collision) {
-        if (!(collision.other.userData instanceof StaticEntity))
-            return;
-
-        var entity = (StaticEntity) collision.other.userData;
-        if (!entity.isSolid())
-            return;
-
         if (collision.type != Response.slide)
             return;
 

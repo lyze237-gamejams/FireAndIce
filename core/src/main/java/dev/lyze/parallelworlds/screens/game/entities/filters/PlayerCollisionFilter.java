@@ -8,8 +8,8 @@ import dev.lyze.parallelworlds.screens.game.entities.PortalBlock;
 import dev.lyze.parallelworlds.screens.game.entities.PortalDirectionBlock;
 import dev.lyze.parallelworlds.screens.game.entities.StaticEntity;
 
-public class PlayerFilter implements  CollisionFilter {
-    public static final PlayerFilter instance = new PlayerFilter();
+public class PlayerCollisionFilter implements  CollisionFilter {
+    public static final PlayerCollisionFilter instance = new PlayerCollisionFilter();
 
     @Override
     public Response filter(Item item, Item other) {
@@ -30,6 +30,9 @@ public class PlayerFilter implements  CollisionFilter {
         }
 
         if (other.userData instanceof StaticEntity)
+            return Response.slide;
+
+        if (other.userData instanceof Player)
             return Response.slide;
 
         return null;

@@ -8,7 +8,7 @@ public class PortalBlock extends StaticEntity {
     private final PlayerColor color;
 
     public PortalBlock(float x, float y, Level level, PlayerColor color) {
-        super(x, y, 1, 1, level, false);
+        super(x, y, 1, 1, level);
         this.color = color;
     }
 }
