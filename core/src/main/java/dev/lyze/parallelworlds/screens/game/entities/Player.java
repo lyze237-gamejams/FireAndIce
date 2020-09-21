@@ -18,7 +18,6 @@ public class Player extends AiEntity {
     @Getter
     private final PlayerColor color;
 
-    private boolean inPortalBlock;
     private Direction portalDirection;
 
     public Player(Level level, PlayerColor color, boolean invertedGravity) {
@@ -61,10 +60,6 @@ public class Player extends AiEntity {
     @Override
     protected void onCollision(Collision collision) {
         super.onCollision(collision);
-
-        if (collision.other.userData instanceof PortalBlock) {
-            inPortalBlock = true;
-        }
 
         if (collision.other.userData instanceof PortalDirectionBlock) {
             var portalDirection = (PortalDirectionBlock) collision.other.userData;

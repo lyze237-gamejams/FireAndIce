@@ -76,11 +76,17 @@ public class AiEntity extends Entity {
 
 
         if (isGrounded && !isJumping) {
+            if (invertedGravity ? velocity.y > 0 : velocity.y < 0)
+                velocity.y = 0;
+
             jumpsLeft = maxJumpsLeft - 1;
             velocity.y += fixInverted(jumpForce);
             isJumping = true;
         }
         else if (!isGrounded && jumpsLeft > 0) {
+            if (invertedGravity ? velocity.y > 0 : velocity.y < 0)
+                velocity.y = 0;
+
             velocity.y += fixInverted(jumpForce);
             jumpsLeft--;
         }
