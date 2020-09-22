@@ -10,6 +10,9 @@ public class SharedLevelAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("atlas/ui.atlas")
     private UiTextureAtlas uiAtlas;
 
+    @Getter @LoadAssetFromFile("atlas/characters.atlas")
+    private CharactersAtlas charactersAtlas;
+
     @Getter @LoadAssetFromFile("images/Pixel.png")
     private Texture pixel;
 

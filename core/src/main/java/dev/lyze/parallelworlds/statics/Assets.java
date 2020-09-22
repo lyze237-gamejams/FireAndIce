@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.statics.assets.GameAssets;
+import dev.lyze.parallelworlds.statics.assets.levels.shared.CharactersAtlas;
 import dev.lyze.parallelworlds.statics.assets.levels.shared.UiTextureAtlas;
 import dev.lyze.parallelworlds.statics.assets.loadingScreen.LoadingScreenAssets;
 import dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuAssets;
@@ -42,7 +43,7 @@ public class Assets {
         AssetManager ass = new AssetManager();
 
         ass.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-        for (Class<?> textureAtlasClass : new Class<?>[]{MainMenuTextureAtlas.class,  UiTextureAtlas.class, }) {
+        for (Class<?> textureAtlasClass : new Class<?>[] { MainMenuTextureAtlas.class,  UiTextureAtlas.class, CharactersAtlas.class }) {
             ass.setLoader(textureAtlasClass, new DynamicTextureAtlasAssetLoader(new InternalFileHandleResolver(), textureAtlasClass));
         }
 
