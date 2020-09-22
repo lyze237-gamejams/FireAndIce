@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.entities.*;
+import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemy;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
 import dev.lyze.parallelworlds.statics.Statics;
@@ -38,6 +39,7 @@ public class Level {
 
     @Getter
     private final ArrayList<Entity> entities = new ArrayList<>();
+    private final ArrayList<Entity> entitiesToRemove = new ArrayList<>();
 
     private final BitmapFont debugFont;
 
@@ -64,6 +66,11 @@ public class Level {
         players.update(delta);
 
         entities.forEach(e -> e.update(world, delta));
+        entitiesToRemove.forEach(e -> {
+            entities.remove(e);
+            world.remove(e.getItem());
+        });
+        entitiesToRemove.clear();
 
         ((GameCamera) viewport.getCamera()).update(players.getFirePlayer().getPosition(), players.getIcePlayer().getPosition(), map.getBoundaries(), delta);
     }
@@ -141,5 +148,17 @@ public class Level {
         var portal = new PortalDirectionBlock(x, y, this, portalDirection);
         entities.add(portal);
         portal.addToWorld(world);
+    }
+
+    public void spawnLinkedEnemy(int linkedEnemyX, int linkedEnemyY, int linkedEnemyKillPartX, int linkedEnemyKillPartY, Direction direction) {
+        logger.logInfo("Spawning linked enemy at " + linkedEnemyX + "/" + linkedEnemyKillPartY + " with kill part at " + linkedEnemyKillPartX + "/" + linkedEnemyKillPartY);
+
+        var linkedEnemy = new LinkedEnemy(linkedEnemyX, linkedEnemyY, this, linkedEnemyKillPartX, linkedEnemyKillPartY, direction == Direction.Up);
+        entities.add(linkedEnemy);
+        linkedEnemy.addToWorld(world);
+    }
+
+    public void removeEntity(Entity entity) {
+        entitiesToRemove.add(entity);
     }
 }

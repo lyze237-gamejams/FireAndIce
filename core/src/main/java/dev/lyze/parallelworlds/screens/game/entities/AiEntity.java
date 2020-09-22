@@ -5,13 +5,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.dongbat.jbump.Collision;
-import com.dongbat.jbump.Collisions;
-import com.dongbat.jbump.Response;
-import com.dongbat.jbump.World;
+import com.dongbat.jbump.*;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
-import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerCollisionFilter;
 import dev.lyze.parallelworlds.utils.MathUtils;
 import dev.lyze.parallelworlds.utils.Vector3Pool;
 import lombok.Getter;
@@ -45,13 +41,17 @@ public class AiEntity extends Entity {
     private boolean isGrounded;
     private double lastGrounded = 0f;
 
+    private final CollisionFilter collisionFilter;
+
     private final Collisions tempCollisions = new Collisions();
 
     @Getter
     private final GlyphLayout debugGlyphLayout = new GlyphLayout();
 
-    public AiEntity(float x, float y, float width, float height, Level level) {
+    public AiEntity(float x, float y, float width, float height, Level level, CollisionFilter collisionFilter) {
         super(x, y, width, height, level);
+
+        this.collisionFilter = collisionFilter;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class AiEntity extends Entity {
     }
 
     private void checkGround(World<Entity> world) {
-        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), PlayerCollisionFilter.instance, tempCollisions);
+        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), collisionFilter, tempCollisions);
         for (int i = 0; i < tempCollisions.size(); i++) {
             if (tempCollisions.get(i).type.equals(Response.slide)) {
                 lastGrounded = System.currentTimeMillis();
@@ -105,7 +105,7 @@ public class AiEntity extends Entity {
     }
 
     private void checkCollisionsAndApplyVelocity(World<Entity> world, float delta) {
-        var response = world.move(item, position.x + velocity.x, position.y + velocity.y, PlayerCollisionFilter.instance);
+        var response = world.move(item, position.x + velocity.x, position.y + velocity.y, collisionFilter);
 
         for (int i = 0; i < response.projectedCollisions.size(); i++) {
             onCollision(response.projectedCollisions.get(i));

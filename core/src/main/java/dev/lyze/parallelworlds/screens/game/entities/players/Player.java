@@ -14,6 +14,7 @@ import dev.lyze.parallelworlds.screens.game.entities.AiEntity;
 import dev.lyze.parallelworlds.screens.game.entities.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
 import dev.lyze.parallelworlds.screens.game.entities.PortalDirectionBlock;
+import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerCollisionFilter;
 import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.utils.Vector3Pool;
 import lombok.Getter;
@@ -34,7 +35,7 @@ public abstract class Player extends AiEntity {
     private VirtualGamepadGroup gamepad;
 
     public Player(Level level, PlayerColor color, boolean invertedGravity, Animation<TextureAtlas.AtlasRegion> idle, Animation<TextureAtlas.AtlasRegion> run, Animation<TextureAtlas.AtlasRegion> jump, Animation<TextureAtlas.AtlasRegion> fall, Animation<TextureAtlas.AtlasRegion> death) {
-        super(0, 0, 2 * 1.5f, 1.25f * 1.5f, level);
+        super(0, 0, 2 * 1.5f, 1.25f * 1.5f, level, PlayerCollisionFilter.instance);
 
         this.currentAnimation = this.idle = idle;
         this.run = run;

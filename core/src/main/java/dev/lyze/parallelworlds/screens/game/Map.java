@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import dev.lyze.parallelworlds.logger.Logger;
+import dev.lyze.parallelworlds.screens.game.entities.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.GroundTile;
 import dev.lyze.parallelworlds.utils.OrthogonalTiledMapRendererBleeding;
 import lombok.Getter;
@@ -97,6 +98,34 @@ public class Map {
                         break;
                     case "PortalDirection":
                         game.getLevel().spawnPortalDirection(properties.get("direction", String.class), x, y);
+                        break;
+                    case "LinkedEnemy":
+                        logger.logInfo("Found linked enemy at " + x + "/" + y);
+                        var direction = Direction.valueOf(properties.get("direction", String.class));
+
+                        Integer foundAt = null;
+                        for (int y2 = y, cnt = 0; foundAt == null && cnt < 5000; y2 += direction.getAxisStep(), cnt++) {
+                            var innerCell = entities.getCell(x, y2);
+
+                            if (innerCell == null)
+                                continue;
+
+                            var innerTile = innerCell.getTile();
+                            var innerProperties = innerTile.getProperties();
+
+                            if ("LinkedEnemyKillPart".equals(innerProperties.get("type", String.class))) {
+                                logger.logInfo("Found linked enemy kill part at " + x + "/" + y2);
+                                foundAt = y2;
+                            }
+                        }
+
+                        if (foundAt == null) {
+                            logger.logError("Couldn't find matching linked enemy kill part for linked enemy entity at " + x + "/" + y);
+                            break;
+                        }
+
+                        game.getLevel().spawnLinkedEnemy(x, y, x, foundAt, direction);
+
                         break;
                 }
             }
