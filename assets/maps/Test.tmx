@@ -79,60 +79,70 @@
   <tile id="0">
    <properties>
     <property name="player" value="Fire"/>
-    <property name="type" value="Spawn"/>
+    <property name="step" type="int" value="0"/>
+    <property name="type" value="PlayerSpawner"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
     <property name="player" value="Ice"/>
-    <property name="type" value="Spawn"/>
+    <property name="step" type="int" value="0"/>
+    <property name="type" value="PlayerSpawner"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
-    <property name="color" value="White"/>
-    <property name="type" value="Portal"/>
+    <property name="color" value="null"/>
+    <property name="step" type="int" value="0"/>
+    <property name="type" value="PortalSpawner"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
     <property name="color" value="Fire"/>
-    <property name="type" value="Portal"/>
+    <property name="step" type="int" value="0"/>
+    <property name="type" value="PortalSpawner"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
     <property name="color" value="Ice"/>
-    <property name="type" value="Portal"/>
+    <property name="step" type="int" value="0"/>
+    <property name="type" value="PortalSpawner"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
     <property name="direction" value="Up"/>
-    <property name="type" value="PortalDirection"/>
+    <property name="step" type="int" value="0"/>
+    <property name="type" value="PortalDirectionSpawner"/>
    </properties>
   </tile>
   <tile id="6">
    <properties>
     <property name="direction" value="Down"/>
-    <property name="type" value="PortalDirection"/>
+    <property name="step" type="int" value="0"/>
+    <property name="type" value="PortalDirectionSpawner"/>
    </properties>
   </tile>
   <tile id="16">
    <properties>
     <property name="direction" value="Up"/>
-    <property name="type" value="LinkedEnemy"/>
+    <property name="step" type="int" value="1"/>
+    <property name="type" value="LinkedEnemySpawner"/>
    </properties>
   </tile>
   <tile id="17">
    <properties>
     <property name="direction" value="Down"/>
-    <property name="type" value="LinkedEnemy"/>
+    <property name="step" type="int" value="1"/>
+    <property name="type" value="LinkedEnemySpawner"/>
    </properties>
   </tile>
   <tile id="18">
    <properties>
-    <property name="type" value="LinkedEnemyKillPart"/>
+    <property name="step" type="int" value="0"/>
+    <property name="type" value="LinkedEnemyKillPartSpawner"/>
    </properties>
   </tile>
  </tileset>

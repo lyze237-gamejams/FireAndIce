@@ -25,8 +25,7 @@ public class LinkedEnemy extends AiEntity {
         this.invertedGravity = invertedGravity;
 
         linkedEnemyKillPart = new LinkedEnemyKillPart(killPartX, killPartY, level, this, !invertedGravity);
-        level.getEntities().add(linkedEnemyKillPart);
-        linkedEnemyKillPart.addToWorld(level.getWorld());
+        level.addEntity(linkedEnemyKillPart);
     }
 
     @Override

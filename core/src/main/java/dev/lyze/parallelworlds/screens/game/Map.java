@@ -9,8 +9,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import dev.lyze.parallelworlds.logger.Logger;
-import dev.lyze.parallelworlds.screens.game.entities.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.GroundTile;
+import dev.lyze.parallelworlds.screens.game.map.MapEntitiesCreation;
 import dev.lyze.parallelworlds.utils.OrthogonalTiledMapRendererBleeding;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -19,6 +19,7 @@ public class Map {
     private static final Logger<Map> logger = new Logger<>(Map.class);
 
     private final GameScreen game;
+    @Getter
     private final TiledMap map;
 
     private final OrthogonalTiledMapRenderer renderer;
@@ -43,6 +44,8 @@ public class Map {
     }
 
     public void initialize() {
+        new MapEntitiesCreation(game.getLevel(), this).initialize();
+
         setupFields();
         setupLayers();
         setupCollisions();
@@ -70,66 +73,6 @@ public class Map {
         var middleLine = map.getLayers().get("Middle Line");
         if (middleLine != null)
             middleLine.setVisible(false);
-
-        var entities = map.getLayers().get("Entities");
-        if (entities != null) {
-            entities.setVisible(false);
-            setupEntities((TiledMapTileLayer) entities);
-        }
-    }
-
-    private void setupEntities(TiledMapTileLayer entities) {
-        for (int y = 0; y < entities.getHeight(); y++) {
-            for (int x = 0; x < entities.getWidth(); x++) {
-                var cell = entities.getCell(x, y);
-
-                if (cell == null)
-                    continue;
-
-                var tile = cell.getTile();
-                var properties = tile.getProperties();
-
-                switch (properties.get("type", String.class)) {
-                    case "Spawn":
-                        game.getLevel().spawnPlayer(properties.get("player", String.class), x, y);
-                        break;
-                    case "Portal":
-                        game.getLevel().spawnPortal(properties.get("color", String.class), x, y);
-                        break;
-                    case "PortalDirection":
-                        game.getLevel().spawnPortalDirection(properties.get("direction", String.class), x, y);
-                        break;
-                    case "LinkedEnemy":
-                        logger.logInfo("Found linked enemy at " + x + "/" + y);
-                        var direction = Direction.valueOf(properties.get("direction", String.class));
-
-                        Integer foundAt = null;
-                        for (int y2 = y, cnt = 0; foundAt == null && cnt < 5000; y2 += direction.getAxisStep(), cnt++) {
-                            var innerCell = entities.getCell(x, y2);
-
-                            if (innerCell == null)
-                                continue;
-
-                            var innerTile = innerCell.getTile();
-                            var innerProperties = innerTile.getProperties();
-
-                            if ("LinkedEnemyKillPart".equals(innerProperties.get("type", String.class))) {
-                                logger.logInfo("Found linked enemy kill part at " + x + "/" + y2);
-                                foundAt = y2;
-                            }
-                        }
-
-                        if (foundAt == null) {
-                            logger.logError("Couldn't find matching linked enemy kill part for linked enemy entity at " + x + "/" + y);
-                            break;
-                        }
-
-                        game.getLevel().spawnLinkedEnemy(x, y, x, foundAt, direction);
-
-                        break;
-                }
-            }
-        }
     }
 
     private void setupCollisions() {
@@ -165,10 +108,8 @@ public class Map {
                     if (rectangle == null)
                         continue;
 
-                    //var block = new Block(x * tileWidth + rectangle.x, y * tileHeight + rectangle.y, rectangle.width, rectangle.height, game.getLevel());
                     var block = new GroundTile(x + rectangle.x, y + rectangle.y, rectangle.width / tileWidth, rectangle.height / tileHeight, game.getLevel());
-                    block.addToWorld(world);
-                    game.getLevel().getEntities().add(block);
+                    game.getLevel().addEntity(block);
                 }
             }
         }

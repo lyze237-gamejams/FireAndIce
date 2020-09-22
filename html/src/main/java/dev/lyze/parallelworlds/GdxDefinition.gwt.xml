@@ -22,6 +22,8 @@
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.loadingScreen.LoadingScreenAssets" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuAssets" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuTextureAtlas" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.map" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.map.properties" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.TextureAtlas" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.maps.tiled.TiledMap" />
 	<!-- These two lines reduce the work GWT has to do during compilation and also shrink output size. -->
