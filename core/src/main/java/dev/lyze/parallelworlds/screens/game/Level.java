@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.entities.*;
+import dev.lyze.parallelworlds.screens.game.entities.players.Player;
+import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
 import dev.lyze.parallelworlds.statics.Statics;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -63,7 +65,7 @@ public class Level {
 
         entities.forEach(e -> e.update(world, delta));
 
-        ((GameCamera) viewport.getCamera()).update(players.getRedPlayer().getPosition(), players.getBluePlayer().getPosition(), map.getBoundaries(), delta);
+        ((GameCamera) viewport.getCamera()).update(players.getFirePlayer().getPosition(), players.getIcePlayer().getPosition(), map.getBoundaries(), delta);
     }
 
     public void render() {

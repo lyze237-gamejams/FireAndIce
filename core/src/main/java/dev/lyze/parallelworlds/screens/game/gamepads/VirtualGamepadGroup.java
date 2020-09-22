@@ -1,7 +1,7 @@
 package dev.lyze.parallelworlds.screens.game.gamepads;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import dev.lyze.parallelworlds.screens.game.entities.Player;
+import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import lombok.Getter;
 
 import java.util.ArrayList;

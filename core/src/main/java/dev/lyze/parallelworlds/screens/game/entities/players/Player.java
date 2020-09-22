@@ -1,18 +1,26 @@
-package dev.lyze.parallelworlds.screens.game.entities;
+package dev.lyze.parallelworlds.screens.game.entities.players;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
+import dev.lyze.parallelworlds.screens.game.entities.AiEntity;
+import dev.lyze.parallelworlds.screens.game.entities.Direction;
+import dev.lyze.parallelworlds.screens.game.entities.Entity;
+import dev.lyze.parallelworlds.screens.game.entities.PortalDirectionBlock;
 import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.statics.Statics;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public class Player extends AiEntity {
+public abstract class Player extends AiEntity {
     private static final Logger<Player> logger = new Logger<>(Player.class);
+
+    private final Animation<TextureAtlas.AtlasRegion> idle, run, jump, death;
 
     @Getter
     private final PlayerColor color;
@@ -20,8 +28,13 @@ public class Player extends AiEntity {
     private Direction portalDirection;
     private VirtualGamepadGroup gamepad;
 
-    public Player(Level level, PlayerColor color, boolean invertedGravity) {
+    public Player(Level level, PlayerColor color, boolean invertedGravity, Animation<TextureAtlas.AtlasRegion> idle, Animation<TextureAtlas.AtlasRegion> run, Animation<TextureAtlas.AtlasRegion> jump, Animation<TextureAtlas.AtlasRegion> death) {
         super(0, 0, 2, 4, level);
+
+        this.idle = idle;
+        this.run = run;
+        this.jump = jump;
+        this.death = death;
 
         this.invertedGravity = invertedGravity;
         this.color = color;

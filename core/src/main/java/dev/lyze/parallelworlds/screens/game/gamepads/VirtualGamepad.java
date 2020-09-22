@@ -1,6 +1,6 @@
 package dev.lyze.parallelworlds.screens.game.gamepads;
 
-import dev.lyze.parallelworlds.screens.game.entities.Player;
+import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import lombok.Getter;
 
 public abstract class VirtualGamepad {

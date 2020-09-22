@@ -78,13 +78,13 @@
   <image source="tiles/Entities.png" width="64" height="64"/>
   <tile id="0">
    <properties>
-    <property name="player" value="Red"/>
+    <property name="player" value="Fire"/>
     <property name="type" value="Spawn"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
-    <property name="player" value="Blue"/>
+    <property name="player" value="Ice"/>
     <property name="type" value="Spawn"/>
    </properties>
   </tile>
@@ -96,13 +96,13 @@
   </tile>
   <tile id="3">
    <properties>
-    <property name="color" value="Red"/>
+    <property name="color" value="Fire"/>
     <property name="type" value="Portal"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
-    <property name="color" value="Blue"/>
+    <property name="color" value="Ice"/>
     <property name="type" value="Portal"/>
    </properties>
   </tile>

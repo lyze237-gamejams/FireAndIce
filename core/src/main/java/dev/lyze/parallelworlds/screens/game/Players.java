@@ -3,8 +3,10 @@ package dev.lyze.parallelworlds.screens.game;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import dev.lyze.parallelworlds.screens.game.entities.Player;
-import dev.lyze.parallelworlds.screens.game.entities.PlayerColor;
+import dev.lyze.parallelworlds.screens.game.entities.players.FirePlayer;
+import dev.lyze.parallelworlds.screens.game.entities.players.IcePlayer;
+import dev.lyze.parallelworlds.screens.game.entities.players.Player;
+import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -16,14 +18,14 @@ public class Players {
     private final ArrayList<Player> players = new ArrayList<>();
 
     @Getter
-    private final Player redPlayer, bluePlayer;
+    private final Player firePlayer, icePlayer;
     private final Level level;
 
     public Players(Level level) {
         this.level = level;
 
-        players.add(redPlayer = new Player(level, PlayerColor.Red, false));
-        players.add(bluePlayer = new Player(level, PlayerColor.Blue, true));
+        players.add(firePlayer = new FirePlayer(level));
+        players.add(icePlayer = new IcePlayer(level));
 
         players.forEach(p -> p.addToWorld(level.getWorld()));
     }

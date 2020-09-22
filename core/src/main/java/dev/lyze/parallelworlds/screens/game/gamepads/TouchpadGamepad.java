@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import dev.lyze.parallelworlds.screens.game.entities.Direction;
-import dev.lyze.parallelworlds.screens.game.entities.Player;
-import dev.lyze.parallelworlds.screens.game.entities.PlayerColor;
+import dev.lyze.parallelworlds.screens.game.entities.players.Player;
+import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
 import dev.lyze.parallelworlds.statics.Statics;
 
 public class TouchpadGamepad extends VirtualGamepad {
@@ -26,7 +26,7 @@ public class TouchpadGamepad extends VirtualGamepad {
         var additionalTable = new Table();
         additionalTable.setFillParent(true);
 
-        if (player.getColor() == PlayerColor.Blue) {
+        if (player.getColor() == PlayerColor.Ice) {
             Table leftControlsTable = setupController(uiAtlas.getBlueUp(), uiAtlas.getBlueLeft(), uiAtlas.getBlueRight(), uiAtlas.getBlueDown());
             rootTable.add(leftControlsTable).bottom().left().padLeft(8).padBottom(8).expand();
 
