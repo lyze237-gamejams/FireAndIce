@@ -14,6 +14,7 @@ import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerCollisionFilter;
 import dev.lyze.parallelworlds.utils.MathUtils;
 import dev.lyze.parallelworlds.utils.Vector3Pool;
+import lombok.Getter;
 
 public class AiEntity extends Entity {
     private static final Logger<AiEntity> logger = new Logger<>(AiEntity.class);
@@ -38,11 +39,15 @@ public class AiEntity extends Entity {
     protected boolean wantsToMoveRight;
     protected boolean wantsToJump;
 
+    @Getter
     private boolean isJumping;
+    @Getter
     private boolean isGrounded;
     private double lastGrounded = 0f;
 
     private final Collisions tempCollisions = new Collisions();
+
+    @Getter
     private final GlyphLayout debugGlyphLayout = new GlyphLayout();
 
     public AiEntity(float x, float y, float width, float height, Level level) {
@@ -157,7 +162,7 @@ public class AiEntity extends Entity {
             isJumping = false;
     }
 
-    private float fixInverted(float val) {
+    protected float fixInverted(float val) {
         return invertedGravity ? -val : val;
     }
 
