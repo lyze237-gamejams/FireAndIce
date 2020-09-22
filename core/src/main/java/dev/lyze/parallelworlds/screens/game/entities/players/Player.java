@@ -77,8 +77,8 @@ public abstract class Player extends AiEntity {
     }
 
     private void checkInput() {
-        wantsToMoveLeft = gamepad.isLeftPressed();
-        wantsToMoveRight = gamepad.isRightPressed();
+        wantsToMoveLeft = gamepad.getLeftPressed();
+        wantsToMoveRight = gamepad.getRightPressed();
 
         wantsToJump = gamepad.isJumpJustPressed();
     }
@@ -116,7 +116,6 @@ public abstract class Player extends AiEntity {
         if (this.currentAnimation == newAnimation)
             return;
 
-        logger.logInfo(currentAnimation.getKeyFrame(animationTime).name + "=>" + newAnimation.getKeyFrame(0).name);
         this.currentAnimation = newAnimation;
         animationTime = 0;
     }

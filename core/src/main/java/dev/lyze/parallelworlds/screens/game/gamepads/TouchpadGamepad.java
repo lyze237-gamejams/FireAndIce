@@ -13,8 +13,8 @@ import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
 import dev.lyze.parallelworlds.statics.Statics;
 
 public class TouchpadGamepad extends VirtualGamepad {
-    public TouchpadGamepad(Player player) {
-        super(player);
+    public TouchpadGamepad(Player player, int playerNumber) {
+        super(player, playerNumber);
     }
 
     public void setup(Stage stage) {
@@ -76,10 +76,10 @@ public class TouchpadGamepad extends VirtualGamepad {
                     case Down:
                         break;
                     case Left:
-                        self.leftPressed = true;
+                        self.leftPressed = 1;
                         break;
                     case Right:
-                        self.rightPressed = true;
+                        self.rightPressed = 1;
                         break;
                 }
                 return true;
@@ -94,10 +94,10 @@ public class TouchpadGamepad extends VirtualGamepad {
                     case Down:
                         break;
                     case Left:
-                        self.leftPressed = false;
+                        self.leftPressed = 0;
                         break;
                     case Right:
-                        self.rightPressed = false;
+                        self.rightPressed = 0;
                         break;
                 }
             }

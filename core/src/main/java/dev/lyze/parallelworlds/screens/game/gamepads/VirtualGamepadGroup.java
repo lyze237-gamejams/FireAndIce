@@ -10,16 +10,18 @@ public class VirtualGamepadGroup {
     private ArrayList<VirtualGamepad> gamepads = new ArrayList<>();
 
     @Getter
-    protected boolean leftPressed;
+    protected float leftPressed;
     @Getter
-    protected boolean rightPressed;
+    protected float rightPressed;
     @Getter
     protected boolean jumpJustPressed;
 
-    public VirtualGamepadGroup(Player player, Stage mobileUi) {
-        gamepads.add(new KeyboardGamepad(player));
+    public VirtualGamepadGroup(Player player, int playerNumber, Stage mobileUi) {
+        gamepads.add(new KeyboardGamepad(player, playerNumber));
 
-        var touchpadGamepad = new TouchpadGamepad(player);
+        gamepads.add(new ControllerGamepad(player, playerNumber));
+
+        var touchpadGamepad = new TouchpadGamepad(player, playerNumber);
         touchpadGamepad.setup(mobileUi);
         gamepads.add(touchpadGamepad);
 
@@ -27,15 +29,15 @@ public class VirtualGamepadGroup {
     }
 
     public void update(float delta) {
-        leftPressed = false;
-        rightPressed = false;
+        leftPressed = 0;
+        rightPressed = 0;
         jumpJustPressed = false;
 
         for (VirtualGamepad g : gamepads) {
             g.update(delta);
 
-            leftPressed |= g.leftPressed;
-            rightPressed |= g.rightPressed;
+            leftPressed = Math.max(leftPressed, g.leftPressed);
+            rightPressed = Math.max(rightPressed, g.rightPressed);
             jumpJustPressed |= g.jumpJustPressed;
         }
     }

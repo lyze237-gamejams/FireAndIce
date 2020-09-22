@@ -35,8 +35,8 @@ public class AiEntity extends Entity {
 
     protected boolean invertedGravity = false;
 
-    protected boolean wantsToMoveLeft;
-    protected boolean wantsToMoveRight;
+    protected float wantsToMoveLeft;
+    protected float wantsToMoveRight;
     protected boolean wantsToJump;
 
     @Getter
@@ -126,7 +126,7 @@ public class AiEntity extends Entity {
     }
 
     private void setInput() {
-        inputVelocity.set(wantsToMoveLeft ? -movementSpeedIncrease : wantsToMoveRight ? movementSpeedIncrease : 0, 0);
+        inputVelocity.set(wantsToMoveLeft > 0.2f ? -movementSpeedIncrease : wantsToMoveRight > 0.2f ? movementSpeedIncrease : 0, 0);
     }
 
     private void checkMovementDirection() {
@@ -144,9 +144,9 @@ public class AiEntity extends Entity {
 
     private void applyInput(float delta) {
         if (inputVelocity.x > 0) {
-            velocity.x = MathUtils.approach(velocity.x, maxSpeed, inputVelocity.x * delta);
+            velocity.x = MathUtils.approach(velocity.x, maxSpeed * wantsToMoveRight, inputVelocity.x * delta);
         } else if (inputVelocity.x < 0) {
-            velocity.x = MathUtils.approach(velocity.x, -maxSpeed, inputVelocity.x * delta);
+            velocity.x = MathUtils.approach(velocity.x, -maxSpeed * wantsToMoveLeft, inputVelocity.x * delta);
         }
     }
 

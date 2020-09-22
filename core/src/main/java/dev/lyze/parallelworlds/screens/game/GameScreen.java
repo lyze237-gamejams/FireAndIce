@@ -40,7 +40,7 @@ public class GameScreen extends ManagedScreen {
         level = new Level(this, levelAssets.getMap(), gameViewport);
         level.initialize();
 
-        level.getPlayers().getPlayers().forEach(p -> gamepads.add(new VirtualGamepadGroup(p, mobileUi)));
+        level.getPlayers().getPlayers().forEach(p -> gamepads.add(new VirtualGamepadGroup(p, gamepads.size(), mobileUi)));
 
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
