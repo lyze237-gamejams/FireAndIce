@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.lyze.parallelworlds.screens.game.entities.players.FirePlayer;
 import dev.lyze.parallelworlds.screens.game.entities.players.FrozenPlayer;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
-import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
+import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 

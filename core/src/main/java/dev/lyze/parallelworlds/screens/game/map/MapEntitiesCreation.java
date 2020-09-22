@@ -3,6 +3,7 @@ package dev.lyze.parallelworlds.screens.game.map;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
@@ -10,7 +11,6 @@ import dev.lyze.parallelworlds.screens.game.Map;
 import dev.lyze.parallelworlds.screens.game.map.properties.MapProperties;
 import dev.lyze.parallelworlds.utils.Point;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -82,19 +82,20 @@ public class MapEntitiesCreation {
 
         try {
             var instance = ClassReflection.newInstance(spawner.getPropertiesClass());
-            for (Field field : spawner.getPropertiesClass().getDeclaredFields()) {
+            for (Field field : ClassReflection.getDeclaredFields(spawner.getPropertiesClass())) {
                 initializeMapProperties(tile, instance, field);
             }
 
             spawner.spawn(x, y, instance, spawnedEntities);
+
             return instance;
-        } catch (ReflectionException | IllegalAccessException e) {
+        } catch (ReflectionException e) {
             logger.logError("Couldn't create " + spawner.getPropertiesClass().getSimpleName(), e);
             throw new IllegalArgumentException();
         }
     }
 
-    private void initializeMapProperties(TiledMapTile tile, MapProperties instance, Field field) throws IllegalAccessException {
+    private void initializeMapProperties(TiledMapTile tile, MapProperties instance, Field field) throws ReflectionException {
         field.setAccessible(true);
 
         var value = tile.getProperties().get(field.getName());

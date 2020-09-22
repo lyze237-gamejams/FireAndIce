@@ -13,15 +13,12 @@
 	<entry-point class="dev.lyze.parallelworlds.gwt.GwtLauncher" />
 	<set-configuration-property name="gdx.assetpath" value="../assets" />
 	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.GameAssets" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.levels.LevelAssets" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.levels.TestLevelAssets" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.levels.shared.SharedLevelAssets" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.levels.shared.UiTextureAtlas" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.loadingScreen.LoadingScreenAssets" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuAssets" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuTextureAtlas" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.levels" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.levels.shared" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.loadingScreen" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.mainMenu" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.entities.enums" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.map" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.map.properties" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.TextureAtlas" />

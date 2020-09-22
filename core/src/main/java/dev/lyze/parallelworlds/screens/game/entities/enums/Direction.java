@@ -1,4 +1,4 @@
-package dev.lyze.parallelworlds.screens.game.entities;
+package dev.lyze.parallelworlds.screens.game.entities.enums;
 
 import lombok.Getter;
 

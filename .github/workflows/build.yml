@@ -31,9 +31,6 @@ jobs:
       - name: Build jar
         run: ./gradlew lwjgl3:jar
 
-      - name: Build gwt
-        run: ./gradlew html:dist
-
       - name: Build package image
         run: ./gradlew lwjgl3:jpackageImage
 
@@ -50,8 +47,6 @@ jobs:
 
       - run: ./butler push ParallelWorlds.deb lyze237/ParallelWorlds:linux-deb
       - run: ./butler push ParallelWorlds.rpm lyze237/ParallelWorlds:linux-rpm
-
-      - run: ./butler push html/build/dist lyze237/ParallelWorlds:html
 
 
 

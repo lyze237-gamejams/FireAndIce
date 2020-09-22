@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import dev.lyze.parallelworlds.screens.game.entities.Direction;
+import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
-import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
+import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
 import dev.lyze.parallelworlds.statics.Statics;
 
 public class TouchpadGamepad extends VirtualGamepad {

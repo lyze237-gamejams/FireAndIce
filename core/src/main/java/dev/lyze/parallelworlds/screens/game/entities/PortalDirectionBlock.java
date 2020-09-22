@@ -1,6 +1,7 @@
 package dev.lyze.parallelworlds.screens.game.entities;
 
 import dev.lyze.parallelworlds.screens.game.Level;
+import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import lombok.Getter;
 
 public class PortalDirectionBlock extends StaticEntity {

@@ -1,4 +1,4 @@
-package dev.lyze.parallelworlds.screens.game.entities.players;
+package dev.lyze.parallelworlds.screens.game.entities.enums;
 
 import com.badlogic.gdx.graphics.Color;
 import lombok.Getter;

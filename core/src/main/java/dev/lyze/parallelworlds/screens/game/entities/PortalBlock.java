@@ -1,7 +1,7 @@
 package dev.lyze.parallelworlds.screens.game.entities;
 
 import dev.lyze.parallelworlds.screens.game.Level;
-import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
+import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
 import lombok.Getter;
 
 public class PortalBlock extends StaticEntity {

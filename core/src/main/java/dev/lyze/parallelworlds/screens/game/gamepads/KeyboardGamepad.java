@@ -3,7 +3,7 @@ package dev.lyze.parallelworlds.screens.game.gamepads;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
-import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
+import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
 
 public class KeyboardGamepad extends VirtualGamepad {
     public KeyboardGamepad(Player player, int playerNumber) {

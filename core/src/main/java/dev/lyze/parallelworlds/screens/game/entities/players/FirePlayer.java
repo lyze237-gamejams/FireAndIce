@@ -3,6 +3,7 @@ package dev.lyze.parallelworlds.screens.game.entities.players;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
+import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
 import dev.lyze.parallelworlds.statics.Statics;
 
 public class FirePlayer extends Player {
