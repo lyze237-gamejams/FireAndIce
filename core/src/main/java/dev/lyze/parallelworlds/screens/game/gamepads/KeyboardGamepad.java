@@ -21,4 +21,9 @@ public class KeyboardGamepad extends VirtualGamepad {
     public void reset(float delta) {
 
     }
+
+    @Override
+    public void vibrate(int durationInMs, float strength) {
+
+    }
 }

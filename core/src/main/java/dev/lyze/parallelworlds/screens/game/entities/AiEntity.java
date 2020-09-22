@@ -61,7 +61,7 @@ public class AiEntity extends Entity {
         applyGravity(delta);
         setInput();
         checkGround(world);
-        checkJump(delta);
+        checkJump();
         checkMovementDirection();
 
         applyInput(delta);
@@ -76,6 +76,8 @@ public class AiEntity extends Entity {
         for (int i = 0; i < tempCollisions.size(); i++) {
             if (tempCollisions.get(i).type.equals(Response.slide)) {
                 lastGrounded = System.currentTimeMillis();
+                if (!isGrounded)
+                    landed();
                 isGrounded = true;
                 return;
             }
@@ -84,17 +86,22 @@ public class AiEntity extends Entity {
         isGrounded = false;
     }
 
-    private void checkJump(float delta) {
+    protected void landed() { }
+
+    private void checkJump() {
         if (!wantsToJump)
             return;
 
-        if ((isGrounded || (System.currentTimeMillis() - lastGrounded) < jumpAfterGroundLeftMax) && !isJumping) {
-            if (invertedGravity ? velocity.y > 0 : velocity.y < 0)
-                velocity.y = 0;
+        if ((isGrounded || (System.currentTimeMillis() - lastGrounded) < jumpAfterGroundLeftMax) && !isJumping)
+            jump();
+    }
 
-            velocity.y += fixInverted(jumpForce);
-            isJumping = true;
-        }
+    protected void jump() {
+        if (invertedGravity ? velocity.y > 0 : velocity.y < 0)
+            velocity.y = 0;
+
+        velocity.y += fixInverted(jumpForce);
+        isJumping = true;
     }
 
     private void checkCollisionsAndApplyVelocity(World<Entity> world, float delta) {

@@ -23,10 +23,10 @@ public class ControllerGamepad extends VirtualGamepad {
         var controller = (AdvancedController) basic;
         var mapping = controller.getMapping();
 
-        if (!jumpHeld) {
-            jumpJustPressed = controller.getButton(mapping.buttonA);
-            jumpHeld = true;
-        }
+        if (!jumpHeld)
+            if (jumpJustPressed = controller.getButton(mapping.buttonA))
+                jumpHeld = true;
+
         if (!controller.getButton(mapping.buttonA))
             jumpHeld = false;
 
@@ -37,5 +37,23 @@ public class ControllerGamepad extends VirtualGamepad {
     @Override
     public void reset(float delta) {
         jumpJustPressed = false;
+    }
+
+    @Override
+    public void vibrate(int durationInMs, float strength) {
+        if (Controllers.getControllers().size <= playerNumber)
+            return;
+
+        var basic = Controllers.getControllers().get(playerNumber);
+        if (!(basic instanceof AdvancedController))
+            return;
+
+        var controller = (AdvancedController) basic;
+
+        if (!controller.canVibrate())
+            return;
+
+        controller.cancelVibration();
+        controller.startVibration(durationInMs, strength);
     }
 }

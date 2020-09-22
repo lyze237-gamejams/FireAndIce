@@ -113,4 +113,9 @@ public class TouchpadGamepad extends VirtualGamepad {
     public void reset(float delta) {
         jumpJustPressed = false;
     }
+
+    @Override
+    public void vibrate(int durationInMs, float strength) {
+
+    }
 }

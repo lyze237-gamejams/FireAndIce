@@ -45,4 +45,8 @@ public class VirtualGamepadGroup {
     public void reset(float delta) {
         gamepads.forEach(g -> g.reset(delta));
     }
+
+    public void vibrate(int durationInMs, float strength) {
+        gamepads.forEach(g -> g.vibrate(durationInMs, strength));
+    }
 }

@@ -19,20 +19,14 @@ jobs:
         with:
           java-version: 14
 
-
-
       - name: Download butler
         run: wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -O butler.zip
 
       - name: Unzip buttler
         run: unzip butler.zip
 
-
-
       - name: Fix permissions
         run: chmod +x butler && chmod +x gradlew
-
-
 
       - name: Build jar
         run: ./gradlew lwjgl3:jar
@@ -50,16 +44,41 @@ jobs:
         run: mv lwjgl3/build/lib/*.jar ParallelWorlds_linux.jar && mv lwjgl3/build/jpackage/*.deb ParallelWorlds.deb && mv lwjgl3/build/jpackage/*.rpm ParallelWorlds.rpm
 
 
-
-      - name: Check if butler works
-        run: ./butler -V
-
       - run: ./butler push ParallelWorlds_linux.jar lyze237/ParallelWorlds:linux-jar
 
       - run: ./butler push lwjgl3/build/jpackage/ParallelWorlds lyze237/ParallelWorlds:linux-image
 
       - run: ./butler push ParallelWorlds.deb lyze237/ParallelWorlds:linux-deb
       - run: ./butler push ParallelWorlds.rpm lyze237/ParallelWorlds:linux-rpm
+
+      - run: ./butler push html/build/dist lyze237/ParallelWorlds:html
+
+
+
+  linux-gwt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 14
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+
+      - name: Download butler
+        run: wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -O butler.zip
+
+      - name: Unzip buttler
+        run: unzip butler.zip
+
+
+      - name: Fix permissions
+        run: chmod +x butler && chmod +x gradlew
+
+
+      - name: Build gwt
+        run: ./gradlew html:dist
+
 
       - run: ./butler push html/build/dist lyze237/ParallelWorlds:html
 
@@ -77,13 +96,11 @@ jobs:
           java-version: 14
 
 
-
       - name: Download Butler
         run: Invoke-WebRequest -Uri https://broth.itch.ovh/butler/windows-amd64/LATEST/archive/default -OutFile butler.zip
 
       - name: Extract butler
         run: Expand-Archive -DestinationPath . butler.zip
-
 
 
       - name: Build jar
@@ -99,14 +116,9 @@ jobs:
         run: mv lwjgl3/build/lib/*.jar ParallelWorlds_windows.jar && mv lwjgl3/build/jpackage/*.exe ParallelWorlds.exe && mv lwjgl3/build/jpackage/*.msi ParallelWorlds.msi
 
 
-
-      - name: Check if butler works
-        run: ./butler.exe -V
-
       - run: ./butler push ParallelWorlds_windows.jar lyze237/ParallelWorlds:windows-jar
 
       - run: ./butler push lwjgl3/build/jpackage/ParallelWorlds lyze237/ParallelWorlds:windows-image
 
       - run: ./butler push ParallelWorlds.exe lyze237/ParallelWorlds:windows-exe
       - run: ./butler push ParallelWorlds.msi lyze237/ParallelWorlds:windows-msi
-
