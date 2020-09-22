@@ -15,7 +15,6 @@ import dev.lyze.parallelworlds.screens.game.entities.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
 import dev.lyze.parallelworlds.screens.game.entities.PortalDirectionBlock;
 import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
-import dev.lyze.parallelworlds.statics.Statics;
 import dev.lyze.parallelworlds.utils.Vector3Pool;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -24,7 +23,6 @@ public abstract class Player extends AiEntity {
     private static final Logger<Player> logger = new Logger<>(Player.class);
 
     private final Animation<TextureAtlas.AtlasRegion> idle, run, jump, fall, death;
-
     private Animation<TextureAtlas.AtlasRegion> currentAnimation;
 
     private float animationTime;
@@ -36,7 +34,7 @@ public abstract class Player extends AiEntity {
     private VirtualGamepadGroup gamepad;
 
     public Player(Level level, PlayerColor color, boolean invertedGravity, Animation<TextureAtlas.AtlasRegion> idle, Animation<TextureAtlas.AtlasRegion> run, Animation<TextureAtlas.AtlasRegion> jump, Animation<TextureAtlas.AtlasRegion> fall, Animation<TextureAtlas.AtlasRegion> death) {
-        super(0, 0, 2, 2, level);
+        super(0, 0, 2 * 1.5f, 1.25f * 1.5f, level);
 
         this.currentAnimation = this.idle = idle;
         this.run = run;
@@ -97,17 +95,19 @@ public abstract class Player extends AiEntity {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.setColor(color.getRenderColor());
-        batch.draw(Statics.assets.getGame().getSharedLevelAssets().getPixel(), position.x, position.y, width, height);
         batch.setColor(Color.WHITE);
+        var frame = currentAnimation.getKeyFrame(animationTime);
 
         var drawX = isFacingRight ? position.x : position.x + width;
         var drawY = invertedGravity ? position.y + height : position.y;
 
-        var drawWidth = isFacingRight ? width : -width;
-        var drawHeight = invertedGravity ? -height : height;
+        var drawWidth = isFacingRight ? frame.getRegionWidth() / level.getMap().getTileWidth() : -frame.getRegionWidth() / level.getMap().getTileWidth();
+        var drawHeight = invertedGravity ? -frame.getRegionHeight() / level.getMap().getTileHeight() : frame.getRegionHeight() / level.getMap().getTileHeight();
 
-        batch.draw(currentAnimation.getKeyFrame(animationTime), drawX, drawY, drawWidth, drawHeight);
+        drawWidth *= 1.5f;
+        drawHeight *= 1.5f;
+
+        batch.draw(frame, drawX, drawY, drawWidth, drawHeight);
 
         super.render(batch);
     }

@@ -22,6 +22,21 @@ public class CharactersAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("flamebread/Run")
     private Array<TextureAtlas.AtlasRegion> flamebread_run;
 
+    @Getter @LoadFromTextureAtlas("frozenbread/Death")
+    private Array<TextureAtlas.AtlasRegion> frozenbread_death;
+
+    @Getter @LoadFromTextureAtlas("frozenbread/Idle")
+    private Array<TextureAtlas.AtlasRegion> frozenbread_idle;
+
+    @Getter @LoadFromTextureAtlas("frozenbread/Jump")
+    private Array<TextureAtlas.AtlasRegion> frozenbread_jump;
+
+    @Getter @LoadFromTextureAtlas("frozenbread/Fall")
+    private Array<TextureAtlas.AtlasRegion> frozenbread_fall;
+
+    @Getter @LoadFromTextureAtlas("frozenbread/Run")
+    private Array<TextureAtlas.AtlasRegion> frozenbread_run;
+
     public CharactersAtlas(TextureAtlas atlas) {
         super(atlas);
     }

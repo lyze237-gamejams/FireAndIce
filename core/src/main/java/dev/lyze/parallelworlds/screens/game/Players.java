@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.lyze.parallelworlds.screens.game.entities.players.FirePlayer;
-import dev.lyze.parallelworlds.screens.game.entities.players.IcePlayer;
+import dev.lyze.parallelworlds.screens.game.entities.players.FrozenPlayer;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.screens.game.entities.players.PlayerColor;
 import lombok.Getter;
@@ -25,7 +25,7 @@ public class Players {
         this.level = level;
 
         players.add(firePlayer = new FirePlayer(level));
-        players.add(icePlayer = new IcePlayer(level));
+        players.add(icePlayer = new FrozenPlayer(level));
 
         players.forEach(p -> p.addToWorld(level.getWorld()));
     }
