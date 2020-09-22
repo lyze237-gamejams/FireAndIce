@@ -18,12 +18,12 @@ import dev.lyze.parallelworlds.utils.Vector3Pool;
 public class AiEntity extends Entity {
     private static final Logger<AiEntity> logger = new Logger<>(AiEntity.class);
 
-    private final float gravity = -2f;
+    private final float gravity = -1.8f;
     private final float movementSpeedIncrease = 10f;
     private final float maxSpeed = 0.25f;
     private final float friction = 5f;
 
-    private final float jumpForce = 0.85f;
+    private final float jumpForce = 0.80f;
 
     private final double jumpAfterGroundLeftMax = 150;
 
@@ -68,9 +68,15 @@ public class AiEntity extends Entity {
 
     private void checkGround(World<Entity> world) {
         world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), PlayerCollisionFilter.instance, tempCollisions);
-        if (isGrounded = tempCollisions.size() > 0) {
-            lastGrounded = System.currentTimeMillis();
+        for (int i = 0; i < tempCollisions.size(); i++) {
+            if (tempCollisions.get(i).type.equals(Response.slide)) {
+                lastGrounded = System.currentTimeMillis();
+                isGrounded = true;
+                return;
+            }
         }
+
+        isGrounded = false;
     }
 
     private void checkJump(float delta) {
