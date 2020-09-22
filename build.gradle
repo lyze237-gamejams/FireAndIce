@@ -26,6 +26,7 @@ task texturePacker {
 	doLast {
 		TexturePacker.process("${project.rootDir}/assets/images/particles", "${project.rootDir}/assets/atlas", "particles")
 		TexturePacker.process("${project.rootDir}/assets/images/ui", "${project.rootDir}/assets/atlas", "ui")
+		TexturePacker.process("${project.rootDir}/assets/images/characters", "${project.rootDir}/assets/atlas", "characters")
 	}
 }
 
