@@ -37,6 +37,19 @@ public class CharactersAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("frozenbread/Run")
     private Array<TextureAtlas.AtlasRegion> frozenbread_run;
 
+
+    @Getter @LoadFromTextureAtlas("snail/Walk")
+    private Array<TextureAtlas.AtlasRegion> snail_walk;
+
+    @Getter @LoadFromTextureAtlas("snail/Death")
+    private Array<TextureAtlas.AtlasRegion> snail_death;
+
+    @Getter @LoadFromTextureAtlas("snailsoul/Walk")
+    private Array<TextureAtlas.AtlasRegion> snailsoul_walk;
+
+    @Getter @LoadFromTextureAtlas("snailsoul/Death")
+    private Array<TextureAtlas.AtlasRegion> snailsoul_death;
+
     public CharactersAtlas(TextureAtlas atlas) {
         super(atlas);
     }

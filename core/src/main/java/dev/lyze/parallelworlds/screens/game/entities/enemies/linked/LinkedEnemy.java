@@ -1,7 +1,6 @@
 package dev.lyze.parallelworlds.screens.game.entities.enemies.linked;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
@@ -24,6 +23,9 @@ public class LinkedEnemy extends AiEntity {
 
         this.invertedGravity = invertedGravity;
 
+        setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_walk(), Animation.PlayMode.LOOP));
+        setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_death(), Animation.PlayMode.NORMAL));
+
         linkedEnemyKillPart = new LinkedEnemyKillPart(killPartX, killPartY, level, this, !invertedGravity);
         level.addEntity(linkedEnemyKillPart);
     }
@@ -33,6 +35,12 @@ public class LinkedEnemy extends AiEntity {
         super.update(world, delta);
 
         this.linkedEnemyKillPart.getPosition().x = this.position.x;
+
+        if (linkedEnemyKillPart.isDead()) {
+            wantsToMoveLeft = 0;
+            wantsToMoveRight = 0;
+            return;
+        }
 
         if (currentlyMoveRight) {
             wantsToMoveRight = 0.3f;
@@ -58,14 +66,5 @@ public class LinkedEnemy extends AiEntity {
 
         logger.logInfo("Haha, player is a noob and died!");
         // hit! ha! dead! RIP
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
-        super.render(batch);
-
-        batch.setColor(Color.YELLOW);
-        batch.draw(Statics.assets.getGame().getSharedLevelAssets().getPixel(), position.x, position.y, width, height);
-        batch.setColor(Color.WHITE);
     }
 }

@@ -86,6 +86,7 @@ public class Level {
 
         spriteBatch.begin();
 
+        spriteBatch.setColor(Color.WHITE);
         players.render(spriteBatch);
         entities.forEach(e -> e.render(spriteBatch));
         spriteBatch.end();

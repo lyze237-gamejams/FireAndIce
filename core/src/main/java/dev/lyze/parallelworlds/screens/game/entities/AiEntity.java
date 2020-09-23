@@ -1,9 +1,7 @@
 package dev.lyze.parallelworlds.screens.game.entities;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.dongbat.jbump.*;
 import dev.lyze.parallelworlds.logger.Logger;
@@ -11,6 +9,7 @@ import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.utils.MathUtils;
 import dev.lyze.parallelworlds.utils.Vector3Pool;
 import lombok.Getter;
+import lombok.Setter;
 
 public class AiEntity extends Entity {
     private static final Logger<AiEntity> logger = new Logger<>(AiEntity.class);
@@ -27,6 +26,8 @@ public class AiEntity extends Entity {
     protected final Vector2 velocity = new Vector2();
     protected final Vector2 inputVelocity = new Vector2();
 
+    @Getter
+    @Setter
     protected boolean isFacingRight = true;
 
     protected boolean invertedGravity = false;
@@ -39,7 +40,15 @@ public class AiEntity extends Entity {
     private boolean isJumping;
     @Getter
     private boolean isGrounded;
+    @Getter
+    private boolean isDead;
     private double lastGrounded = 0f;
+
+    @Getter @Setter
+    private Animation<TextureAtlas.AtlasRegion> idle, run, jump, fall, death;
+    private Animation<TextureAtlas.AtlasRegion> currentAnimation;
+
+    private float animationTime;
 
     private final CollisionFilter collisionFilter;
 
@@ -58,6 +67,8 @@ public class AiEntity extends Entity {
     public void update(World<Entity> world, float delta) {
         super.update(world, delta);
 
+        animationTime += delta;
+
         applyGravity(delta);
         setInput();
         checkGround(world);
@@ -69,6 +80,53 @@ public class AiEntity extends Entity {
         applyFriction(delta);
 
         checkCollisionsAndApplyVelocity(world, delta);
+
+        updateAnimation();
+    }
+
+    @Override
+    public void render(SpriteBatch batch) {
+        super.render(batch);
+
+        if (currentAnimation == null)
+            return;
+
+        var frame = currentAnimation.getKeyFrame(animationTime);
+
+        var drawX = isFacingRight ? position.x : position.x + width;
+        var drawY = invertedGravity ? position.y + height : position.y;
+
+        var drawWidth = isFacingRight ? frame.getRegionWidth() / level.getMap().getTileWidth() : -frame.getRegionWidth() / level.getMap().getTileWidth();
+        var drawHeight = invertedGravity ? -frame.getRegionHeight() / level.getMap().getTileHeight() : frame.getRegionHeight() / level.getMap().getTileHeight();
+
+        drawWidth *= 1.5f;
+        drawHeight *= 1.5f;
+
+        batch.draw(frame, drawX, drawY, drawWidth, drawHeight);
+    }
+
+    protected void updateAnimation() {
+        if (isDead)
+            setAnimation(death);
+        else if (isJumping)
+            setAnimation(jump);
+        else if (!isGrounded)
+            setAnimation(fall);
+        else if (velocity.x > 0 || velocity.x < 0)
+            setAnimation(run);
+        else
+            setAnimation(idle);
+    }
+
+    protected void setAnimation(Animation<TextureAtlas.AtlasRegion> newAnimation) {
+        if (this.currentAnimation == newAnimation)
+            return;
+
+        if (newAnimation == null)
+            return;
+
+        this.currentAnimation = newAnimation;
+        animationTime = 0;
     }
 
     private void checkGround(World<Entity> world) {
@@ -84,6 +142,11 @@ public class AiEntity extends Entity {
         }
 
         isGrounded = false;
+    }
+
+    public void die() {
+        if (!isDead)
+            isDead = true;
     }
 
     protected void landed() { }
@@ -105,11 +168,13 @@ public class AiEntity extends Entity {
     }
 
     private void checkCollisionsAndApplyVelocity(World<Entity> world, float delta) {
+        if (isDead)
+            return;
+
         var response = world.move(item, position.x + velocity.x, position.y + velocity.y, collisionFilter);
 
-        for (int i = 0; i < response.projectedCollisions.size(); i++) {
+        for (int i = 0; i < response.projectedCollisions.size(); i++)
             onCollision(response.projectedCollisions.get(i));
-        }
 
         position.set(response.goalX, response.goalY);
     }
@@ -176,31 +241,25 @@ public class AiEntity extends Entity {
     public void debugTextRender(BitmapFont font, Camera cam, SpriteBatch screenBatch) {
         var pos = Vector3Pool.instance.obtain();
         pos.set(position, 0);
-        pos.add(width, height, 0);
-
         cam.project(pos);
 
-        font.draw(screenBatch,
-                "Pos: " + position.x + "/" + position.y + "\n" +
+        var str = "Pos: " + position.x + "/" + position.y + "\n" +
                 "Jum: " + isJumping + " ; Grn: " + isGrounded + "\n" +
                 "Vel: " + velocity.x + "/" + velocity.y + "\n" +
-                "Grv: " + fixInverted(gravity),
-                pos.x, pos.y);
+                "Grv: " + fixInverted(gravity);
+        font.draw(screenBatch, str, pos.x + width, pos.y + height);
 
-
-
-
-        String str = "WJ: " + wantsToJump + "\n" +
+        str = "WJ: " + wantsToJump + "\n" +
                 "WL: " + wantsToMoveLeft + "\n" +
                 "WR: " + wantsToMoveRight + "\n";
-
         debugGlyphLayout.setText(font, str);
+        font.draw(screenBatch, str, pos.x - debugGlyphLayout.width, pos.y + height);
 
-        pos.set(position, 0);
-        pos.add(0, height, 0);
-        cam.project(pos);
 
-        font.draw(screenBatch, str, pos.x - debugGlyphLayout.width, pos.y);
+        str = currentAnimation.getKeyFrame(animationTime).name;
+        debugGlyphLayout.setText(font, str);
+        font.draw(screenBatch, str, pos.x - debugGlyphLayout.width / 2f, pos.y + debugGlyphLayout.height*2);
+
         Vector3Pool.instance.free(pos);
     }
 }

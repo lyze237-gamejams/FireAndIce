@@ -1,11 +1,12 @@
 package dev.lyze.parallelworlds.screens.game.entities.enemies.linked;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.dongbat.jbump.Collision;
+import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.AiEntity;
+import dev.lyze.parallelworlds.screens.game.entities.Entity;
 import dev.lyze.parallelworlds.screens.game.entities.filters.EnemyCollisionFilter;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.statics.Statics;
@@ -17,9 +18,27 @@ public class LinkedEnemyKillPart extends AiEntity {
     public LinkedEnemyKillPart(float x, float y, Level level, LinkedEnemy linkedEnemy, boolean invertedGravity) {
         super(x, y, 1, 1, level, EnemyCollisionFilter.instance);
 
+        setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_walk(), Animation.PlayMode.LOOP));
+        setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));
+
         this.linkedEnemy = linkedEnemy;
         this.invertedGravity = invertedGravity;
     }
+
+    @Override
+    public void update(World<Entity> world, float delta) {
+        super.update(world, delta);
+        setFacingRight(linkedEnemy.isFacingRight());
+    }
+
+    @Override
+    protected void updateAnimation() {
+        if (isDead())
+            setAnimation(getDeath());
+        else
+            setAnimation(getRun());
+    }
+
 
     @Override
     protected void onCollision(Collision collision) {
@@ -29,17 +48,7 @@ public class LinkedEnemyKillPart extends AiEntity {
             return;
 
         logger.logInfo("Ohno I died");
-        level.removeEntity(this);
-        level.removeEntity(linkedEnemy);
-        // ohno they got me :(
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
-        super.render(batch);
-
-        batch.setColor(Color.ORANGE);
-        batch.draw(Statics.assets.getGame().getSharedLevelAssets().getPixel(), position.x, position.y, width, height);
-        batch.setColor(Color.WHITE);
+        die();
+        linkedEnemy.die();
     }
 }
