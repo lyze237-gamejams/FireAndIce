@@ -26,7 +26,7 @@ public abstract class Player extends AiEntity {
     private VirtualGamepadGroup gamepad;
 
     public Player(Level level, PlayerColor color, boolean invertedGravity, Animation<TextureAtlas.AtlasRegion> idle, Animation<TextureAtlas.AtlasRegion> run, Animation<TextureAtlas.AtlasRegion> jump, Animation<TextureAtlas.AtlasRegion> fall, Animation<TextureAtlas.AtlasRegion> death) {
-        super(0, 0, 2 * 1.5f, 1.25f * 1.5f, level, PlayerCollisionFilter.instance);
+        super(0, 0, 2, 1.25f, level, PlayerCollisionFilter.instance);
 
         setIdle(idle);
         setRun(run);
@@ -36,6 +36,8 @@ public abstract class Player extends AiEntity {
 
         this.invertedGravity = invertedGravity;
         this.color = color;
+
+        setAnimationXOffset(-0.6f);
     }
 
     @Override

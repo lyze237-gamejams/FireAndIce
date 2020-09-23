@@ -16,13 +16,15 @@ public class LinkedEnemyKillPart extends AiEntity {
     private final LinkedEnemy linkedEnemy;
 
     public LinkedEnemyKillPart(float x, float y, Level level, LinkedEnemy linkedEnemy, boolean invertedGravity) {
-        super(x, y, 1, 1, level, EnemyCollisionFilter.instance);
+        super(x, y, 2, 1.4f, level, EnemyCollisionFilter.instance);
 
         setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_walk(), Animation.PlayMode.LOOP));
         setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));
 
         this.linkedEnemy = linkedEnemy;
         this.invertedGravity = invertedGravity;
+
+        setAnimationXOffset(-0.6f);
     }
 
     @Override

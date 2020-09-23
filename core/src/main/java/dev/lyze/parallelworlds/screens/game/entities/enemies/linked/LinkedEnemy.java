@@ -19,7 +19,7 @@ public class LinkedEnemy extends AiEntity {
     private boolean currentlyMoveRight = true;
 
     public LinkedEnemy(float x, float y, Level level, int killPartX, int killPartY, boolean invertedGravity) {
-        super(x, y, 1, 1, level, EnemyCollisionFilter.instance);
+        super(x, y, 2, 1.4f, level, EnemyCollisionFilter.instance);
 
         this.invertedGravity = invertedGravity;
 

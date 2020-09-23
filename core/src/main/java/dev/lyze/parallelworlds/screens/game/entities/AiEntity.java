@@ -8,6 +8,7 @@ import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.utils.MathUtils;
 import dev.lyze.parallelworlds.utils.Vector3Pool;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,6 +36,9 @@ public class AiEntity extends Entity {
     protected float wantsToMoveLeft;
     protected float wantsToMoveRight;
     protected boolean wantsToJump;
+
+    @Getter @Setter(AccessLevel.PROTECTED)
+    private float animationXOffset;
 
     @Getter
     private boolean isJumping;
@@ -93,7 +97,7 @@ public class AiEntity extends Entity {
 
         var frame = currentAnimation.getKeyFrame(animationTime);
 
-        var drawX = isFacingRight ? position.x : position.x + width;
+        var drawX = isFacingRight ? position.x + animationXOffset : position.x + width - animationXOffset;
         var drawY = invertedGravity ? position.y + height : position.y;
 
         var drawWidth = isFacingRight ? frame.getRegionWidth() / level.getMap().getTileWidth() : -frame.getRegionWidth() / level.getMap().getTileWidth();
