@@ -23,6 +23,9 @@ public class AiEntity extends Entity {
     @Getter @Setter
     private float jumpForce = 0.80f;
 
+    @Getter @Setter
+    private boolean floating;
+
     private final double jumpAfterGroundLeftMax = 150;
 
     protected final Vector2 velocity = new Vector2();
@@ -233,6 +236,9 @@ public class AiEntity extends Entity {
     }
 
     private void applyGravity(float delta) {
+        if (floating)
+            return;
+
         velocity.y += fixInverted(gravity) * delta;
 
         if (isJumping && invertedGravity ? (velocity.y > 0) : (velocity.y < 0))

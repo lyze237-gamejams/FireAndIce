@@ -1,7 +1,8 @@
 package dev.lyze.parallelworlds.screens.game.map.properties;
 
 import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemy;
-import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.SnailEnemy;
+import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.impl.BatEnemy;
+import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.impl.SnailEnemy;
 import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import lombok.Data;
 import lombok.Getter;
@@ -14,7 +15,7 @@ public class LinkedEnemyMapProperties extends MapProperties {
     private Types entity;
 
     public enum Types {
-        Snail(SnailEnemy.class);
+        Snail(SnailEnemy.class), Bat(BatEnemy.class);
 
         @Getter
         private final Class<? extends LinkedEnemy> entityClass;

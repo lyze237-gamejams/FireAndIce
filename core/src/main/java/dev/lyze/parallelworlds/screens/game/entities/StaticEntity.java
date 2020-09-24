@@ -7,7 +7,7 @@ import lombok.Setter;
 
 public class StaticEntity extends Entity {
     @Getter @Setter(AccessLevel.PROTECTED)
-    private boolean isCollidable;
+    private boolean hitbox;
     public StaticEntity(float x, float y, float width, float height, Level level) {
         super(x, y, width, height, level);
     }

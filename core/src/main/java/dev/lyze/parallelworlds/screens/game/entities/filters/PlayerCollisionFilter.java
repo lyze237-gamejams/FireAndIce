@@ -30,7 +30,7 @@ public class PlayerCollisionFilter implements  CollisionFilter {
         }
 
         if (other.userData instanceof StaticEntity) {
-            if (((StaticEntity) other.userData).isCollidable())
+            if (((StaticEntity) other.userData).isHitbox())
                 return Response.slide;
             return Response.cross;
         }

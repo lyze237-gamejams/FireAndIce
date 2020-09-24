@@ -1,4 +1,4 @@
-package dev.lyze.parallelworlds.screens.game.entities.enemies.linked;
+package dev.lyze.parallelworlds.screens.game.entities.enemies.linked.impl;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.dongbat.jbump.Collision;
@@ -6,6 +6,8 @@ import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
+import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemy;
+import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemyKillPart;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.statics.Statics;
 

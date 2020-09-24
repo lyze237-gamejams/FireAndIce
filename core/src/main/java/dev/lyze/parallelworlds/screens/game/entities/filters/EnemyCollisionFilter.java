@@ -11,8 +11,11 @@ public class EnemyCollisionFilter implements CollisionFilter {
 
     @Override
     public Response filter(Item item, Item other) {
-        if (other.userData instanceof StaticEntity)
-            return Response.slide;
+        if (other.userData instanceof StaticEntity) {
+            if (((StaticEntity) other.userData).isHitbox())
+                return Response.slide;
+            return Response.cross;
+        }
 
         if (other.userData instanceof Player)
             return Response.cross;

@@ -1,4 +1,4 @@
-package dev.lyze.parallelworlds.screens.game.entities.enemies.linked;
+package dev.lyze.parallelworlds.screens.game.entities.enemies.linked.impl;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.dongbat.jbump.Collision;
@@ -6,20 +6,24 @@ import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
+import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemy;
+import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemyKillPart;
 import dev.lyze.parallelworlds.screens.game.entities.particles.ParticlesExplosion;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.statics.Statics;
 
-public class SnailEnemyKillPart extends LinkedEnemyKillPart {
-    private static final Logger<SnailEnemyKillPart> logger = new Logger<>(SnailEnemyKillPart.class);
+public class BatEnemyKillPart extends LinkedEnemyKillPart {
+    private static final Logger<BatEnemyKillPart> logger = new Logger<>(BatEnemyKillPart.class);
 
-    public SnailEnemyKillPart(float x, float y, Level level, LinkedEnemy linkedEnemy, boolean invertedGravity) {
+    public BatEnemyKillPart(float x, float y, Level level, LinkedEnemy linkedEnemy, boolean invertedGravity) {
         super(x, y, level, linkedEnemy, invertedGravity);
 
         setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_walk(), Animation.PlayMode.LOOP));
         setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));
 
         setAnimationXOffset(-0.6f);
+
+        setFloating(true);
     }
 
     @Override

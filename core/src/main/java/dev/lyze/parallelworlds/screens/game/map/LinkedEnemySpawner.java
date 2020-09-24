@@ -4,8 +4,8 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.Map;
-import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemy;
+import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import dev.lyze.parallelworlds.screens.game.map.properties.LinkedEnemyKillPartProperties;
 import dev.lyze.parallelworlds.screens.game.map.properties.LinkedEnemyMapProperties;
 import dev.lyze.parallelworlds.screens.game.map.properties.MapProperties;
@@ -26,7 +26,7 @@ public class LinkedEnemySpawner extends MapSpawner<LinkedEnemyMapProperties> {
     public void spawnInternal(int x, int y, LinkedEnemyMapProperties properties, HashMap<Point, MapProperties> spawnedEntities) {
         logger.logInfo("Spawning linked enemy with direction " + properties.getDirection() + " at " + x + "/" + y);
 
-        var partPoint = spawnedEntities.keySet().stream().filter(p -> p.getX() == x && properties.getDirection() == Direction.Up ? p.getY() > y : p.getY() < y && spawnedEntities.get(p).getClass().equals(LinkedEnemyKillPartProperties.class)).findFirst().orElse(null);
+        var partPoint = spawnedEntities.keySet().stream().filter(p -> spawnedEntities.get(p).getClass().equals(LinkedEnemyKillPartProperties.class) && p.getX() == x && (properties.getDirection() == Direction.Up ? p.getY() > y : p.getY() < y)).findFirst().orElse(null);
         if (partPoint == null) {
             logger.logError("Couldn't find appropriate linked enemy part for linked enemy.");
             return;
