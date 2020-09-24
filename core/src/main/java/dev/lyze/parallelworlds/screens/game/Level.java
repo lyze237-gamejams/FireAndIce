@@ -137,6 +137,9 @@ public class Level {
     }
 
     public void removeEntity(Entity entity) {
+        if (entitiesToRemove.contains(entity))
+            return;
+
         entitiesToRemove.add(entity);
     }
 

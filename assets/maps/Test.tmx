@@ -227,6 +227,7 @@
   <tile id="16">
    <properties>
     <property name="direction" value="Up"/>
+    <property name="entity" value="Snail"/>
     <property name="step" type="int" value="1"/>
     <property name="type" value="LinkedEnemySpawner"/>
    </properties>
@@ -234,6 +235,7 @@
   <tile id="17">
    <properties>
     <property name="direction" value="Down"/>
+    <property name="entity" value="Snail"/>
     <property name="step" type="int" value="1"/>
     <property name="type" value="LinkedEnemySpawner"/>
    </properties>
