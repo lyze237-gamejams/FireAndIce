@@ -3,7 +3,7 @@ package dev.lyze.parallelworlds.screens.game.map;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.Map;
-import dev.lyze.parallelworlds.screens.game.entities.PortalBlock;
+import dev.lyze.parallelworlds.screens.game.entities.impl.PortalBlock;
 import dev.lyze.parallelworlds.screens.game.map.properties.MapProperties;
 import dev.lyze.parallelworlds.screens.game.map.properties.PortalSpawnerMapProperties;
 import dev.lyze.parallelworlds.utils.Point;

@@ -4,8 +4,8 @@ import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Response;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
-import dev.lyze.parallelworlds.screens.game.entities.PortalBlock;
-import dev.lyze.parallelworlds.screens.game.entities.PortalDirectionBlock;
+import dev.lyze.parallelworlds.screens.game.entities.impl.PortalBlock;
+import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionBlock;
 import dev.lyze.parallelworlds.screens.game.entities.StaticEntity;
 
 public class PlayerCollisionFilter implements  CollisionFilter {
@@ -29,8 +29,11 @@ public class PlayerCollisionFilter implements  CollisionFilter {
             return Response.slide;
         }
 
-        if (other.userData instanceof StaticEntity)
-            return Response.slide;
+        if (other.userData instanceof StaticEntity) {
+            if (((StaticEntity) other.userData).isCollidable())
+                return Response.slide;
+            return Response.cross;
+        }
 
         if (other.userData instanceof Player)
             return Response.slide;

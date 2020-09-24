@@ -8,7 +8,7 @@ import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.AiEntity;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
-import dev.lyze.parallelworlds.screens.game.entities.PortalDirectionBlock;
+import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionBlock;
 import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
 import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerCollisionFilter;

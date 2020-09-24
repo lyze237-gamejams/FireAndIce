@@ -63,6 +63,9 @@ public class ParallelWorlds extends ManagedGame<ManagedScreen, ScreenTransition>
 
     @Override
     public void resize(int width, int height) {
+        if (width == 0 && height == 0)
+            return;
+
         super.resize(width, height);
 
         batch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);

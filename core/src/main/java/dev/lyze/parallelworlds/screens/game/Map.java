@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import dev.lyze.parallelworlds.logger.Logger;
-import dev.lyze.parallelworlds.screens.game.entities.GroundTile;
+import dev.lyze.parallelworlds.screens.game.entities.impl.GroundTile;
 import dev.lyze.parallelworlds.screens.game.map.MapEntitiesCreation;
 import dev.lyze.parallelworlds.utils.OrthogonalTiledMapRendererBleeding;
 import lombok.Getter;

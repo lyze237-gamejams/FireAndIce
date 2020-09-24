@@ -50,6 +50,9 @@ public class CharactersAtlas extends DynamicTextureAtlas {
     @Getter @LoadFromTextureAtlas("snailsoul/Death")
     private Array<TextureAtlas.AtlasRegion> snailsoul_death;
 
+    @Getter @LoadFromTextureAtlas("coins/BigCoin")
+    private Array<TextureAtlas.AtlasRegion> coins_bigCoin;
+
     public CharactersAtlas(TextureAtlas atlas) {
         super(atlas);
     }

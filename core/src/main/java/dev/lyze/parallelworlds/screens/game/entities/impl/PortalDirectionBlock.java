@@ -1,6 +1,7 @@
-package dev.lyze.parallelworlds.screens.game.entities;
+package dev.lyze.parallelworlds.screens.game.entities.impl;
 
 import dev.lyze.parallelworlds.screens.game.Level;
+import dev.lyze.parallelworlds.screens.game.entities.StaticEntity;
 import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import lombok.Getter;
 
