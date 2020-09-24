@@ -64,7 +64,7 @@ public class Map {
             return;
         }
 
-        boundaries = ((RectangleMapObject) objects.get(0)).getRectangle();
+        boundaries = new Rectangle(((RectangleMapObject) objects.get(0)).getRectangle());
         boundaries.setPosition(boundaries.getX() / tileWidth, boundaries.getY() / tileHeight);
         boundaries.setSize(boundaries.getWidth() / tileWidth, boundaries.getHeight() / tileHeight);
     }

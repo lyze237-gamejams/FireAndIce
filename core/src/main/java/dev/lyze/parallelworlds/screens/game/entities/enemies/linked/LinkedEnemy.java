@@ -67,6 +67,6 @@ public class LinkedEnemy extends AiEntity {
         }
 
         logger.logInfo("Haha, player is a noob and died!");
-        // hit! ha! dead! RIP
+        level.killPlayer();
     }
 }

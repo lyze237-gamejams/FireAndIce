@@ -7,8 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import de.eskalon.commons.screen.ManagedScreen;
+import de.eskalon.commons.screen.transition.impl.BlendingTransition;
+import dev.lyze.parallelworlds.screens.LoadingScreen;
 import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.statics.Statics;
 import dev.lyze.parallelworlds.statics.assets.levels.LevelAssets;
@@ -20,7 +21,6 @@ import java.util.Objects;
 public class GameScreen extends ManagedScreen {
     private final Stage ui = new Stage(new ExtendViewport(640, 320));
     private final Stage mobileUi = new Stage(new ExtendViewport(320 * 0.75f, 160 * 0.75f));
-    private final Viewport gameViewport = new ExtendViewport(80, 40, new GameCamera());
 
     private Label coinLabel;
 
@@ -42,7 +42,6 @@ public class GameScreen extends ManagedScreen {
         coinLabel = new Label("0", Statics.assets.getGame().getSharedLevelAssets().getSkin());
         inner.add(coinLabel).padLeft(12).padTop(6);
 
-
         root.add(inner).expand().top().left().padLeft(12).padTop(12);
         ui.addActor(root);
 
@@ -54,7 +53,7 @@ public class GameScreen extends ManagedScreen {
         super.show();
 
         levelAssets = (LevelAssets) Objects.requireNonNull(pushParams)[0];
-        level = new Level(this, levelAssets.getMap(), gameViewport);
+        level = new Level(this, levelAssets.getMap());
         level.initialize();
 
         level.getPlayers().getPlayers().forEach(p -> gamepads.add(new VirtualGamepadGroup(p, gamepads.size(), mobileUi)));
@@ -86,7 +85,6 @@ public class GameScreen extends ManagedScreen {
 
     private void update() {
         gamepads.forEach(g -> g.update(actualDeltaTime));
-        gameViewport.apply();
 
         level.update(actualDeltaTime);
         coinLabel.setText(level.getCoinCount());
@@ -105,7 +103,6 @@ public class GameScreen extends ManagedScreen {
         Gdx.gl.glClearColor(0.2f, 0.1f, 0.4f, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
-        gameViewport.apply();
         level.render();
 
         ui.getViewport().apply();
@@ -119,7 +116,7 @@ public class GameScreen extends ManagedScreen {
 
     @Override
     public void resize(int width, int height) {
-        gameViewport.update(width, height);
+        level.resize(width, height);
         ui.getViewport().update(width, height, true);
         mobileUi.getViewport().update(width, height, true);
     }
@@ -132,5 +129,13 @@ public class GameScreen extends ManagedScreen {
     @Override
     public void dispose() {
 
+    }
+
+    public void restartLevel() {
+        setLevel(levelAssets);
+    }
+
+    public void setLevel(LevelAssets levelAssets) {
+        Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), BlendingTransition.class.getName(), levelAssets);
     }
 }

@@ -55,6 +55,8 @@ public class LoadingScreen extends ManagedScreen {
         assetsToLoad.add(gameAssets);
         assetsToLoad.add(Statics.assets.getGame().getSharedLevelAssets());
 
+        sceneSwitched = false;
+
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 

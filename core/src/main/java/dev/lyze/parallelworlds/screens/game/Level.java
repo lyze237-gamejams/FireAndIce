@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class Level {
     private static final Logger<Level> logger = new Logger<>(Level.class);
-    private final Viewport viewport;
+    private final Viewport viewport = new ExtendViewport(80, 40, new GameCamera());
     private final GameScreen game;
 
     private final SpriteBatch spriteBatch = new SpriteBatch();
@@ -33,6 +34,7 @@ public class Level {
 
     @Getter
     private final Players players;
+    private boolean playersDead;
 
     @Getter
     private int coinCount;
@@ -44,9 +46,8 @@ public class Level {
 
     private final BitmapFont debugFont;
 
-    public Level(GameScreen game, TiledMap tiledMap, Viewport viewport) {
+    public Level(GameScreen game, TiledMap tiledMap) {
         this.game = game;
-        this.viewport = viewport;
 
         world = new World<>(1);
         map = new Map(game, tiledMap);
@@ -61,9 +62,18 @@ public class Level {
 
     public void initialize() {
         map.initialize();
+
+        for (int i = 0; i < 100; i++) {
+            ((GameCamera) viewport.getCamera()).update(players.getFirePlayer().getPosition(), players.getIcePlayer().getPosition(), map.getBoundaries(), 0.1f);
+        }
     }
 
     public void update(float delta) {
+        viewport.apply();
+
+        if (playersDead)
+            return;
+
         players.update(delta);
 
         entities.forEach(e -> e.update(world, delta));
@@ -79,6 +89,7 @@ public class Level {
     }
 
     public void render() {
+        viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
 
         spriteBatch.begin();
@@ -131,5 +142,14 @@ public class Level {
 
     public void addCoin() {
         coinCount++;
+    }
+
+    public void killPlayer() {
+        game.restartLevel();
+        playersDead = true;
+    }
+
+    public void resize(int width, int height) {
+        viewport.update(width, height);
     }
 }
