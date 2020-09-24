@@ -35,7 +35,11 @@ public class Level {
     private final Players players;
 
     @Getter
+    private int coinCount;
+
+    @Getter
     private final ArrayList<Entity> entities = new ArrayList<>();
+    private final ArrayList<Entity> entitiesToAdd = new ArrayList<>();
     private final ArrayList<Entity> entitiesToRemove = new ArrayList<>();
 
     private final BitmapFont debugFont;
@@ -63,6 +67,8 @@ public class Level {
         players.update(delta);
 
         entities.forEach(e -> e.update(world, delta));
+        entities.addAll(entitiesToAdd);
+        entitiesToAdd.clear();
         entitiesToRemove.forEach(e -> {
             entities.remove(e);
             world.remove(e.getItem());
@@ -115,11 +121,15 @@ public class Level {
     }
 
     public void addEntity(Entity entity) {
-        entities.add(entity);
+        entitiesToAdd.add(entity);
         entity.addToWorld(world);
     }
 
     public void removeEntity(Entity entity) {
         entitiesToRemove.add(entity);
+    }
+
+    public void addCoin() {
+        coinCount++;
     }
 }

@@ -6,9 +6,6 @@ import dev.lyze.parallelworlds.statics.utils.LoadFromTextureAtlas;
 import lombok.Getter;
 
 public class UiTextureAtlas extends DynamicTextureAtlas {
-    @Getter @LoadFromTextureAtlas("Coin")
-    private TextureAtlas.AtlasRegion coin;
-    
     @Getter @LoadFromTextureAtlas("Blue_Down")
     private TextureAtlas.AtlasRegion blueDown;
     

@@ -3,6 +3,9 @@ package dev.lyze.parallelworlds.screens.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import de.eskalon.commons.screen.ManagedScreen;
@@ -19,6 +22,8 @@ public class GameScreen extends ManagedScreen {
     private final Stage mobileUi = new Stage(new ExtendViewport(320 * 0.75f, 160 * 0.75f));
     private final Viewport gameViewport = new ExtendViewport(80, 40, new GameCamera());
 
+    private Label coinLabel;
+
     @Getter
     private LevelAssets levelAssets;
 
@@ -29,6 +34,18 @@ public class GameScreen extends ManagedScreen {
 
     @Override
     protected void create() {
+        var root = new Table();
+        root.setFillParent(true);
+
+        var inner = new Table();
+        inner.add(new Image(Statics.assets.getGame().getSharedLevelAssets().getParticlesAtlas().getCoins_idle().first())).size(25);
+        coinLabel = new Label("0", Statics.assets.getGame().getSharedLevelAssets().getSkin());
+        inner.add(coinLabel).padLeft(12).padTop(6);
+
+
+        root.add(inner).expand().top().left().padLeft(12).padTop(12);
+        ui.addActor(root);
+
         addInputProcessor(mobileUi);
     }
 
@@ -70,7 +87,10 @@ public class GameScreen extends ManagedScreen {
     private void update() {
         gamepads.forEach(g -> g.update(actualDeltaTime));
         gameViewport.apply();
+
         level.update(actualDeltaTime);
+        coinLabel.setText(level.getCoinCount());
+
         ui.getViewport().apply();
         ui.act(actualDeltaTime);
 

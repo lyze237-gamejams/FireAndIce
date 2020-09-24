@@ -8,6 +8,7 @@ import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.AiEntity;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
 import dev.lyze.parallelworlds.screens.game.entities.filters.EnemyCollisionFilter;
+import dev.lyze.parallelworlds.screens.game.entities.particles.ParticlesExplosion;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.statics.Statics;
 
@@ -50,7 +51,11 @@ public class LinkedEnemyKillPart extends AiEntity {
             return;
 
         logger.logInfo("Ohno I died");
-        die();
         linkedEnemy.die();
+        die();
+
+        for (int i = 0; i < 10; i++) {
+            level.addEntity(new ParticlesExplosion(position.x, position.y, level, invertedGravity));
+        }
     }
 }

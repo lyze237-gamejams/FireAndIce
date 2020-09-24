@@ -28,6 +28,8 @@ public class LinkedEnemy extends AiEntity {
 
         linkedEnemyKillPart = new LinkedEnemyKillPart(killPartX, killPartY, level, this, !invertedGravity);
         level.addEntity(linkedEnemyKillPart);
+
+        setAnimationXOffset(-0.6f);
     }
 
     @Override

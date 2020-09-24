@@ -20,7 +20,8 @@ public class AiEntity extends Entity {
     private final float maxSpeed = 0.25f;
     private final float friction = 5f;
 
-    private final float jumpForce = 0.80f;
+    @Getter @Setter
+    private float jumpForce = 0.80f;
 
     private final double jumpAfterGroundLeftMax = 150;
 
