@@ -55,7 +55,7 @@ public class LinkedEnemyKillPart extends AiEntity {
         die();
 
         for (int i = 0; i < 10; i++) {
-            level.addEntity(new ParticlesExplosion(position.x, position.y, level, invertedGravity));
+            level.addEntity(new ParticlesExplosion(linkedEnemy.getPosition().x, linkedEnemy.getPosition().y, level, !invertedGravity));
         }
     }
 }
