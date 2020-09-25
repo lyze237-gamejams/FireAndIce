@@ -12,8 +12,8 @@ public class LinkedEnemyKillPart extends MoveableEntity {
 
     protected final LinkedEnemy linkedEnemy;
 
-    public LinkedEnemyKillPart(float x, float y, Level level, LinkedEnemy linkedEnemy, boolean invertedWorld) {
-        super(x, y, 2, 1.4f, level, SnailEnemyCollisionFilter.instance);
+    public LinkedEnemyKillPart(float x, float y, Level level, int partsOffset, LinkedEnemy linkedEnemy, boolean invertedWorld) {
+        super(x, y - partsOffset, 2, 1.4f, level, SnailEnemyCollisionFilter.instance);
 
         this.linkedEnemy = linkedEnemy;
         setInvertedWorld(invertedWorld);

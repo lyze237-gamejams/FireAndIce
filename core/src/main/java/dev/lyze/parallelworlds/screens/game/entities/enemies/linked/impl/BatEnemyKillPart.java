@@ -15,8 +15,12 @@ import dev.lyze.parallelworlds.statics.Statics;
 public class BatEnemyKillPart extends LinkedEnemyKillPart {
     private static final Logger<BatEnemyKillPart> logger = new Logger<>(BatEnemyKillPart.class);
 
-    public BatEnemyKillPart(float x, float y, Level level, LinkedEnemy linkedEnemy, boolean invertedGravity) {
-        super(x, y, level, linkedEnemy, invertedGravity);
+    private float startY;
+
+    public BatEnemyKillPart(float x, float y, Level level, int partsOffset, LinkedEnemy linkedEnemy, boolean invertedGravity) {
+        super(x, y, level, partsOffset, linkedEnemy, invertedGravity);
+
+        this.startY = this.position.y;
 
         setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_walk(), Animation.PlayMode.LOOP));
         setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));
@@ -27,6 +31,8 @@ public class BatEnemyKillPart extends LinkedEnemyKillPart {
     @Override
     public void update(World<Entity> world, float delta) {
         super.update(world, delta);
+
+        this.position.y = startY + (((BatEnemy) linkedEnemy).getStartY() - linkedEnemy.getPosition().y);
     }
 
     @Override

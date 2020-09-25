@@ -17,8 +17,8 @@ public class SnailEnemy extends LinkedEnemy {
 
     private boolean currentlyMoveRight = true;
 
-    public SnailEnemy(float x, float y, Level level, float killPartX, float killPartY, boolean invertedGravity) {
-        super(x, y, level, killPartX, killPartY, invertedGravity);
+    public SnailEnemy(float x, float y, Level level, int partsOffset, boolean invertedGravity) {
+        super(x, y, level, partsOffset, invertedGravity);
 
         setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_walk(), Animation.PlayMode.LOOP));
         setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_death(), Animation.PlayMode.NORMAL));
@@ -47,8 +47,8 @@ public class SnailEnemy extends LinkedEnemy {
     }
 
     @Override
-    protected LinkedEnemyKillPart createEnemyKillPart(float x, float y, Level level, boolean invertedGravity) {
-        return new SnailEnemyKillPart(x, y, level, this, !invertedGravity);
+    protected LinkedEnemyKillPart createEnemyKillPart(float x, float y, Level level, int partsOffset, boolean invertedGravity) {
+        return new SnailEnemyKillPart(x, y, level, partsOffset,this, !invertedGravity);
     }
 
     @Override

@@ -24,11 +24,8 @@ public class LinkedEnemySpawner extends MapSpawner<LinkedEnemyMapProperties> {
     public void spawnInternal(int x, int y, LinkedEnemyMapProperties properties, HashMap<Point, MapProperties> spawnedEntities) {
         logger.logInfo("Spawning linked enemy with inverted world " + properties.isInvertedWorld() + " at " + x + "/" + y);
 
-        var enemyY = y + properties.getHeight();
-        var partY = y - properties.getHeight();
-
-        var constructor = ClassReflection.getDeclaredConstructor(properties.getEntity().getEntityClass(), float.class, float.class, Level.class, float.class, float.class, boolean.class);
-        var linkedEnemy = (LinkedEnemy) constructor.newInstance(x, enemyY, level, x, partY, properties.isInvertedWorld());
+        var constructor = ClassReflection.getDeclaredConstructor(properties.getEntity().getEntityClass(), float.class, float.class, Level.class, int.class, boolean.class);
+        var linkedEnemy = (LinkedEnemy) constructor.newInstance(x, y, level, properties.getHeight(), properties.isInvertedWorld());
         level.addEntity(linkedEnemy);
     }
 }

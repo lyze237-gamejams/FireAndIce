@@ -15,8 +15,8 @@ import dev.lyze.parallelworlds.statics.Statics;
 public class SnailEnemyKillPart extends LinkedEnemyKillPart {
     private static final Logger<SnailEnemyKillPart> logger = new Logger<>(SnailEnemyKillPart.class);
 
-    public SnailEnemyKillPart(float x, float y, Level level, LinkedEnemy linkedEnemy, boolean invertedGravity) {
-        super(x, y, level, linkedEnemy, invertedGravity);
+    public SnailEnemyKillPart(float x, float y, Level level, int partsOffset, LinkedEnemy linkedEnemy, boolean invertedGravity) {
+        super(x, y, level, partsOffset, linkedEnemy, invertedGravity);
 
         setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_walk(), Animation.PlayMode.LOOP));
         setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));

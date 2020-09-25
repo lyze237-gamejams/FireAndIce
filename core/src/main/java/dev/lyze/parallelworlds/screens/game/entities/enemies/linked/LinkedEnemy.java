@@ -12,12 +12,12 @@ public abstract class LinkedEnemy extends MoveableEntity {
 
     protected final LinkedEnemyKillPart linkedEnemyKillPart;
 
-    public LinkedEnemy(float x, float y, Level level, float killPartX, float killPartY, boolean invertedWorld) {
-        super(x, y, 2, 1.4f, level, SnailEnemyCollisionFilter.instance);
+    public LinkedEnemy(float x, float y, Level level, int partsOffset, boolean invertedWorld) {
+        super(x, y + partsOffset, 2, 1.4f, level, SnailEnemyCollisionFilter.instance);
 
         this.setInvertedWorld(invertedWorld);
 
-        linkedEnemyKillPart = createEnemyKillPart(killPartX, killPartY, level, invertedWorld);
+        linkedEnemyKillPart = createEnemyKillPart(x, y, level, partsOffset, invertedWorld);
         level.addEntity(linkedEnemyKillPart);
     }
 
@@ -26,5 +26,5 @@ public abstract class LinkedEnemy extends MoveableEntity {
         super.update(world, delta);
     }
 
-    protected abstract LinkedEnemyKillPart createEnemyKillPart(float x, float y, Level level, boolean invertedGravity);
+    protected abstract LinkedEnemyKillPart createEnemyKillPart(float x, float y, Level level, int partsOffset, boolean invertedGravity);
 }

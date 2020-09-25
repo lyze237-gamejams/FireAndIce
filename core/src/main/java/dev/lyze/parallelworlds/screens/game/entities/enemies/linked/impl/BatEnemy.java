@@ -7,12 +7,15 @@ import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
+import dev.lyze.parallelworlds.screens.game.entities.TileEntity;
 import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemy;
 import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemyKillPart;
 import dev.lyze.parallelworlds.screens.game.entities.filters.BatCheckForPlayerCollisionFilter;
 import dev.lyze.parallelworlds.screens.game.entities.filters.BatEnemyCollisionFilter;
+import dev.lyze.parallelworlds.screens.game.entities.impl.PortalTile;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.statics.Statics;
+import lombok.Getter;
 
 public class BatEnemy extends LinkedEnemy {
     private static final Logger<BatEnemy> logger = new Logger<>(BatEnemy.class);
@@ -21,12 +24,13 @@ public class BatEnemy extends LinkedEnemy {
 
     private State state = State.Idle;
 
+    @Getter
     private final float startY;
 
-    public BatEnemy(float x, float y, Level level, float killPartX, float killPartY, boolean invertedGravity) {
-        super(x, y, level, killPartX, killPartY, invertedGravity);
+    public BatEnemy(float x, float y, Level level, int partsOffset, boolean invertedGravity) {
+        super(x, y, level, partsOffset, invertedGravity);
 
-        startY = y;
+        startY = position.y;
 
         setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_walk(), Animation.PlayMode.LOOP));
         setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_walk(), Animation.PlayMode.LOOP));
@@ -55,9 +59,20 @@ public class BatEnemy extends LinkedEnemy {
 
     private boolean checkPlayerUnderMe(World<Entity> world) {
         world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(20f), BatCheckForPlayerCollisionFilter.instance, getTempCollisions());
+
         for (int i = 0; i < getTempCollisions().size(); i++) {
             var collision = getTempCollisions().get(i);
-            if (collision.other.userData instanceof Player)
+            var userData = collision.other.userData;
+            if (userData instanceof TileEntity) {
+                var tileEntity = (TileEntity) userData;
+                if (tileEntity.isHitbox())
+                    return false;
+
+                if (tileEntity instanceof PortalTile)
+                    return false;
+            }
+
+            if (userData instanceof Player)
                 return true;
         }
 
@@ -93,8 +108,8 @@ public class BatEnemy extends LinkedEnemy {
     }
 
     @Override
-    protected LinkedEnemyKillPart createEnemyKillPart(float x, float y, Level level, boolean invertedGravity) {
-        return new BatEnemyKillPart(x, y, level, this, !invertedGravity);
+    protected LinkedEnemyKillPart createEnemyKillPart(float x, float y, Level level, int partsOffset, boolean invertedGravity) {
+        return new BatEnemyKillPart(x, y, level, partsOffset, this, !invertedGravity);
     }
 
     @Override
