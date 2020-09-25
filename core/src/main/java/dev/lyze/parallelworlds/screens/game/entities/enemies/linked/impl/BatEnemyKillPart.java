@@ -22,8 +22,6 @@ public class BatEnemyKillPart extends LinkedEnemyKillPart {
         setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));
 
         setAnimationXOffset(-0.6f);
-
-        setFloating(true);
     }
 
     @Override
@@ -51,7 +49,7 @@ public class BatEnemyKillPart extends LinkedEnemyKillPart {
         die();
 
         for (int i = 0; i < 10; i++) {
-            level.addEntity(new ParticlesExplosion(linkedEnemy.getPosition().x, linkedEnemy.getPosition().y, level, !invertedGravity));
+            level.addEntity(new ParticlesExplosion(linkedEnemy.getPosition().x, linkedEnemy.getPosition().y, level, !isInvertedWorld()));
         }
     }
 }

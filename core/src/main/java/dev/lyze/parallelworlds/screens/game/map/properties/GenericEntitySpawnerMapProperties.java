@@ -1,8 +1,8 @@
 package dev.lyze.parallelworlds.screens.game.map.properties;
 
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
-import dev.lyze.parallelworlds.screens.game.entities.impl.BigCoinBlock;
-import dev.lyze.parallelworlds.screens.game.entities.impl.EnemyBarrierBlock;
+import dev.lyze.parallelworlds.screens.game.entities.impl.BigCoinTile;
+import dev.lyze.parallelworlds.screens.game.entities.impl.EnemyBarrierTile;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ public class GenericEntitySpawnerMapProperties extends MapProperties {
     private boolean invertedGravity;
 
     public enum Types {
-        BigCoin(BigCoinBlock.class), EnemyBarrier(EnemyBarrierBlock.class);
+        BigCoin(BigCoinTile.class), EnemyBarrier(EnemyBarrierTile.class);
 
         @Getter
         private final Class<? extends Entity> entityClass;

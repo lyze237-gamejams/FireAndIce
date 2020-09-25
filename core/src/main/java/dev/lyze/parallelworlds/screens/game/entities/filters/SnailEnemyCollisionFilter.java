@@ -3,19 +3,16 @@ package dev.lyze.parallelworlds.screens.game.entities.filters;
 import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Response;
-import dev.lyze.parallelworlds.screens.game.entities.StaticEntity;
+import dev.lyze.parallelworlds.screens.game.entities.TileEntity;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 
-public class EnemyCollisionFilter implements CollisionFilter {
-    public static final EnemyCollisionFilter instance = new EnemyCollisionFilter();
+public class SnailEnemyCollisionFilter implements CollisionFilter {
+    public static final SnailEnemyCollisionFilter instance = new SnailEnemyCollisionFilter();
 
     @Override
     public Response filter(Item item, Item other) {
-        if (other.userData instanceof StaticEntity) {
-            if (((StaticEntity) other.userData).isHitbox())
-                return Response.slide;
-            return Response.cross;
-        }
+        if (other.userData instanceof TileEntity)
+            return ((TileEntity) other.userData).isHitbox() ? Response.slide : null;
 
         if (other.userData instanceof Player)
             return Response.cross;

@@ -6,9 +6,9 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
-import dev.lyze.parallelworlds.screens.game.entities.AiEntity;
+import dev.lyze.parallelworlds.screens.game.entities.GravityEntity;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
-import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionBlock;
+import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionTile;
 import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
 import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerCollisionFilter;
@@ -16,7 +16,7 @@ import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-public abstract class Player extends AiEntity {
+public abstract class Player extends GravityEntity {
     private static final Logger<Player> logger = new Logger<>(Player.class);
 
     @Getter
@@ -25,7 +25,7 @@ public abstract class Player extends AiEntity {
     private Direction portalDirection;
     private VirtualGamepadGroup gamepad;
 
-    public Player(Level level, PlayerColor color, boolean invertedGravity, Animation<TextureAtlas.AtlasRegion> idle, Animation<TextureAtlas.AtlasRegion> run, Animation<TextureAtlas.AtlasRegion> jump, Animation<TextureAtlas.AtlasRegion> fall, Animation<TextureAtlas.AtlasRegion> death) {
+    public Player(Level level, PlayerColor color, boolean invertedWorld, Animation<TextureAtlas.AtlasRegion> idle, Animation<TextureAtlas.AtlasRegion> run, Animation<TextureAtlas.AtlasRegion> jump, Animation<TextureAtlas.AtlasRegion> fall, Animation<TextureAtlas.AtlasRegion> death) {
         super(0, 0, 2, 1.25f, level, PlayerCollisionFilter.instance);
 
         setIdle(idle);
@@ -34,7 +34,7 @@ public abstract class Player extends AiEntity {
         setFall(fall);
         setDeath(death);
 
-        this.invertedGravity = invertedGravity;
+        setInvertedWorld(invertedWorld);
         this.color = color;
 
         setAnimationXOffset(-0.6f);
@@ -52,10 +52,7 @@ public abstract class Player extends AiEntity {
         if (oldPortalDirection != null && portalDirection == null) {
             // left all direction blocks
             logger.logInfo("DIRECTION " + oldPortalDirection);
-            if (oldPortalDirection == Direction.Up)
-                invertedGravity = false;
-            else if (oldPortalDirection == Direction.Down)
-                invertedGravity = true;
+            setInvertedWorld(oldPortalDirection == Direction.Down);
         }
     }
 
@@ -70,8 +67,8 @@ public abstract class Player extends AiEntity {
     protected void onCollision(Collision collision) {
         super.onCollision(collision);
 
-        if (collision.other.userData instanceof PortalDirectionBlock) {
-            var portalDirection = (PortalDirectionBlock) collision.other.userData;
+        if (collision.other.userData instanceof PortalDirectionTile) {
+            var portalDirection = (PortalDirectionTile) collision.other.userData;
             this.portalDirection = portalDirection.getDirection();
         }
     }

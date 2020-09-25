@@ -3,7 +3,7 @@ package dev.lyze.parallelworlds.screens.game.map;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.Map;
-import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionBlock;
+import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionTile;
 import dev.lyze.parallelworlds.screens.game.map.properties.MapProperties;
 import dev.lyze.parallelworlds.screens.game.map.properties.PortalDirectionMapProperties;
 import dev.lyze.parallelworlds.utils.Point;
@@ -21,7 +21,7 @@ public class PortalDirectionSpawner extends MapSpawner<PortalDirectionMapPropert
     public void spawnInternal(int x, int y, PortalDirectionMapProperties data, HashMap<Point, MapProperties> spawnedEntities) {
         logger.logInfo("Spawning portal direction " + data.getDirection() + " at " + x + "/" + y);
 
-        var portal = new PortalDirectionBlock(x, y, level, data.getDirection());
+        var portal = new PortalDirectionTile(x, y, level, data.getDirection());
         level.addEntity(portal);
     }
 }

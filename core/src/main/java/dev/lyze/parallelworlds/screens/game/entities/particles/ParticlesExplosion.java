@@ -5,7 +5,7 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
-import dev.lyze.parallelworlds.screens.game.entities.AiEntity;
+import dev.lyze.parallelworlds.screens.game.entities.GravityEntity;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
 import dev.lyze.parallelworlds.screens.game.entities.filters.CoinsColliderFilter;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
@@ -13,7 +13,7 @@ import dev.lyze.parallelworlds.statics.Statics;
 
 import java.util.Random;
 
-public class ParticlesExplosion extends AiEntity {
+public class ParticlesExplosion extends GravityEntity {
     private static final Logger<ParticlesExplosion> logger = new Logger<>(ParticlesExplosion.class);
 
     private static final Random random = new Random();
@@ -21,10 +21,10 @@ public class ParticlesExplosion extends AiEntity {
     private float invincibilityTimer = 0.1f;
     private boolean groundTouched;
 
-    public ParticlesExplosion(float x, float y, Level level, boolean invertedGravity) {
+    public ParticlesExplosion(float x, float y, Level level, boolean invertedWorld) {
         super(x, y, 1, 1, level, CoinsColliderFilter.instance);
 
-        this.invertedGravity = invertedGravity;
+        setInvertedWorld(invertedWorld);
 
         setIdle(new Animation<>(0.2f, Statics.assets.getGame().getSharedLevelAssets().getParticlesAtlas().getCoins_idle(), Animation.PlayMode.LOOP));
         setFall(new Animation<>(0.05f, Statics.assets.getGame().getSharedLevelAssets().getParticlesAtlas().getCoins_explode(), Animation.PlayMode.NORMAL));

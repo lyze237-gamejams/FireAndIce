@@ -2,6 +2,7 @@ package dev.lyze.parallelworlds.screens.game.entities.enemies.linked.impl;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.dongbat.jbump.Collision;
+import com.dongbat.jbump.Response;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
@@ -55,10 +56,11 @@ public class SnailEnemy extends LinkedEnemy {
         super.onCollision(collision);
 
         if (!(collision.other.userData instanceof Player)) {
-            if (collision.normal.x != 0) {
-                logger.logInfo("TURNING AROUND");
-                currentlyMoveRight = !currentlyMoveRight;
-            }
+            if (!collision.type.equals(Response.slide))
+                return;
+
+            logger.logInfo("Turning around because of " + collision.other.userData.getClass());
+            currentlyMoveRight = !currentlyMoveRight;
             return;
         }
 

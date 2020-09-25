@@ -7,19 +7,19 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
-import dev.lyze.parallelworlds.screens.game.entities.StaticEntity;
+import dev.lyze.parallelworlds.screens.game.entities.TileEntity;
 import dev.lyze.parallelworlds.screens.game.entities.filters.CoinsColliderFilter;
 import dev.lyze.parallelworlds.screens.game.entities.particles.ParticlesExplosion;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.statics.Statics;
 
-public class BigCoinBlock extends StaticEntity {
+public class BigCoinTile extends TileEntity {
     private final Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getCoins_bigCoin(), Animation.PlayMode.LOOP_PINGPONG);
 
     private float animationTime;
     private boolean invertedGravity;
 
-    public BigCoinBlock(float x, float y, Level level, boolean invertedGravity) {
+    public BigCoinTile(float x, float y, Level level, boolean invertedGravity) {
         super(x, y, 2, 2, level);
 
         this.invertedGravity = invertedGravity;

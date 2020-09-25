@@ -12,21 +12,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-public class AiEntity extends Entity {
-    private static final Logger<AiEntity> logger = new Logger<>(AiEntity.class);
+public class MoveableEntity extends Entity {
+    private static final Logger<MoveableEntity> logger = new Logger<>(MoveableEntity.class);
 
-    private final float gravity = -1.8f;
     private final float movementSpeedIncrease = 10f;
     private final float maxSpeed = 0.25f;
     private final float friction = 5f;
-
-    @Getter @Setter
-    private float jumpForce = 0.80f;
-
-    @Getter @Setter
-    private boolean floating;
-
-    private final double jumpAfterGroundLeftMax = 150;
 
     protected final Vector2 velocity = new Vector2();
     protected final Vector2 inputVelocity = new Vector2();
@@ -35,37 +26,34 @@ public class AiEntity extends Entity {
     @Setter
     protected boolean isFacingRight = true;
 
-    protected boolean invertedGravity = false;
-
     protected float wantsToMoveLeft;
     protected float wantsToMoveRight;
-    protected boolean wantsToJump;
 
     @Getter @Setter(AccessLevel.PROTECTED)
     private float animationXOffset;
 
     @Getter
-    private boolean isJumping;
-    @Getter
-    private boolean isGrounded;
-    @Getter
     private boolean isDead;
-    private double lastGrounded = 0f;
 
     @Getter @Setter
-    private Animation<TextureAtlas.AtlasRegion> idle, run, jump, fall, death;
+    private Animation<TextureAtlas.AtlasRegion> idle, run, death;
     private Animation<TextureAtlas.AtlasRegion> currentAnimation;
+
+    @Getter @Setter
+    private boolean invertedWorld;
 
     private float animationTime;
 
+    @Getter
     private final CollisionFilter collisionFilter;
 
+    @Getter
     private final Collisions tempCollisions = new Collisions();
 
     @Getter
     private final GlyphLayout debugGlyphLayout = new GlyphLayout();
 
-    public AiEntity(float x, float y, float width, float height, Level level, CollisionFilter collisionFilter) {
+    public MoveableEntity(float x, float y, float width, float height, Level level, CollisionFilter collisionFilter) {
         super(x, y, width, height, level);
 
         this.collisionFilter = collisionFilter;
@@ -77,20 +65,19 @@ public class AiEntity extends Entity {
 
         animationTime += delta;
 
-        applyGravity(delta);
         setInput();
-        checkGround(world);
-        checkJump();
         checkMovementDirection();
 
         applyInput(delta);
-        applyGravity(delta);
         applyFriction(delta);
 
+        beforeApplyVelocity(world, delta);
         checkCollisionsAndApplyVelocity(world, delta);
 
         updateAnimation();
     }
+
+    protected void beforeApplyVelocity(World<Entity> world, float delta) { }
 
     @Override
     public void render(SpriteBatch batch) {
@@ -102,10 +89,10 @@ public class AiEntity extends Entity {
         var frame = currentAnimation.getKeyFrame(animationTime);
 
         var drawX = isFacingRight ? position.x + animationXOffset : position.x + width - animationXOffset;
-        var drawY = invertedGravity ? position.y + height : position.y;
+        var drawY = invertedWorld ? position.y + height : position.y;
 
         var drawWidth = isFacingRight ? frame.getRegionWidth() / level.getMap().getTileWidth() : -frame.getRegionWidth() / level.getMap().getTileWidth();
-        var drawHeight = invertedGravity ? -frame.getRegionHeight() / level.getMap().getTileHeight() : frame.getRegionHeight() / level.getMap().getTileHeight();
+        var drawHeight = invertedWorld ? -frame.getRegionHeight() / level.getMap().getTileHeight() : frame.getRegionHeight() / level.getMap().getTileHeight();
 
         drawWidth *= 1.5f;
         drawHeight *= 1.5f;
@@ -116,10 +103,6 @@ public class AiEntity extends Entity {
     protected void updateAnimation() {
         if (isDead)
             setAnimation(death);
-        else if (isJumping)
-            setAnimation(jump);
-        else if (!isGrounded)
-            setAnimation(fall);
         else if (velocity.x > 0 || velocity.x < 0)
             setAnimation(run);
         else
@@ -137,42 +120,9 @@ public class AiEntity extends Entity {
         animationTime = 0;
     }
 
-    private void checkGround(World<Entity> world) {
-        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), collisionFilter, tempCollisions);
-        for (int i = 0; i < tempCollisions.size(); i++) {
-            if (tempCollisions.get(i).type.equals(Response.slide)) {
-                lastGrounded = System.currentTimeMillis();
-                if (!isGrounded)
-                    landed();
-                isGrounded = true;
-                return;
-            }
-        }
-
-        isGrounded = false;
-    }
-
     public void die() {
         if (!isDead)
             isDead = true;
-    }
-
-    protected void landed() { }
-
-    private void checkJump() {
-        if (!wantsToJump)
-            return;
-
-        if ((isGrounded || (System.currentTimeMillis() - lastGrounded) < jumpAfterGroundLeftMax) && !isJumping)
-            jump();
-    }
-
-    protected void jump() {
-        if (invertedGravity ? velocity.y > 0 : velocity.y < 0)
-            velocity.y = 0;
-
-        velocity.y += fixInverted(jumpForce);
-        isJumping = true;
     }
 
     private void checkCollisionsAndApplyVelocity(World<Entity> world, float delta) {
@@ -194,14 +144,6 @@ public class AiEntity extends Entity {
         if (collision.normal.x != 0) {
             // wall
             velocity.x = 0;
-        }
-        if (collision.normal.y != 0) {
-            // ceiling or floor
-            velocity.y = 0;
-
-            if (collision.normal.y == fixInverted(1)) {
-                isJumping = false;
-            }
         }
     }
 
@@ -235,18 +177,8 @@ public class AiEntity extends Entity {
             velocity.x = MathUtils.approach(velocity.x, 0, friction * delta);
     }
 
-    private void applyGravity(float delta) {
-        if (floating)
-            return;
-
-        velocity.y += fixInverted(gravity) * delta;
-
-        if (isJumping && invertedGravity ? (velocity.y > 0) : (velocity.y < 0))
-            isJumping = false;
-    }
-
     protected float fixInverted(float val) {
-        return invertedGravity ? -val : val;
+        return invertedWorld ? -val : val;
     }
 
     public void debugTextRender(BitmapFont font, Camera cam, SpriteBatch screenBatch) {
@@ -254,14 +186,7 @@ public class AiEntity extends Entity {
         pos.set(position, 0);
         cam.project(pos);
 
-        var str = "Pos: " + position.x + "/" + position.y + "\n" +
-                "Jum: " + isJumping + " ; Grn: " + isGrounded + "\n" +
-                "Vel: " + velocity.x + "/" + velocity.y + "\n" +
-                "Grv: " + fixInverted(gravity);
-        font.draw(screenBatch, str, pos.x + width, pos.y + height);
-
-        str = "WJ: " + wantsToJump + "\n" +
-                "WL: " + wantsToMoveLeft + "\n" +
+        var str = "WL: " + wantsToMoveLeft + "\n" +
                 "WR: " + wantsToMoveRight + "\n";
         debugGlyphLayout.setText(font, str);
         font.draw(screenBatch, str, pos.x - debugGlyphLayout.width, pos.y + height);

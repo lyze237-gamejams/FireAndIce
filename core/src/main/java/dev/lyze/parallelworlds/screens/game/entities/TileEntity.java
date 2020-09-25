@@ -5,10 +5,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-public class StaticEntity extends Entity {
+public class TileEntity extends Entity {
     @Getter @Setter(AccessLevel.PROTECTED)
     private boolean hitbox;
-    public StaticEntity(float x, float y, float width, float height, Level level) {
+    public TileEntity(float x, float y, float width, float height, Level level) {
         super(x, y, width, height, level);
     }
 }

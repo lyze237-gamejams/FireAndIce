@@ -49,7 +49,7 @@ public class SnailEnemyKillPart extends LinkedEnemyKillPart {
         die();
 
         for (int i = 0; i < 10; i++) {
-            level.addEntity(new ParticlesExplosion(linkedEnemy.getPosition().x, linkedEnemy.getPosition().y, level, !invertedGravity));
+            level.addEntity(new ParticlesExplosion(linkedEnemy.getPosition().x, linkedEnemy.getPosition().y, level, !isInvertedWorld()));
         }
     }
 }

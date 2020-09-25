@@ -6,7 +6,7 @@ import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
-import dev.lyze.parallelworlds.screens.game.entities.StaticEntity;
+import dev.lyze.parallelworlds.screens.game.entities.TileEntity;
 import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemy;
 import dev.lyze.parallelworlds.screens.game.entities.enemies.linked.LinkedEnemyKillPart;
 import dev.lyze.parallelworlds.screens.game.entities.players.Player;
@@ -21,11 +21,8 @@ public class BatEnemy extends LinkedEnemy {
         super(x, y, level, killPartX, killPartY, invertedGravity);
 
         setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_walk(), Animation.PlayMode.LOOP));
-        setJump(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_walk(), Animation.PlayMode.LOOP));
-        setFall(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_walk(), Animation.PlayMode.LOOP));
+        setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_walk(), Animation.PlayMode.LOOP));
         setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnail_death(), Animation.PlayMode.NORMAL));
-
-        setFloating(true);
 
         setAnimationXOffset(-0.6f);
     }
@@ -59,8 +56,8 @@ public class BatEnemy extends LinkedEnemy {
     protected void onCollision(Collision collision) {
         super.onCollision(collision);
 
-        if (collision.other.userData instanceof StaticEntity) {
-            if (((StaticEntity) collision.other.userData).isHitbox()) {
+        if (collision.other.userData instanceof TileEntity) {
+            if (((TileEntity) collision.other.userData).isHitbox()) {
                 if (collision.normal.x != 0) {
                     logger.logInfo("TURNING AROUND");
                     currentlyMoveRight = !currentlyMoveRight;
