@@ -35,6 +35,11 @@ public class MoveableEntity extends Entity {
     @Getter
     private boolean isDead;
 
+    @Getter
+    private boolean isGrounded;
+    @Getter
+    private double lastGrounded;
+
     @Getter @Setter
     private Animation<TextureAtlas.AtlasRegion> idle, run, death;
     private Animation<TextureAtlas.AtlasRegion> currentAnimation;
@@ -44,8 +49,8 @@ public class MoveableEntity extends Entity {
 
     private float animationTime;
 
-    @Getter
-    private final CollisionFilter collisionFilter;
+    @Getter @Setter
+    private CollisionFilter collisionFilter;
 
     @Getter
     private final Collisions tempCollisions = new Collisions();
@@ -66,6 +71,7 @@ public class MoveableEntity extends Entity {
         animationTime += delta;
 
         setInput();
+        checkGround(world);
         checkMovementDirection();
 
         applyInput(delta);
@@ -75,6 +81,26 @@ public class MoveableEntity extends Entity {
         checkCollisionsAndApplyVelocity(world, delta);
 
         updateAnimation();
+    }
+
+    private void checkGround(World<Entity> world) {
+        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), getCollisionFilter(), getTempCollisions());
+        for (int i = 0; i < getTempCollisions().size(); i++) {
+            if (getTempCollisions().get(i).type.equals(Response.slide)) {
+                if (!isGrounded)
+                    landed();
+
+                lastGrounded = System.currentTimeMillis();
+                isGrounded = true;
+
+                return;
+            }
+        }
+
+        isGrounded = false;
+    }
+
+    protected void landed() {
     }
 
     protected void beforeApplyVelocity(World<Entity> world, float delta) { }

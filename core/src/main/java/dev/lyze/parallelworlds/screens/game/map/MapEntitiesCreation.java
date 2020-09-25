@@ -33,7 +33,6 @@ public class MapEntitiesCreation {
         mapSpawners.add(new PortalSpawner(level, map));
         mapSpawners.add(new PortalDirectionSpawner(level, map));
         mapSpawners.add(new LinkedEnemySpawner(level, map));
-        mapSpawners.add(new LinkedEnemyKillPartSpawner(level, map));
         mapSpawners.add(new GenericEntitySpawner(level, map));
     }
 

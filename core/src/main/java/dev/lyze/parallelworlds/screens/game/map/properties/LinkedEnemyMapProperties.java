@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class LinkedEnemyMapProperties extends MapProperties {
-    private Direction direction;
+    private boolean invertedWorld;
     private Types entity;
+    private int height;
 
     public enum Types {
         Snail(SnailEnemy.class), Bat(BatEnemy.class);

@@ -26,9 +26,6 @@ public class GravityEntity extends MoveableEntity {
 
     @Getter
     private boolean isJumping;
-    @Getter
-    private boolean isGrounded;
-    private double lastGrounded = 0f;
 
     protected boolean wantsToJump;
 
@@ -39,7 +36,6 @@ public class GravityEntity extends MoveableEntity {
     @Override
     public void update(World<Entity> world, float delta) {
         applyGravity(delta);
-        checkGround(world);
         checkJump();
         super.update(world, delta);
     }
@@ -55,7 +51,7 @@ public class GravityEntity extends MoveableEntity {
             setAnimation(getDeath());
         else if (isJumping)
             setAnimation(jump);
-        else if (!isGrounded)
+        else if (!isGrounded())
             setAnimation(fall);
         else if (velocity.x > 0 || velocity.x < 0)
             setAnimation(getRun());
@@ -63,28 +59,11 @@ public class GravityEntity extends MoveableEntity {
             setAnimation(getIdle());
     }
 
-    private void checkGround(World<Entity> world) {
-        world.project(item, position.x, position.y, width, height, position.x, position.y - fixInverted(0.1f), getCollisionFilter(), getTempCollisions());
-        for (int i = 0; i < getTempCollisions().size(); i++) {
-            if (getTempCollisions().get(i).type.equals(Response.slide)) {
-                lastGrounded = System.currentTimeMillis();
-                if (!isGrounded)
-                    landed();
-                isGrounded = true;
-                return;
-            }
-        }
-
-        isGrounded = false;
-    }
-
-    protected void landed() { }
-
     private void checkJump() {
         if (!wantsToJump)
             return;
 
-        if ((isGrounded || (System.currentTimeMillis() - lastGrounded) < jumpAfterGroundLeftMax) && !isJumping)
+        if ((isGrounded() || (System.currentTimeMillis() - getLastGrounded()) < jumpAfterGroundLeftMax) && !isJumping)
             jump();
     }
 
