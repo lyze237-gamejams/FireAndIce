@@ -83,7 +83,7 @@ public class MainMenuScreen extends ManagedScreen {
         addButton(menuSubTable, "Start new game", initialDelay + 0.15f).addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), HorizontalSlicingTransition.class.getName(), Statics.assets.getGame().getLevels().get(0));
+                Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), HorizontalSlicingTransition.class.getName(), Statics.assets.getGame().getLevels().get("Test"));
             }
         });
         addButton(menuSubTable, "Options", initialDelay + 0.15f * 2);

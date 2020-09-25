@@ -46,6 +46,8 @@ public class Level {
 
     private final BitmapFont debugFont;
 
+    private boolean finished;
+
     public Level(GameScreen game, TiledMap tiledMap) {
         this.game = game;
 
@@ -71,7 +73,7 @@ public class Level {
     public void update(float delta) {
         viewport.apply();
 
-        if (playersDead)
+        if (playersDead || finished)
             return;
 
         players.update(delta);
@@ -148,9 +150,22 @@ public class Level {
     }
 
     public void killPlayer() {
+        if (finished)
+            return;
+
         game.restartLevel();
         playersDead = true;
+        finished = true;
     }
+
+    public void loadLevel(String level) {
+        if (finished)
+            return;
+
+        game.setLevel(level);
+        finished = true;
+    }
+
 
     public void resize(int width, int height) {
         viewport.update(width, height);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
+import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.LoadingScreen;
 import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.statics.Statics;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameScreen extends ManagedScreen {
+    private static final Logger<GameScreen> logger = new Logger<>(GameScreen.class);
+
     private final Stage ui = new Stage(new ExtendViewport(640, 320));
     private final Stage mobileUi = new Stage(new ExtendViewport(320 * 0.75f, 160 * 0.75f));
 
@@ -133,6 +136,11 @@ public class GameScreen extends ManagedScreen {
 
     public void restartLevel() {
         setLevel(levelAssets);
+    }
+
+    public void setLevel(String level) {
+        logger.logInfo("Loading level " + level);
+        setLevel(Statics.assets.getGame().getLevels().get(level));
     }
 
     public void setLevel(LevelAssets levelAssets) {

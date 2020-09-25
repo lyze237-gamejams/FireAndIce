@@ -8,6 +8,7 @@ import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
 import dev.lyze.parallelworlds.screens.game.entities.GravityEntity;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
+import dev.lyze.parallelworlds.screens.game.entities.impl.ExitTile;
 import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionTile;
 import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
@@ -67,8 +68,15 @@ public abstract class Player extends GravityEntity {
     protected void onCollision(Collision collision) {
         super.onCollision(collision);
 
-        if (collision.other.userData instanceof PortalDirectionTile) {
-            var portalDirection = (PortalDirectionTile) collision.other.userData;
+        var userData = collision.other.userData;
+
+        if (userData instanceof ExitTile) {
+            level.loadLevel(((ExitTile) userData).getLevelName());
+            return;
+        }
+
+        if (userData instanceof PortalDirectionTile) {
+            var portalDirection = (PortalDirectionTile) userData;
             this.portalDirection = portalDirection.getDirection();
         }
     }

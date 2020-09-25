@@ -34,6 +34,7 @@ public class MapEntitiesCreation {
         mapSpawners.add(new PortalDirectionSpawner(level, map));
         mapSpawners.add(new LinkedEnemySpawner(level, map));
         mapSpawners.add(new GenericEntitySpawner(level, map));
+        mapSpawners.add(new ExitSpawner(level, map));
     }
 
     public void initialize() {
@@ -69,7 +70,7 @@ public class MapEntitiesCreation {
         for (int cnt = 0; spawnedEntities.size() < entitiesCoordinates.size(); cnt++) {
             for (Point coord : entitiesCoordinates.keySet()) {
                 var cell = entitiesLayer.getCell(coord.getX(), coord.getY());
-                if (cell.getTile().getProperties().get("step", Integer.class) == cnt) {
+                if (cell.getTile().getProperties().get("step", 0, Integer.class) == cnt) {
                     var spawnedProperties = spawn(coord.getX(), coord.getY(), entitiesCoordinates.get(coord), cell);
                     spawnedEntities.put(coord, spawnedProperties);
                 }
