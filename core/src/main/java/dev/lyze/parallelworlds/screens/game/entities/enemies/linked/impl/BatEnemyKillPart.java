@@ -22,8 +22,8 @@ public class BatEnemyKillPart extends LinkedEnemyKillPart {
 
         this.startY = this.position.y;
 
-        setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_walk(), Animation.PlayMode.LOOP));
-        setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));
+        setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getBatsoul_walk(), Animation.PlayMode.LOOP));
+        setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getBatsoul_death(), Animation.PlayMode.NORMAL));
 
         setAnimationXOffset(-0.6f);
     }

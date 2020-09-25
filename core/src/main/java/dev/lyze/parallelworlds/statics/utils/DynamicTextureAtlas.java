@@ -23,11 +23,22 @@ public abstract class DynamicTextureAtlas {
 
             var path = annotation.getAnnotation(LoadFromTextureAtlas.class);
 
+            boolean flipX = false, flipY = false;
+            var flipAnnotation = field.getDeclaredAnnotation(Flip.class);
+            if (flipAnnotation != null) {
+                var flip = flipAnnotation.getAnnotation(Flip.class);
+
+                flipX = flip.flipX();
+                flipY = flip.flipY();
+            }
+
             if (field.getType() == TextureAtlas.AtlasRegion.class) {
                 logger.logInfo("Loading region: " + path.value());
                 field.setAccessible(true);
                 try {
-                    field.set(this, atlas.findRegion(path.value()));
+                    var region = atlas.findRegion(path.value());
+                    region.flip(flipX, flipY);
+                    field.set(this, region);
                 } catch (ReflectionException e) {
                     logger.logError("Couldn't assign region " + field.getName() + ": " + path.value(), e);
                 }
@@ -35,7 +46,10 @@ public abstract class DynamicTextureAtlas {
                 logger.logInfo("Loading regions: " + path.value());
                 field.setAccessible(true);
                 try {
-                    field.set(this, atlas.findRegions(path.value()));
+                    var regions = atlas.findRegions(path.value());
+                    for (TextureAtlas.AtlasRegion r : regions)
+                        r.flip(flipX, flipY);
+                    field.set(this, regions);
                 } catch (ReflectionException e) {
                     logger.logError("Couldn't assign region " + field.getName() + ": " + path.value(), e);
                 }

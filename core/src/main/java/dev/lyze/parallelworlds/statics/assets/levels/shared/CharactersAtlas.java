@@ -3,6 +3,7 @@ package dev.lyze.parallelworlds.statics.assets.levels.shared;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import dev.lyze.parallelworlds.statics.utils.DynamicTextureAtlas;
+import dev.lyze.parallelworlds.statics.utils.Flip;
 import dev.lyze.parallelworlds.statics.utils.LoadFromTextureAtlas;
 import lombok.Getter;
 
@@ -52,6 +53,18 @@ public class CharactersAtlas extends DynamicTextureAtlas {
 
     @Getter @LoadFromTextureAtlas("coins/BigCoin")
     private Array<TextureAtlas.AtlasRegion> coins_bigCoin;
+
+    @Getter @LoadFromTextureAtlas("bat/Walk") @Flip(flipX = true)
+    private Array<TextureAtlas.AtlasRegion> bat_walk;
+
+    @Getter @LoadFromTextureAtlas("bat/Death") @Flip(flipX = true)
+    private Array<TextureAtlas.AtlasRegion> bat_death;
+
+    @Getter @LoadFromTextureAtlas("batsoul/Walk") @Flip(flipX = true)
+    private Array<TextureAtlas.AtlasRegion> batsoul_walk;
+
+    @Getter @LoadFromTextureAtlas("batsoul/Death") @Flip(flipX = true)
+    private Array<TextureAtlas.AtlasRegion> batsoul_death;
 
     public CharactersAtlas(TextureAtlas atlas) {
         super(atlas);
