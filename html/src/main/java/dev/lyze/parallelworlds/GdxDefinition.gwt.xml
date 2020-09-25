@@ -23,6 +23,7 @@
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.map.properties" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.entities.enemies.linked" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.entities.enemies.linked.impl" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.Level" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.entities.impl" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.graphics.g2d.TextureAtlas" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.maps.tiled.TiledMap" />
