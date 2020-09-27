@@ -70,7 +70,7 @@ public abstract class DynamicAssets {
             for (var potentialSkinField: dynamicAssetFields.keySet()) {
                 var potentialSkinPath = dynamicAssetFields.get(potentialSkinField);
                 if (!potentialSkinPath.value().equals(path.value()))
-                    return;
+                    continue;
 
                 try {
                     logger.logInfo("Loading atlas from skin: " + path.value());

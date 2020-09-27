@@ -57,6 +57,9 @@ public class SoundAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("sounds/Fall.ogg")
     private Sound fall;
 
+    @Getter @LoadAssetFromFile("sounds/Long Slide Up.ogg")
+    private Sound longSlideUp;
+
     private final Random random = new Random();
 
     public SoundAssets(AssetManager assMan) {

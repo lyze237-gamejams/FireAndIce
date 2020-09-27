@@ -10,6 +10,8 @@ dependencies {
 
 	api "com.github.tommyettinger:jbump:$jbumpVersion"
 
+	api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
+
 	implementation "org.projectlombok:lombok:$lombokVersion"
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }

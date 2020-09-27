@@ -46,6 +46,9 @@ dependencies {
 
 	api "com.github.tommyettinger:jbump:$jbumpVersion:sources"
 
+	api "com.github.tommyettinger:regexodus:$regExodusVersion:sources"
+	api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion:sources"
+
 	lom "org.projectlombok:lombok:$lombokVersion"
 	implementation configurations.lom.dependencies
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"

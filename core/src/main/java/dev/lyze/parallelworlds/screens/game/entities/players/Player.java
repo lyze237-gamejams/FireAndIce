@@ -83,6 +83,7 @@ public abstract class Player extends GravityEntity {
         var userData = collision.other.userData;
 
         if (userData instanceof ExitTile) {
+            Statics.assets.getSound().getLongSlideUp().play(0.5f);
             level.loadLevel(((ExitTile) userData).getLevelName());
             return;
         }

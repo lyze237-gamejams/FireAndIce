@@ -18,6 +18,9 @@ public class MainMenuAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("music/Up-the-Ladder.mp3")
     private Music music;
 
+    @Getter @LoadAssetFromFile("music/Caffeine-Crazed-Coin-Op-Kids.mp3")
+    private Music caffeine;
+
     public MainMenuAssets(AssetManager ass) {
         super(ass);
     }

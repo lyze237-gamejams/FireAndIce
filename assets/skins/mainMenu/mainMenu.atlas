@@ -45,11 +45,11 @@ layer
   size: 384, 216
   orig: 384, 216
   offset: 0, 0
-  index: 2
+  index: 1
 layer
   rotate: false
   xy: 508, 586
   size: 384, 216
   orig: 384, 216
   offset: 0, 0
-  index: 1
+  index: 2

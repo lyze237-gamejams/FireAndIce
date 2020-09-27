@@ -10,6 +10,7 @@
 	<inherits name="libgdx_screenmanager" />
 	<inherits name="libgdx_screenmanager_gwt" />
 	<inherits name="com.dongbat.jbump" />
+	<inherits name="com.rafaskoberg.gdx.typinglabel.typinglabel" />
 	<entry-point class="dev.lyze.parallelworlds.gwt.GwtLauncher" />
 	<set-configuration-property name="gdx.assetpath" value="../assets" />
 	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
