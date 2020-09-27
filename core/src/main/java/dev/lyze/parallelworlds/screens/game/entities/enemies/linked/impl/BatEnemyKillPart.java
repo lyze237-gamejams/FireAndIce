@@ -51,6 +51,7 @@ public class BatEnemyKillPart extends LinkedEnemyKillPart {
             return;
 
         logger.logInfo("Ohno I died");
+        Statics.assets.getSound().playBigPitch(0.6f, Statics.assets.getSound().getSword1());
         linkedEnemy.die();
         die();
 

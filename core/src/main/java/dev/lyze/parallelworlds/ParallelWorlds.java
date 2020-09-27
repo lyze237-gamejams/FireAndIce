@@ -12,6 +12,7 @@ import de.eskalon.commons.screen.transition.impl.HorizontalSlicingTransition;
 import de.eskalon.commons.screen.transition.impl.SlidingDirection;
 import de.eskalon.commons.screen.transition.impl.SlidingOutTransition;
 import dev.lyze.parallelworlds.logger.Logger;
+import dev.lyze.parallelworlds.screens.EndScene;
 import dev.lyze.parallelworlds.screens.IntroScreen;
 import dev.lyze.parallelworlds.screens.game.GameScreen;
 import dev.lyze.parallelworlds.screens.LoadingScreen;
@@ -41,6 +42,7 @@ public class ParallelWorlds extends ManagedGame<ManagedScreen, ScreenTransition>
         this.screenManager.addScreen(LoadingScreen.class.getName(), new LoadingScreen());
         this.screenManager.addScreen(MainMenuScreen.class.getName(), new MainMenuScreen());
         this.screenManager.addScreen(IntroScreen.class.getName(), new IntroScreen());
+        this.screenManager.addScreen(EndScene.class.getName(), new EndScene());
         this.screenManager.addScreen(GameScreen.class.getName(), new GameScreen());
 
         screenManager.addScreenTransition(BlendingTransition.class.getName(), new BlendingTransition(batch, 1F, Interpolation.pow2In));

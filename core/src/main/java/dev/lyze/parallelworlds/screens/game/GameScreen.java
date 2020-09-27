@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
 import dev.lyze.parallelworlds.logger.Logger;
+import dev.lyze.parallelworlds.screens.EndScene;
 import dev.lyze.parallelworlds.screens.LoadingScreen;
 import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.statics.Statics;
@@ -21,10 +22,10 @@ import java.util.Objects;
 public class GameScreen extends ManagedScreen {
     private static final Logger<GameScreen> logger = new Logger<>(GameScreen.class);
 
-    private final Stage ui = new Stage(new ExtendViewport(640, 320));
+    private final Stage ui = new Stage(new ExtendViewport(1280, 720));
     private final Stage mobileUi = new Stage(new ExtendViewport(320 * 0.75f, 160 * 0.75f));
 
-    private Label coinLabel;
+    private Label coinLabel, mapTextLabel;
 
     @Getter
     private String mapPath;
@@ -34,17 +35,24 @@ public class GameScreen extends ManagedScreen {
 
     private ArrayList<VirtualGamepadGroup> gamepads = new ArrayList<>();
 
+    private int totalDeaths, totalCoins;
+
     @Override
     protected void create() {
         var root = new Table();
         root.setFillParent(true);
 
-        var inner = new Table();
-        inner.add(new Image(Statics.assets.getGame().getParticlesAtlas().getCoins_idle().first())).size(25);
+        var leftInnerTable = new Table();
+        leftInnerTable.add(new Image(Statics.assets.getGame().getParticlesAtlas().getCoins_idle().first())).size(25);
         coinLabel = new Label("0", Statics.assets.getGame().getSkin());
-        inner.add(coinLabel).padLeft(12).padTop(6);
+        leftInnerTable.add(coinLabel).padLeft(12).padTop(6);
 
-        root.add(inner).expand().top().left().padLeft(12).padTop(12);
+        var rightInnerTable = new Table();
+        mapTextLabel = new Label("", Statics.assets.getGame().getSkin());
+        rightInnerTable.add(mapTextLabel).padLeft(12).padTop(6);
+
+        root.add(leftInnerTable).expand().top().left().padLeft(12).padTop(12);
+        root.add(rightInnerTable).expand().top().right().padRight(12).padTop(12);
         ui.addActor(root);
 
         addInputProcessor(mobileUi);
@@ -58,6 +66,8 @@ public class GameScreen extends ManagedScreen {
         var map = Statics.assets.getGame().get(mapPath);
         level = new Level(this, map);
         level.initialize();
+
+        mapTextLabel.setText(level.getMap().getText());
 
         level.getPlayers().getPlayers().forEach(p -> gamepads.add(new VirtualGamepadGroup(p, gamepads.size(), mobileUi)));
 
@@ -135,12 +145,23 @@ public class GameScreen extends ManagedScreen {
     }
 
     public void restartLevel() {
+        totalDeaths++;
         setLevel(mapPath);
     }
 
-    public void setLevel(String mapPath) {
+    public void nextLevel(String mapPath) {
+        totalCoins += level.getCoinCount();
+
+        setLevel(mapPath);
+    }
+
+    private void setLevel(String mapPath) {
         logger.logInfo("Loading level " + mapPath);
         level.dispose();
-        Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), BlendingTransition.class.getName(), mapPath);
+
+        if (mapPath.equals("FINISH"))
+            Statics.parallelWorlds.getScreenManager().pushScreen(EndScene.class.getName(), BlendingTransition.class.getName(), totalCoins, totalDeaths);
+        else
+            Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), BlendingTransition.class.getName(), mapPath);
     }
 }

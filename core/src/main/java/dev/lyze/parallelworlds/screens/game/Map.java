@@ -36,6 +36,8 @@ public class Map {
     private Rectangle boundaries;
     @Getter
     private Music music;
+    @Getter
+    private String text;
 
     @Getter
     private Color topColor, bottomColor;
@@ -150,6 +152,8 @@ public class Map {
 
         topColor = map.getProperties().get("topColor", Color.class);
         bottomColor = map.getProperties().get("bottomColor", Color.class);
+
+        text = map.getProperties().get("text", String.class);
 
         var musicPath= map.getProperties().get("music", String.class);
         if (musicPath == null)

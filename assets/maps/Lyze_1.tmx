@@ -3,6 +3,7 @@
  <properties>
   <property name="bottomColor" type="color" value="#ff181425"/>
   <property name="music" value="BoosterLevel_1.ogg"/>
+  <property name="text" value="Made by @Lyze237"/>
   <property name="topColor" type="color" value="#fff77622"/>
  </properties>
  <tileset firstgid="1" name="Ground" tilewidth="8" tileheight="8" tilecount="64" columns="8">

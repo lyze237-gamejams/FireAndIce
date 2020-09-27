@@ -1,6 +1,7 @@
 package dev.lyze.parallelworlds.screens.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -79,6 +80,9 @@ public class Level {
             return;
 
         players.update(delta);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F12))
+            killPlayer();
 
         entities.forEach(e -> e.update(world, delta));
         entities.addAll(entitiesToAdd);
@@ -166,7 +170,7 @@ public class Level {
         if (finished)
             return;
 
-        game.setLevel(level);
+        game.nextLevel(level);
         finished = true;
     }
 

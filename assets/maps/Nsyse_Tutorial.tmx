@@ -3,6 +3,7 @@
  <properties>
   <property name="bottomColor" type="color" value="#ff181425"/>
   <property name="music" value="Pixel-Island.ogg"/>
+  <property name="text" value="Made by @ZeNsyse"/>
   <property name="topColor" type="color" value="#fff77622"/>
  </properties>
  <tileset firstgid="1" name="Ground" tilewidth="8" tileheight="8" tilecount="64" columns="8">
@@ -273,7 +274,7 @@
   </tile>
   <tile id="48">
    <properties>
-    <property name="level" value="Test"/>
+    <property name="level" value="Lyze_1"/>
     <property name="type" value="ExitSpawner"/>
    </properties>
   </tile>

@@ -29,8 +29,8 @@ public class GameAssets extends DynamicAssets  {
 
     @Getter @LoadAssetFromFile("maps/Nsyse_Tutorial.tmx")
     private TiledMap nsyseTutorial;
-    @Getter @LoadAssetFromFile("maps/Test.tmx")
-    private TiledMap test;
+    @Getter @LoadAssetFromFile("maps/Lyze_1.tmx")
+    private TiledMap lyze1;
     @Getter @LoadAssetFromFile("maps/Nsyse_1.tmx")
     private TiledMap nsyse1;
     @Getter @LoadAssetFromFile("maps/Borazilla_1.tmx")
