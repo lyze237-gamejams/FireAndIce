@@ -41,30 +41,11 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/layer_1.png
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: layer_1
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-			type: TEXTURE
-			hidden: false
-		}
-		{
 			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/layer_2.png
 			bgColor: {
-				r: 1
-				g: 1
-				b: 1
+				r: 0
+				g: 0
+				b: 0
 				a: 1
 			}
 			tint: null
@@ -79,7 +60,7 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/layer_3.png
+			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/layer_1.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -88,26 +69,7 @@ atlasData: {
 			}
 			tint: null
 			tintName: null
-			name: layer_3
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-			type: TEXTURE
-			hidden: false
-		}
-		{
-			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/layer_4.png
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: layer_4
+			name: layer_1
 			tiled: false
 			minWidth: -1
 			minHeight: -1
