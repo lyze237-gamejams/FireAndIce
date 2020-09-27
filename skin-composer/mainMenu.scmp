@@ -100,25 +100,6 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/Title.png
-			bgColor: {
-				r: 0
-				g: 0
-				b: 0
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: Title
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-			type: FONT
-			hidden: false
-		}
-		{
 			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/Debug.png
 			bgColor: {
 				r: 0
@@ -129,6 +110,25 @@ atlasData: {
 			tint: null
 			tintName: null
 			name: Debug
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
+		{
+			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/Comicraft - CCArea51IndustrialOpen.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: Comicraft - CCArea51IndustrialOpen
 			tiled: false
 			minWidth: -1
 			minHeight: -1
@@ -176,7 +176,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: Title
-			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/Title.fnt
+			file: C:/Users/lyze/Documents/Workspace/java/ParallelWorlds/skin-composer/mainMenu_data/Comicraft - CCArea51IndustrialOpen.fnt
 		}
 	]
 	freeTypeFonts: []

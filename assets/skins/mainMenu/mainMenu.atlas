@@ -11,18 +11,18 @@ Buttons
   orig: 505, 367
   offset: 0, 0
   index: -1
+Comicraft - CCArea51IndustrialOpen
+  rotate: false
+  xy: 1, 371
+  size: 426, 233
+  orig: 426, 233
+  offset: 0, 0
+  index: -1
 Debug
   rotate: false
   xy: 1, 975
   size: 506, 45
   orig: 506, 45
-  offset: 0, 0
-  index: -1
-Title
-  rotate: false
-  xy: 1, 371
-  size: 476, 233
-  orig: 476, 233
   offset: 0, 0
   index: -1
 clouds

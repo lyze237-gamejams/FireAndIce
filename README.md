@@ -1,7 +1,9 @@
-# ParallelWorlds
+# Fire and Ice
 Libgdx gamejam project; september 2020
 
-## Assets used
+
+
+## Credits
 
 ### Music
 * Soundimage: https://soundimage.org/
@@ -12,3 +14,7 @@ Libgdx gamejam project; september 2020
 
 ### Textures
 * Made by myself
+
+### Map help
+* Nsyse: https://twitter.com/ZeNsyse
+* Borazilla: https://twitter.com/Borazilla

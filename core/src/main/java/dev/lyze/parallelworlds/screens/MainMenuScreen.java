@@ -66,7 +66,7 @@ public class MainMenuScreen extends ManagedScreen {
         var titleTable = new Table();
         titleTable.setFillParent(true);
 
-        titleTable.add(new Label("Parallel Worlds", Statics.assets.getMainMenu().getSkin(), "title"))
+        titleTable.add(new Label("Fire and Ice", Statics.assets.getMainMenu().getSkin(), "title"))
                 .padTop(140).padLeft(140).left().top().expand();
         textUi.addActor(titleTable);
 

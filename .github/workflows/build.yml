@@ -1,4 +1,4 @@
-name: Build ParallelWorlds and upload it to itch.io
+name: Build FireAndIce and upload it to itch.io
 
 on:
   push:
@@ -38,15 +38,15 @@ jobs:
         run: ./gradlew lwjgl3:jpackage
 
       - name: Fix file names
-        run: mv lwjgl3/build/lib/*.jar ParallelWorlds_linux.jar && mv lwjgl3/build/jpackage/*.deb ParallelWorlds.deb && mv lwjgl3/build/jpackage/*.rpm ParallelWorlds.rpm
+        run: mv lwjgl3/build/lib/*.jar FireAndIce_linux.jar && mv lwjgl3/build/jpackage/*.deb FireAndIce.deb && mv lwjgl3/build/jpackage/*.rpm FireAndIce.rpm
 
 
-      - run: ./butler push ParallelWorlds_linux.jar lyze237/ParallelWorlds:linux-jar
+      - run: ./butler push FireAndIce_linux.jar lyze237/FireAndIce:linux-jar
 
-      - run: ./butler push lwjgl3/build/jpackage/ParallelWorlds lyze237/ParallelWorlds:linux-image
+      - run: ./butler push lwjgl3/build/jpackage/FireAndIce lyze237/FireAndIce:linux-image
 
-      - run: ./butler push ParallelWorlds.deb lyze237/ParallelWorlds:linux-deb
-      - run: ./butler push ParallelWorlds.rpm lyze237/ParallelWorlds:linux-rpm
+      - run: ./butler push FireAndIce.deb lyze237/FireAndIce:linux-deb
+      - run: ./butler push FireAndIce.rpm lyze237/FireAndIce:linux-rpm
 
 
 
@@ -75,7 +75,7 @@ jobs:
         run: ./gradlew html:dist
 
 
-      - run: ./butler push html/build/dist lyze237/ParallelWorlds:html
+      - run: ./butler push html/build/dist lyze237/FireAndIce:html
 
 
 
@@ -108,12 +108,12 @@ jobs:
         run: ./gradlew.bat lwjgl3:jpackage
 
       - name: Fix file names
-        run: mv lwjgl3/build/lib/*.jar ParallelWorlds_windows.jar && mv lwjgl3/build/jpackage/*.exe ParallelWorlds.exe && mv lwjgl3/build/jpackage/*.msi ParallelWorlds.msi
+        run: mv lwjgl3/build/lib/*.jar FireAndIce_windows.jar && mv lwjgl3/build/jpackage/*.exe FireAndIce.exe && mv lwjgl3/build/jpackage/*.msi FireAndIce.msi
 
 
-      - run: ./butler push ParallelWorlds_windows.jar lyze237/ParallelWorlds:windows-jar
+      - run: ./butler push FireAndIce_windows.jar lyze237/FireAndIce:windows-jar
 
-      - run: ./butler push lwjgl3/build/jpackage/ParallelWorlds lyze237/ParallelWorlds:windows-image
+      - run: ./butler push lwjgl3/build/jpackage/FireAndIce lyze237/FireAndIce:windows-image
 
-      - run: ./butler push ParallelWorlds.exe lyze237/ParallelWorlds:windows-exe
-      - run: ./butler push ParallelWorlds.msi lyze237/ParallelWorlds:windows-msi
+      - run: ./butler push FireAndIce.exe lyze237/FireAndIce:windows-exe
+      - run: ./butler push FireAndIce.msi lyze237/FireAndIce:windows-msi
