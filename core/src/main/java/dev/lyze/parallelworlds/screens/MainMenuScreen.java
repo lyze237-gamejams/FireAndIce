@@ -83,6 +83,7 @@ public class MainMenuScreen extends ManagedScreen {
         addButton(menuSubTable, "Start new game", initialDelay + 0.15f).addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Statics.assets.getMainMenu().getMusic().stop();
                 Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), HorizontalSlicingTransition.class.getName(), "Test");
             }
         });
@@ -122,6 +123,9 @@ public class MainMenuScreen extends ManagedScreen {
     @Override
     public void show() {
         super.show();
+
+        Statics.assets.getMainMenu().getMusic().setLooping(true);
+        Statics.assets.getMainMenu().getMusic().play();
 
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }

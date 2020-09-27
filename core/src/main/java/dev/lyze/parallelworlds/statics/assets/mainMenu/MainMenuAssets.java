@@ -1,6 +1,7 @@
 package dev.lyze.parallelworlds.statics.assets.mainMenu;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import dev.lyze.parallelworlds.statics.utils.DynamicAssets;
 import dev.lyze.parallelworlds.statics.utils.LoadAssetFromFile;
@@ -13,6 +14,9 @@ public class MainMenuAssets extends DynamicAssets {
 
     @Getter @LoadAssetFromFile("skins/mainMenu/mainMenu.json")
     private Skin skin;
+
+    @Getter @LoadAssetFromFile("music/Up-the-Ladder.mp3")
+    private Music music;
 
     public MainMenuAssets(AssetManager ass) {
         super(ass);

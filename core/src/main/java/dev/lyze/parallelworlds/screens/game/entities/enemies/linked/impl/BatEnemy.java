@@ -50,8 +50,10 @@ public class BatEnemy extends LinkedEnemy {
             return;
         }
 
-        if (checkPlayerUnderMe(world) && state == State.Idle)
+        if (checkPlayerUnderMe(world) && state == State.Idle) {
+            Statics.assets.getSound().playSmallPitch(0.5f, Statics.assets.getSound().getJump3());
             state = State.SwoopDown;
+        }
 
         calculateMovement(world);
     }

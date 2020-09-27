@@ -1,4 +1,4 @@
-package dev.lyze.parallelworlds.statics.assets.levels.shared;
+package dev.lyze.parallelworlds.statics.assets.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;

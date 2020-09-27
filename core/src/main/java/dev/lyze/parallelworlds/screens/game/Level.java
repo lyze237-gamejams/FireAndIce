@@ -155,6 +155,8 @@ public class Level {
         if (finished)
             return;
 
+        Statics.assets.getSound().getFall().play(0.6f);
+
         game.restartLevel();
         playersDead = true;
         finished = true;

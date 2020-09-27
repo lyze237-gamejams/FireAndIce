@@ -14,10 +14,10 @@
 	<set-configuration-property name="gdx.assetpath" value="../assets" />
 	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.levels" />
-	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.levels.shared" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.sprites" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.loadingScreen" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.mainMenu" />
+	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.statics.assets.sfx" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.entities.enums" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.map" />
 	<extend-configuration-property name="gdx.reflect.include" value="dev.lyze.parallelworlds.screens.game.map.properties" />

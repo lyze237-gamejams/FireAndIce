@@ -6,16 +6,19 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.World;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.Level;
-import dev.lyze.parallelworlds.screens.game.entities.GravityEntity;
 import dev.lyze.parallelworlds.screens.game.entities.Entity;
-import dev.lyze.parallelworlds.screens.game.entities.impl.ExitTile;
-import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionTile;
+import dev.lyze.parallelworlds.screens.game.entities.GravityEntity;
 import dev.lyze.parallelworlds.screens.game.entities.enums.Direction;
 import dev.lyze.parallelworlds.screens.game.entities.enums.PlayerColor;
 import dev.lyze.parallelworlds.screens.game.entities.filters.PlayerCollisionFilter;
+import dev.lyze.parallelworlds.screens.game.entities.impl.ExitTile;
+import dev.lyze.parallelworlds.screens.game.entities.impl.PortalDirectionTile;
 import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
+import dev.lyze.parallelworlds.statics.Statics;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
+
+import java.util.Random;
 
 public abstract class Player extends GravityEntity {
     private static final Logger<Player> logger = new Logger<>(Player.class);
@@ -25,6 +28,8 @@ public abstract class Player extends GravityEntity {
 
     private Direction portalDirection;
     private VirtualGamepadGroup gamepad;
+
+    private Random random = new Random();
 
     public Player(Level level, PlayerColor color, boolean invertedWorld, Animation<TextureAtlas.AtlasRegion> idle, Animation<TextureAtlas.AtlasRegion> run, Animation<TextureAtlas.AtlasRegion> jump, Animation<TextureAtlas.AtlasRegion> fall, Animation<TextureAtlas.AtlasRegion> death) {
         super(0, 0, 2, 1.25f, level, PlayerCollisionFilter.instance);
@@ -62,6 +67,13 @@ public abstract class Player extends GravityEntity {
         wantsToMoveRight = gamepad.getRightPressed();
 
         wantsToJump = gamepad.isJumpJustPressed();
+    }
+
+    @Override
+    protected void jump() {
+        super.jump();
+
+        Statics.assets.getSound().playBigPitch(0.4f, Statics.assets.getSound().getJump1());
     }
 
     @Override

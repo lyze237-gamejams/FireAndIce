@@ -5,9 +5,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.statics.assets.GameAssets;
-import dev.lyze.parallelworlds.statics.assets.levels.shared.CharactersAtlas;
-import dev.lyze.parallelworlds.statics.assets.levels.shared.ParticlesAtlas;
-import dev.lyze.parallelworlds.statics.assets.levels.shared.UiTextureAtlas;
+import dev.lyze.parallelworlds.statics.assets.sfx.SoundAssets;
+import dev.lyze.parallelworlds.statics.assets.sprites.CharactersAtlas;
+import dev.lyze.parallelworlds.statics.assets.sprites.ParticlesAtlas;
+import dev.lyze.parallelworlds.statics.assets.sprites.UiTextureAtlas;
 import dev.lyze.parallelworlds.statics.assets.loadingScreen.LoadingScreenAssets;
 import dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuAssets;
 import dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuTextureAtlas;
@@ -27,17 +28,21 @@ public class Assets {
     private final LoadingScreenAssets loadingScreen;
     @Getter
     private final MusicAssets music;
+    @Getter
+    private final SoundAssets sound;
 
     public Assets() {
         mainMenu = new MainMenuAssets(createAssMan());
         loadingScreen = new LoadingScreenAssets(createAssMan());
         music = new MusicAssets(createAssMan());
         game = new GameAssets(createAssMan());
+        sound = new SoundAssets(createAssMan());
     }
 
     public void load() {
         mainMenu.load();
         game.load();
+        sound.load();
         loadingScreen.load();
         music.load();
     }
