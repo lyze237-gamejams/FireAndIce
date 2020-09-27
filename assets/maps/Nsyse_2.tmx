@@ -274,7 +274,7 @@
   </tile>
   <tile id="48">
    <properties>
-    <property name="level" value="FINISH"/>
+    <property name="level" value="Nsyse_3"/>
     <property name="type" value="ExitSpawner"/>
    </properties>
   </tile>
