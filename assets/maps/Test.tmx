@@ -272,13 +272,13 @@
   </tile>
   <tile id="48">
    <properties>
-    <property name="level" value="1"/>
+    <property name="level" value="Borazilla_1"/>
     <property name="type" value="ExitSpawner"/>
    </properties>
   </tile>
   <tile id="49">
    <properties>
-    <property name="level" value="2"/>
+    <property name="level" value="Nsyse_2"/>
     <property name="type" value="ExitSpawner"/>
    </properties>
   </tile>
