@@ -35,7 +35,7 @@ public class EndScene extends ManagedScreen {
         var root = new Table();
         root.setFillParent(true);
 
-        label = new TypingLabel("{EASE}{SPEED=SLOWER}Thanks for playing!{SPEED}\nYou earned a total of {VAR=COINS} coins\nand died {VAR=deaths} times.\n\nNot bad!\n\nThanks! - Made by {RAINBOW}@lyze237{ENDRAINBOW}", Statics.assets.getMainMenu().getSkin());
+        label = new TypingLabel("{EASE}{SPEED=SLOWER}Thanks for playing!{SPEED}\nYou earned a total of {VAR=COINS} coins\nand died {VAR=deaths} times.\n\nNot bad!\n\nThanks! - Made by {RAINBOW}@lyze237{ENDRAINBOW}, @ZeNsyse, @Borazilla", Statics.assets.getMainMenu().getSkin());
         root.add(label).top().left().expand().padLeft(32).padTop(32);
 
         ui.addActor(root);
