@@ -15,10 +15,10 @@ public class MainMenuAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("skins/mainMenu/mainMenu.json")
     private Skin skin;
 
-    @Getter @LoadAssetFromFile("music/Up-the-Ladder.mp3")
+    @Getter @LoadAssetFromFile("music/Up-the-Ladder.ogg")
     private Music music;
 
-    @Getter @LoadAssetFromFile("music/Caffeine-Crazed-Coin-Op-Kids.mp3")
+    @Getter @LoadAssetFromFile("music/Caffeine-Crazed-Coin-Op-Kids.ogg")
     private Music caffeine;
 
     public MainMenuAssets(AssetManager ass) {
