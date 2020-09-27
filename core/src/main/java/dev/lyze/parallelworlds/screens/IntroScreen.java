@@ -1,7 +1,6 @@
 package dev.lyze.parallelworlds.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -65,7 +64,7 @@ public class IntroScreen extends ManagedScreen {
         if ((delay -= delta) > 0)
             return;
 
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT))
+        if (Gdx.input.isTouched())
             label.skipToTheEnd();
 
         if (label.hasEnded() && !sceneSwitched) {

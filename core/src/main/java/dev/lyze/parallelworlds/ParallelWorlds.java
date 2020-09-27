@@ -30,6 +30,8 @@ public class ParallelWorlds extends ManagedGame<ManagedScreen, ScreenTransition>
 
         logger.logInfo("Hello!");
 
+        Statics.isMobileDevice |= Gdx.input.isPeripheralAvailable(Input.Peripheral.MultitouchScreen);
+
         setupStatics();
         setupScreens();
 
