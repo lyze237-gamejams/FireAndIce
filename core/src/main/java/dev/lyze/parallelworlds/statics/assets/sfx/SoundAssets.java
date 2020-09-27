@@ -57,7 +57,7 @@ public class SoundAssets extends DynamicAssets {
     @Getter @LoadAssetFromFile("sounds/Fall.ogg")
     private Sound fall;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public SoundAssets(AssetManager assMan) {
         super(assMan);
@@ -68,24 +68,10 @@ public class SoundAssets extends DynamicAssets {
     }
 
     public void playSmallPitch(float volume, Sound... sounds) {
-        var sound = sounds[random.nextInt(sounds.length)];
-
-        /*
-        if (Gdx.app.getType() == Application.ApplicationType.WebGL)
-            sound.play(volume);
-        else
-            sound.play(volume, (random.nextFloat() / 3f) + 0.9f, 0);
-         */
+        sounds[random.nextInt(sounds.length)].play(volume, (random.nextFloat() / 3f) + 0.9f, 0);
     }
 
     public void playBigPitch(float volume, Sound... sounds) {
-        var sound = sounds[random.nextInt(sounds.length)];
-
-        /*
-        if (Gdx.app.getType() == Application.ApplicationType.WebGL)
-            sound.play(volume);
-        else
-            sound.play(volume, random.nextFloat() + 0.8f, 0);
-         */
+        sounds[random.nextInt(sounds.length)].play(volume, random.nextFloat() + 0.8f, 0);
     }
 }

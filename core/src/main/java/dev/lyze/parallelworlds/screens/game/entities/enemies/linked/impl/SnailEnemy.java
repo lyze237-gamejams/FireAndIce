@@ -59,7 +59,6 @@ public class SnailEnemy extends LinkedEnemy {
             if (!collision.type.equals(Response.slide))
                 return;
 
-            logger.logInfo("Turning around because of " + collision.other.userData.getClass());
             currentlyMoveRight = !currentlyMoveRight;
             return;
         }
