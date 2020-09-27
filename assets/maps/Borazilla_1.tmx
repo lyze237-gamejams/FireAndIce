@@ -3,7 +3,7 @@
  <properties>
   <property name="bottomColor" type="color" value="#ff181425"/>
   <property name="music" value="8-Bit-Puzzler"/>
-  <property name="text" value="Made by @Borazilla - Press F12 to restart"/>
+  <property name="text" value="Map creator: @Borazilla - Press F12 to restart"/>
   <property name="topColor" type="color" value="#fff77622"/>
  </properties>
  <tileset firstgid="1" name="Ground" tilewidth="8" tileheight="8" tilecount="64" columns="8">
