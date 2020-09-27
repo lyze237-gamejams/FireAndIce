@@ -27,6 +27,8 @@ public class GameAssets extends DynamicAssets  {
     @Getter @LoadAssetFromFile("skins/default/default.json")
     private Skin skin;
 
+    @Getter @LoadAssetFromFile("maps/Nsyse_Tutorial.tmx")
+    private TiledMap nsyseTutorial;
     @Getter @LoadAssetFromFile("maps/Test.tmx")
     private TiledMap test;
     @Getter @LoadAssetFromFile("maps/Nsyse_1.tmx")

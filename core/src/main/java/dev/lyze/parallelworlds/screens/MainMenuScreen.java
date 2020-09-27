@@ -84,10 +84,9 @@ public class MainMenuScreen extends ManagedScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Statics.assets.getMainMenu().getMusic().stop();
-                Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), HorizontalSlicingTransition.class.getName(), "Test");
+                Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), HorizontalSlicingTransition.class.getName(), "Nsyse_Tutorial");
             }
         });
-        addButton(menuSubTable, "Options", initialDelay + 0.15f * 2);
         addButton(menuSubTable, "Exit", initialDelay + 0.15f * 3).addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

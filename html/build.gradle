@@ -24,6 +24,7 @@ gwt {
 	compiler.strict = true
 	compiler.disableCastChecking = true
 	sourceLevel = 11
+	compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
 }
 
 configurations { lom }
