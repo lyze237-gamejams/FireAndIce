@@ -69,6 +69,7 @@ public class GameScreen extends ManagedScreen {
 
         mapTextLabel.setText(level.getMap().getText());
 
+        gamepads.clear();
         level.getPlayers().getPlayers().forEach(p -> gamepads.add(new VirtualGamepadGroup(p, gamepads.size(), mobileUi)));
 
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
