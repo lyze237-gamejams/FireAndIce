@@ -35,12 +35,12 @@ public class IntroScreen extends ManagedScreen {
         root.setFillParent(true);
 
         label = new TypingLabel("{EASE}{SPEED=SLOWER}Glad that you arrived!{SPEED}\n" +
-                "{ENDEASE}{COLOR=#743f39}Firebread{CLEARCOLOR} and {COLOR=#0095e9}Forzenbread{CLEARCOLOR} need your {RAINBOW}help!{ENDRAINBOW}\n" +
+                "{ENDEASE}{COLOR=#743f39}Firebread{CLEARCOLOR} and {COLOR=#0095e9}Icebread{CLEARCOLOR} need your {RAINBOW}help!{ENDRAINBOW}\n" +
                 "It looks like the evil {SHAKE}snail king{ENDSHAKE}...\n" +
-                "{SPEED=SLOWER}...merged{SPEED} their dimensions together!\n" +
+                "{SPEED=SLOWER}...merged{SPEED} their worlds together!\n" +
                 "Only {RAINBOW}you{ENDRAINBOW} can help them out of this mess...\n\n" +
                 "{SPEED=SLOW}{SLIDE}save them please!{ENDSLIDE}{SPEED}\n\n" +
-                "Ps. {JUMP}Jump{ENDJUMP} onto their souls to destroy them!{WAIT=5} ", Statics.assets.getMainMenu().getSkin());
+                "Ps. {JUMP}Jump{ENDJUMP} onto enemy souls to destroy them!{WAIT=5} ", Statics.assets.getMainMenu().getSkin());
         root.add(label).top().left().expand().padLeft(32).padTop(32);
 
         ui.addActor(root);
