@@ -73,7 +73,7 @@ public abstract class Player extends GravityEntity {
     protected void jump() {
         super.jump();
 
-        Statics.assets.getSound().playBigPitch(0.4f, Statics.assets.getSound().getJump1());
+        Statics.assets.getSound().playBigPitch(Statics.assets.getSound().getJump1());
     }
 
     @Override

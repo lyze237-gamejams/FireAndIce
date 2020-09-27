@@ -70,7 +70,7 @@ public class ParticlesExplosion extends GravityEntity {
         }
 
         if (groundTouched) {
-            Statics.assets.getSound().play(0.4f, Statics.assets.getSound().getCoin1(), Statics.assets.getSound().getCoin2());
+            Statics.assets.getSound().play(Statics.assets.getSound().getCoin1(), Statics.assets.getSound().getCoin2());
             level.addCoin();
             level.removeEntity(this);
         }

@@ -66,15 +66,15 @@ public class SoundAssets extends DynamicAssets {
         super(assMan);
     }
 
-    public void play(float volume, Sound... sounds) {
-        sounds[random.nextInt(sounds.length)].play(volume);
+    public void play(Sound... sounds) {
+        sounds[random.nextInt(sounds.length)].play();
     }
 
-    public void playSmallPitch(float volume, Sound... sounds) {
-        sounds[random.nextInt(sounds.length)].play(volume, (random.nextFloat() / 3f) + 0.9f, 0);
+    public void playSmallPitch(Sound... sounds) {
+        sounds[random.nextInt(sounds.length)].play(1, (random.nextFloat() / 3f) + 0.9f, 0);
     }
 
-    public void playBigPitch(float volume, Sound... sounds) {
-        sounds[random.nextInt(sounds.length)].play(volume, random.nextFloat() + 0.8f, 0);
+    public void playBigPitch(Sound... sounds) {
+        sounds[random.nextInt(sounds.length)].play(1, random.nextFloat() + 0.8f, 0);
     }
 }

@@ -40,7 +40,7 @@ public class BigCoinTile extends TileEntity {
         if (!(collision.other.userData instanceof Player))
             return;
 
-        Statics.assets.getSound().play(0.6f, Statics.assets.getSound().getCoinTotalWin1(), Statics.assets.getSound().getCoinTotalWin2());
+        Statics.assets.getSound().play(Statics.assets.getSound().getCoinTotalWin1(), Statics.assets.getSound().getCoinTotalWin2());
 
         for (int i = 0; i < 25; i++) {
             level.addEntity(new ParticlesExplosion(position.x, position.y, level, invertedGravity));
