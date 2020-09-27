@@ -64,6 +64,8 @@ public class Level {
 
     public void initialize() {
         map.initialize();
+        map.getMusic().setLooping(true);
+        map.getMusic().play();
 
         for (int i = 0; i < 100; i++) {
             ((GameCamera) viewport.getCamera()).update(players.getFirePlayer().getPosition(), players.getIcePlayer().getPosition(), map.getBoundaries(), 0.1f);
@@ -169,5 +171,9 @@ public class Level {
 
     public void resize(int width, int height) {
         viewport.update(width, height);
+    }
+
+    public void dispose() {
+        map.getMusic().stop();
     }
 }

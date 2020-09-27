@@ -144,6 +144,7 @@ public class GameScreen extends ManagedScreen {
     }
 
     public void setLevel(LevelAssets levelAssets) {
+        level.dispose();
         Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), BlendingTransition.class.getName(), levelAssets);
     }
 }

@@ -1,5 +1,6 @@
 package dev.lyze.parallelworlds.screens.game;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.game.entities.impl.GroundTile;
 import dev.lyze.parallelworlds.screens.game.map.MapEntitiesCreation;
+import dev.lyze.parallelworlds.statics.Statics;
 import dev.lyze.parallelworlds.utils.OrthogonalTiledMapRendererBleeding;
 import lombok.Getter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -32,6 +34,8 @@ public class Map {
     private int mapPixelWidth, mapPixelHeight;
     @Getter
     private Rectangle boundaries;
+    @Getter
+    private Music music;
 
     @Getter
     private Color topColor, bottomColor;
@@ -146,6 +150,12 @@ public class Map {
 
         topColor = map.getProperties().get("topColor", Color.class);
         bottomColor = map.getProperties().get("bottomColor", Color.class);
+
+        var musicPath= map.getProperties().get("music", String.class);
+        if (musicPath == null)
+            music = Statics.assets.getMusic().getBooster();
+        else
+            music = Statics.assets.getMusic().get(musicPath);
     }
 
     public void render(OrthographicCamera cam) {

@@ -11,6 +11,7 @@ import dev.lyze.parallelworlds.statics.assets.levels.shared.UiTextureAtlas;
 import dev.lyze.parallelworlds.statics.assets.loadingScreen.LoadingScreenAssets;
 import dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuAssets;
 import dev.lyze.parallelworlds.statics.assets.mainMenu.MainMenuTextureAtlas;
+import dev.lyze.parallelworlds.statics.assets.sfx.MusicAssets;
 import dev.lyze.parallelworlds.statics.utils.DynamicTextureAtlasAssetLoader;
 import dev.lyze.parallelworlds.statics.utils.InternalOrExternalFileHandleResolver;
 import lombok.Getter;
@@ -24,10 +25,13 @@ public class Assets {
     private final GameAssets game;
     @Getter
     private final LoadingScreenAssets loadingScreen;
+    @Getter
+    private final MusicAssets music;
 
     public Assets() {
         mainMenu = new MainMenuAssets(createAssMan());
         loadingScreen = new LoadingScreenAssets(createAssMan());
+        music = new MusicAssets(createAssMan());
 
         game = new GameAssets();
     }
@@ -36,6 +40,7 @@ public class Assets {
         mainMenu.load();
         game.load();
         loadingScreen.load();
+        music.load();
     }
 
     // gwt errors if not done like this

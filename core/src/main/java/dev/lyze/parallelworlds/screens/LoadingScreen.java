@@ -54,6 +54,7 @@ public class LoadingScreen extends ManagedScreen {
         assetsToLoad.clear();
         assetsToLoad.add(gameAssets);
         assetsToLoad.add(Statics.assets.getGame().getSharedLevelAssets());
+        assetsToLoad.add(Statics.assets.getMusic());
 
         sceneSwitched = false;
 
