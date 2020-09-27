@@ -42,7 +42,7 @@ configure(subprojects) {
 
 subprojects {
 	version = '0.0.' + getGitHash()
-	ext.appName = 'ParallelWorlds'
+	ext.appName = 'FireAndIce'
 	repositories {
 		mavenLocal()
 		mavenCentral()
