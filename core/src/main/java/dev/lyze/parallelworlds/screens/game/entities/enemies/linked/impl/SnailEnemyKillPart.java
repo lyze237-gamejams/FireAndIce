@@ -18,8 +18,8 @@ public class SnailEnemyKillPart extends LinkedEnemyKillPart {
     public SnailEnemyKillPart(float x, float y, Level level, int partsOffset, LinkedEnemy linkedEnemy, boolean invertedGravity) {
         super(x, y, level, partsOffset, linkedEnemy, invertedGravity);
 
-        setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_walk(), Animation.PlayMode.LOOP));
-        setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));
+        setRun(new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getSnailsoul_walk(), Animation.PlayMode.LOOP));
+        setDeath(new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getSnailsoul_death(), Animation.PlayMode.NORMAL));
 
         setAnimationXOffset(-0.6f);
     }

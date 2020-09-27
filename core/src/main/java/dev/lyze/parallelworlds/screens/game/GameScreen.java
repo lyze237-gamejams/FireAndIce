@@ -13,7 +13,6 @@ import dev.lyze.parallelworlds.logger.Logger;
 import dev.lyze.parallelworlds.screens.LoadingScreen;
 import dev.lyze.parallelworlds.screens.game.gamepads.VirtualGamepadGroup;
 import dev.lyze.parallelworlds.statics.Statics;
-import dev.lyze.parallelworlds.statics.assets.levels.LevelAssets;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class GameScreen extends ManagedScreen {
     private Label coinLabel;
 
     @Getter
-    private LevelAssets levelAssets;
+    private String mapPath;
 
     @Getter
     private Level level;
@@ -41,8 +40,8 @@ public class GameScreen extends ManagedScreen {
         root.setFillParent(true);
 
         var inner = new Table();
-        inner.add(new Image(Statics.assets.getGame().getSharedLevelAssets().getParticlesAtlas().getCoins_idle().first())).size(25);
-        coinLabel = new Label("0", Statics.assets.getGame().getSharedLevelAssets().getSkin());
+        inner.add(new Image(Statics.assets.getGame().getParticlesAtlas().getCoins_idle().first())).size(25);
+        coinLabel = new Label("0", Statics.assets.getGame().getSkin());
         inner.add(coinLabel).padLeft(12).padTop(6);
 
         root.add(inner).expand().top().left().padLeft(12).padTop(12);
@@ -55,8 +54,9 @@ public class GameScreen extends ManagedScreen {
     public void show() {
         super.show();
 
-        levelAssets = (LevelAssets) Objects.requireNonNull(pushParams)[0];
-        level = new Level(this, levelAssets.getMap());
+        mapPath = (String) Objects.requireNonNull(pushParams)[0];
+        var map = Statics.assets.getGame().get(mapPath);
+        level = new Level(this, map);
         level.initialize();
 
         level.getPlayers().getPlayers().forEach(p -> gamepads.add(new VirtualGamepadGroup(p, gamepads.size(), mobileUi)));
@@ -135,16 +135,12 @@ public class GameScreen extends ManagedScreen {
     }
 
     public void restartLevel() {
-        setLevel(levelAssets);
+        setLevel(mapPath);
     }
 
-    public void setLevel(String level) {
-        logger.logInfo("Loading level " + level);
-        setLevel(Statics.assets.getGame().getLevels().get(level));
-    }
-
-    public void setLevel(LevelAssets levelAssets) {
+    public void setLevel(String mapPath) {
+        logger.logInfo("Loading level " + mapPath);
         level.dispose();
-        Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), BlendingTransition.class.getName(), levelAssets);
+        Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), BlendingTransition.class.getName(), mapPath);
     }
 }

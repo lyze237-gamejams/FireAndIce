@@ -1,29 +1,44 @@
 package dev.lyze.parallelworlds.statics.assets;
 
-import dev.lyze.parallelworlds.statics.Statics;
-import dev.lyze.parallelworlds.statics.assets.levels.Borazilla1LevelAsset;
-import dev.lyze.parallelworlds.statics.assets.levels.LevelAssets;
-import dev.lyze.parallelworlds.statics.assets.levels.Nsyse1LevelAsset;
-import dev.lyze.parallelworlds.statics.assets.levels.TestLevelAssets;
-import dev.lyze.parallelworlds.statics.assets.levels.shared.SharedLevelAssets;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import dev.lyze.parallelworlds.statics.assets.levels.shared.CharactersAtlas;
+import dev.lyze.parallelworlds.statics.assets.levels.shared.ParticlesAtlas;
+import dev.lyze.parallelworlds.statics.assets.levels.shared.UiTextureAtlas;
+import dev.lyze.parallelworlds.statics.utils.DynamicAssets;
+import dev.lyze.parallelworlds.statics.utils.LoadAssetFromFile;
 import lombok.Getter;
 
-import java.util.HashMap;
+public class GameAssets extends DynamicAssets  {
+    @Getter @LoadAssetFromFile("atlas/ui.atlas")
+    private UiTextureAtlas uiAtlas;
 
-public class GameAssets {
-    @Getter
-    private SharedLevelAssets sharedLevelAssets;
+    @Getter @LoadAssetFromFile("atlas/characters.atlas")
+    private CharactersAtlas charactersAtlas;
 
-    @Getter
-    private final HashMap<String, LevelAssets> levels = new HashMap<>();
+    @Getter @LoadAssetFromFile("atlas/particles.atlas")
+    private ParticlesAtlas particlesAtlas;
 
-    public void load() {
-        sharedLevelAssets = new SharedLevelAssets(Statics.assets.createAssMan());
-        sharedLevelAssets.load();
+    @Getter @LoadAssetFromFile("images/Pixel.png")
+    private Texture pixel;
 
-        levels.put("Test", new TestLevelAssets(Statics.assets.createAssMan()));
-        levels.put("Borazilla_1", new Borazilla1LevelAsset(Statics.assets.createAssMan()));
-        levels.put("Nsyse_1", new Nsyse1LevelAsset(Statics.assets.createAssMan()));
-        levels.forEach((s, levelAssets) -> levelAssets.load());
+    @Getter @LoadAssetFromFile("skins/default/default.json")
+    private Skin skin;
+
+    @Getter @LoadAssetFromFile("maps/Test.tmx")
+    private TiledMap test;
+    @Getter @LoadAssetFromFile("maps/Nsyse_1.tmx")
+    private TiledMap nsyse1;
+    @Getter @LoadAssetFromFile("maps/Borazilla_1.tmx")
+    private TiledMap borazilla1;
+
+    public GameAssets(AssetManager assMan) {
+        super(assMan);
+    }
+
+    public TiledMap get(String path) {
+        return getAssMan().get("maps/" + path + ".tmx", TiledMap.class);
     }
 }

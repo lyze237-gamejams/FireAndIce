@@ -23,7 +23,7 @@ public class LoadingScreen extends ManagedScreen {
 
     private final Stage ui = new Stage(new ExtendViewport(1920, 1080));
 
-    private DynamicAssets gameAssets;
+    private String mapPath;
     private ArrayList<DynamicAssets> assetsToLoad = new ArrayList<>();
 
     private boolean sceneSwitched;
@@ -49,11 +49,10 @@ public class LoadingScreen extends ManagedScreen {
     public void show() {
         super.show();
 
-        gameAssets = (DynamicAssets) Objects.requireNonNull(pushParams)[0];
+        mapPath = (String) Objects.requireNonNull(pushParams)[0];
 
         assetsToLoad.clear();
-        assetsToLoad.add(gameAssets);
-        assetsToLoad.add(Statics.assets.getGame().getSharedLevelAssets());
+        assetsToLoad.add(Statics.assets.getGame());
         assetsToLoad.add(Statics.assets.getMusic());
 
         sceneSwitched = false;
@@ -74,7 +73,7 @@ public class LoadingScreen extends ManagedScreen {
 
         if (assetsToLoad.stream().allMatch(a -> a.getAssMan().update()) && !sceneSwitched) {
             assetsToLoad.forEach(DynamicAssets::consume);
-            Statics.parallelWorlds.getScreenManager().pushScreen(GameScreen.class.getName(), SlidingOutTransition.class.getName(), gameAssets);
+            Statics.parallelWorlds.getScreenManager().pushScreen(GameScreen.class.getName(), SlidingOutTransition.class.getName(), mapPath);
             sceneSwitched = true;
         }
     }

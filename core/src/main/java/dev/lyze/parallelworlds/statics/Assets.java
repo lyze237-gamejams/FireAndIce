@@ -32,8 +32,7 @@ public class Assets {
         mainMenu = new MainMenuAssets(createAssMan());
         loadingScreen = new LoadingScreenAssets(createAssMan());
         music = new MusicAssets(createAssMan());
-
-        game = new GameAssets();
+        game = new GameAssets(createAssMan());
     }
 
     public void load() {

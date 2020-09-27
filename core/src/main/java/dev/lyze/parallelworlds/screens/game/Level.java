@@ -56,7 +56,7 @@ public class Level {
 
         players = new Players(this);
 
-        shapeDrawer = new ShapeDrawer(spriteBatch, new TextureRegion(Statics.assets.getGame().getSharedLevelAssets().getPixel()));
+        shapeDrawer = new ShapeDrawer(spriteBatch, new TextureRegion(Statics.assets.getGame().getPixel()));
         shapeDrawer.setDefaultLineWidth(0.1f);
 
         debugFont = Statics.assets.getMainMenu().getSkin().getFont("Debug");
@@ -98,9 +98,9 @@ public class Level {
 
         spriteBatch.begin();
         spriteBatch.setColor(map.getTopColor());
-        spriteBatch.draw(Statics.assets.getGame().getSharedLevelAssets().getPixel(), 0, map.getMapHeight() / 2f, map.getMapWidth(), map.getMapHeight());
+        spriteBatch.draw(Statics.assets.getGame().getPixel(), 0, map.getMapHeight() / 2f, map.getMapWidth(), map.getMapHeight());
         spriteBatch.setColor(map.getBottomColor());
-        spriteBatch.draw(Statics.assets.getGame().getSharedLevelAssets().getPixel(), 0, map.getMapHeight() / 2f, map.getMapWidth(), -map.getMapHeight());
+        spriteBatch.draw(Statics.assets.getGame().getPixel(), 0, map.getMapHeight() / 2f, map.getMapWidth(), -map.getMapHeight());
         spriteBatch.end();
 
         map.render((OrthographicCamera) viewport.getCamera());

@@ -32,8 +32,8 @@ public class BatEnemy extends LinkedEnemy {
 
         startY = position.y;
 
-        setRun(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getBat_walk(), Animation.PlayMode.LOOP));
-        setDeath(new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getBat_death(), Animation.PlayMode.NORMAL));
+        setRun(new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getBat_walk(), Animation.PlayMode.LOOP));
+        setDeath(new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getBat_death(), Animation.PlayMode.NORMAL));
 
         setAnimationXOffset(-0.6f);
 

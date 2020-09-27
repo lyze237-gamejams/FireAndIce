@@ -26,8 +26,8 @@ public class ParticlesExplosion extends GravityEntity {
 
         setInvertedWorld(invertedWorld);
 
-        setIdle(new Animation<>(0.2f, Statics.assets.getGame().getSharedLevelAssets().getParticlesAtlas().getCoins_idle(), Animation.PlayMode.LOOP));
-        setFall(new Animation<>(0.05f, Statics.assets.getGame().getSharedLevelAssets().getParticlesAtlas().getCoins_explode(), Animation.PlayMode.NORMAL));
+        setIdle(new Animation<>(0.2f, Statics.assets.getGame().getParticlesAtlas().getCoins_idle(), Animation.PlayMode.LOOP));
+        setFall(new Animation<>(0.05f, Statics.assets.getGame().getParticlesAtlas().getCoins_explode(), Animation.PlayMode.NORMAL));
 
         if (random.nextBoolean()) {
             wantsToMoveRight = random.nextFloat() * 0.5f + 0.3f;

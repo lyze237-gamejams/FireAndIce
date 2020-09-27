@@ -11,10 +11,10 @@ public class FrozenPlayer extends Player {
 
     public FrozenPlayer(Level level) {
         super(level, PlayerColor.Ice, true,
-                new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFrozenbread_idle(), Animation.PlayMode.LOOP),
-                new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFrozenbread_run(), Animation.PlayMode.LOOP),
-                new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFrozenbread_jump(), Animation.PlayMode.NORMAL),
-                new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFrozenbread_fall(), Animation.PlayMode.NORMAL),
-                new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFrozenbread_death(), Animation.PlayMode.NORMAL));
+                new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getFrozenbread_idle(), Animation.PlayMode.LOOP),
+                new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getFrozenbread_run(), Animation.PlayMode.LOOP),
+                new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getFrozenbread_jump(), Animation.PlayMode.NORMAL),
+                new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getFrozenbread_fall(), Animation.PlayMode.NORMAL),
+                new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getFrozenbread_death(), Animation.PlayMode.NORMAL));
     }
 }

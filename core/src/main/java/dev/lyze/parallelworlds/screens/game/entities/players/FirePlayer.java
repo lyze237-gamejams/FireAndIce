@@ -11,10 +11,10 @@ public class FirePlayer extends Player {
 
     public FirePlayer(Level level) {
         super(level, PlayerColor.Fire, false,
-                new Animation<>(0.05f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFlamebread_idle(), Animation.PlayMode.LOOP),
-                new Animation<>(0.05f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFlamebread_run(), Animation.PlayMode.LOOP),
-                new Animation<>(0.05f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFlamebread_jump(), Animation.PlayMode.NORMAL),
-                new Animation<>(0.05f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFlamebread_fall(), Animation.PlayMode.NORMAL),
-                new Animation<>(0.05f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getFlamebread_death(), Animation.PlayMode.NORMAL));
+                new Animation<>(0.05f, Statics.assets.getGame().getCharactersAtlas().getFlamebread_idle(), Animation.PlayMode.LOOP),
+                new Animation<>(0.05f, Statics.assets.getGame().getCharactersAtlas().getFlamebread_run(), Animation.PlayMode.LOOP),
+                new Animation<>(0.05f, Statics.assets.getGame().getCharactersAtlas().getFlamebread_jump(), Animation.PlayMode.NORMAL),
+                new Animation<>(0.05f, Statics.assets.getGame().getCharactersAtlas().getFlamebread_fall(), Animation.PlayMode.NORMAL),
+                new Animation<>(0.05f, Statics.assets.getGame().getCharactersAtlas().getFlamebread_death(), Animation.PlayMode.NORMAL));
     }
 }

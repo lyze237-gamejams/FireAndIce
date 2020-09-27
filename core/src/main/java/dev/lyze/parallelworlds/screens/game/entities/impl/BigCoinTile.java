@@ -14,7 +14,7 @@ import dev.lyze.parallelworlds.screens.game.entities.players.Player;
 import dev.lyze.parallelworlds.statics.Statics;
 
 public class BigCoinTile extends TileEntity {
-    private final Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(0.1f, Statics.assets.getGame().getSharedLevelAssets().getCharactersAtlas().getCoins_bigCoin(), Animation.PlayMode.LOOP_PINGPONG);
+    private final Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(0.1f, Statics.assets.getGame().getCharactersAtlas().getCoins_bigCoin(), Animation.PlayMode.LOOP_PINGPONG);
 
     private float animationTime;
     private boolean invertedGravity;

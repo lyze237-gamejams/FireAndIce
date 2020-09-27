@@ -18,7 +18,7 @@ public class TouchpadGamepad extends VirtualGamepad {
     }
 
     public void setup(Stage stage) {
-        var uiAtlas = Statics.assets.getGame().getSharedLevelAssets().getUiAtlas();
+        var uiAtlas = Statics.assets.getGame().getUiAtlas();
 
         var rootTable = new Table();
         rootTable.setFillParent(true);
