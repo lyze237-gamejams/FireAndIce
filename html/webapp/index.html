@@ -33,5 +33,13 @@ function handleMouseUp(evt) {
 document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
 document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
 
+window.onkeydown = function(event) {
+	// prevent all navigation keys except the space key
+	if([33, 34, 35, 36, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
+		event.preventDefault();
+		return false;
+	}
+};
+
 </script>
 </html>
