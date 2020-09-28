@@ -2,10 +2,16 @@ package dev.lyze.parallelworlds.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.impl.BlendingTransition;
@@ -55,6 +61,20 @@ public class GameScreen extends ManagedScreen {
         root.add(rightInnerTable).expand().top().right().padRight(12).padTop(12);
         ui.addActor(root);
 
+        var hiddenTable = new Table();
+        hiddenTable.setFillParent(true);
+        var pixmap = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
+        var skipButton = new ImageButton(new TextureRegionDrawable(new Texture(pixmap)));
+        skipButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                level.loadNextLevel();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+        hiddenTable.add(skipButton).expand().top().right();
+        mobileUi.addActor(hiddenTable);
+
         addInputProcessor(mobileUi);
     }
 
@@ -69,6 +89,7 @@ public class GameScreen extends ManagedScreen {
 
         mapTextLabel.setText(level.getMap().getText());
 
+        gamepads.forEach(VirtualGamepadGroup::dispose);
         gamepads.clear();
         level.getPlayers().getPlayers().forEach(p -> gamepads.add(new VirtualGamepadGroup(p, gamepads.size(), mobileUi)));
 
@@ -160,7 +181,7 @@ public class GameScreen extends ManagedScreen {
         logger.logInfo("Loading level " + mapPath);
         level.dispose();
 
-        if (mapPath.equals("FINISH"))
+        if (mapPath == null)
             Statics.parallelWorlds.getScreenManager().pushScreen(EndScene.class.getName(), BlendingTransition.class.getName(), totalCoins, totalDeaths);
         else
             Statics.parallelWorlds.getScreenManager().pushScreen(LoadingScreen.class.getName(), BlendingTransition.class.getName(), mapPath);

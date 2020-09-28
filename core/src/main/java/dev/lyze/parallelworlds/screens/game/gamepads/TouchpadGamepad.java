@@ -17,13 +17,19 @@ public class TouchpadGamepad extends VirtualGamepad {
         super(player, playerNumber);
     }
 
+    private Table rootTable, additionalTable;
+    private Stage stage;
+
+
     public void setup(Stage stage) {
+        this.stage = stage;
+
         var uiAtlas = Statics.assets.getGame().getUiAtlas();
 
-        var rootTable = new Table();
+        rootTable = new Table();
         rootTable.setFillParent(true);
 
-        var additionalTable = new Table();
+        additionalTable = new Table();
         additionalTable.setFillParent(true);
 
         if (player.getColor() == PlayerColor.Ice) {
@@ -117,5 +123,11 @@ public class TouchpadGamepad extends VirtualGamepad {
     @Override
     public void vibrate(int durationInMs, float strength) {
 
+    }
+
+    @Override
+    public void dispose() {
+        stage.getActors().removeValue(rootTable, true);
+        stage.getActors().removeValue(additionalTable, true);
     }
 }

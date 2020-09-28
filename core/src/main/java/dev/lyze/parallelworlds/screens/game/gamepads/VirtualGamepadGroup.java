@@ -49,4 +49,8 @@ public class VirtualGamepadGroup {
     public void vibrate(int durationInMs, float strength) {
         gamepads.forEach(g -> g.vibrate(durationInMs, strength));
     }
+
+    public void dispose() {
+        gamepads.forEach(VirtualGamepad::dispose);
+    }
 }

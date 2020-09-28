@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public abstract class MapSpawner<TProperties extends MapProperties> {
     protected final Level level;
-    private final Map map;
+    protected final Map map;
 
     @Getter
     private final Class<TProperties> propertiesClass;

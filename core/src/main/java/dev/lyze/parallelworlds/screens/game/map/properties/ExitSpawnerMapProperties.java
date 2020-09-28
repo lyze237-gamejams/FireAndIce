@@ -6,5 +6,4 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ExitSpawnerMapProperties extends MapProperties {
-    private String level;
 }

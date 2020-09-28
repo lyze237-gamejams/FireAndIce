@@ -26,4 +26,9 @@ public class KeyboardGamepad extends VirtualGamepad {
     public void vibrate(int durationInMs, float strength) {
 
     }
+
+    @Override
+    public void dispose() {
+
+    }
 }

@@ -56,4 +56,9 @@ public class ControllerGamepad extends VirtualGamepad {
         controller.cancelVibration();
         controller.startVibration(durationInMs, strength);
     }
+
+    @Override
+    public void dispose() {
+
+    }
 }

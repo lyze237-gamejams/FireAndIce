@@ -52,7 +52,7 @@ public class Level {
     public Level(GameScreen game, TiledMap tiledMap) {
         this.game = game;
 
-        world = new World<>(1);
+        world = new World<>(4);
         map = new Map(game, tiledMap);
 
         players = new Players(this);
@@ -83,6 +83,8 @@ public class Level {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F12))
             killPlayer();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F11))
+            loadNextLevel();
 
         entities.forEach(e -> e.update(world, delta));
         if (entitiesToAdd.size() > 0) {
@@ -172,11 +174,11 @@ public class Level {
         finished = true;
     }
 
-    public void loadLevel(String level) {
+    public void loadNextLevel() {
         if (finished)
             return;
 
-        game.nextLevel(level);
+        game.nextLevel(map.getNextLevel());
         finished = true;
     }
 

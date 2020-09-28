@@ -38,6 +38,8 @@ public class Map {
     private Music music;
     @Getter
     private String text;
+    @Getter
+    private String nextLevel;
 
     @Getter
     private Color topColor, bottomColor;
@@ -160,6 +162,8 @@ public class Map {
             music = Statics.assets.getMusic().getBooster();
         else
             music = Statics.assets.getMusic().get(musicPath);
+
+        nextLevel = map.getProperties().get("level", String.class);
     }
 
     public void render(OrthographicCamera cam) {

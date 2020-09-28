@@ -26,4 +26,6 @@ public abstract class VirtualGamepad {
     public abstract void reset(float delta);
 
     public abstract void vibrate(int durationInMs, float strength);
+
+    public abstract void dispose();
 }
