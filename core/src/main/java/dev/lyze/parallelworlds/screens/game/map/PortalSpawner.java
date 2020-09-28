@@ -22,6 +22,6 @@ public class PortalSpawner extends MapSpawner<PortalSpawnerMapProperties> {
         logger.logInfo("Spawning portal " + properties.getColor() + " at " + x + "/" + y);
 
         var portal = new PortalTile(x, y, level, properties.getColor());
-        level.addEntity(portal);
+        level.addStaticEntity(portal);
     }
 }

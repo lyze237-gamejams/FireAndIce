@@ -115,7 +115,7 @@ public class Map {
                         continue;
 
                     var block = new GroundTile(x + rectangle.x, y + rectangle.y, rectangle.width / tileWidth, rectangle.height / tileHeight, game.getLevel());
-                    game.getLevel().addEntity(block);
+                    game.getLevel().addStaticEntity(block);
                 }
             }
         }

@@ -22,6 +22,6 @@ public class PortalDirectionSpawner extends MapSpawner<PortalDirectionMapPropert
         logger.logInfo("Spawning portal direction " + data.getDirection() + " at " + x + "/" + y);
 
         var portal = new PortalDirectionTile(x, y, level, data.getDirection());
-        level.addEntity(portal);
+        level.addStaticEntity(portal);
     }
 }

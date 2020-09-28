@@ -85,8 +85,11 @@ public class Level {
             killPlayer();
 
         entities.forEach(e -> e.update(world, delta));
-        entities.addAll(entitiesToAdd);
-        entitiesToAdd.clear();
+        if (entitiesToAdd.size() > 0) {
+            entities.addAll(entitiesToAdd);
+            entitiesToAdd.clear();
+        }
+
         entitiesToRemove.forEach(e -> {
             entities.remove(e);
             world.remove(e.getItem());
@@ -131,7 +134,6 @@ public class Level {
         shapeDrawer.circle(viewport.getCamera().position.x, viewport.getCamera().position.y, 1);
         spriteBatch.end();
 
-
         spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch.begin();
         players.debugTextRender(debugFont, viewport.getCamera(), spriteBatch);
@@ -141,6 +143,10 @@ public class Level {
 
     public void addEntity(Entity entity) {
         entitiesToAdd.add(entity);
+        entity.addToWorld(world);
+    }
+
+    public void addStaticEntity(Entity entity) {
         entity.addToWorld(world);
     }
 

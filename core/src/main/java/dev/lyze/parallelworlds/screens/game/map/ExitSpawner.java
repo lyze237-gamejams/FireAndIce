@@ -21,6 +21,6 @@ public class ExitSpawner extends MapSpawner<ExitSpawnerMapProperties> {
     public void spawnInternal(int x, int y, ExitSpawnerMapProperties data, HashMap<Point, MapProperties> spawnedEntities) {
         logger.logInfo("Spawning exit at " + x + "/" + y + " with level " + data.getLevel());
 
-        level.addEntity(new ExitTile(x, y, level, data.getLevel()));
+        level.addStaticEntity(new ExitTile(x, y, level, data.getLevel()));
     }
 }
